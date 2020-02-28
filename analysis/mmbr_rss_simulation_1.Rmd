@@ -1,0 +1,137 @@
+---
+title: "M&M RSS"
+author: "Yuxin Zou"
+date: "02/27/2020"
+output:
+  workflowr::wflow_html:
+    code_folding: hide
+---
+
+This is result from our first M&M RSS simulation.
+
+There are 200 data sets, each with 1 causal SNP shared across conditions. The number of conditions are 5 and 10. 
+
+```{r}
+library(dplyr)
+library(kableExtra)
+library(knitr)
+out = readRDS('output/mnm_rss_lite_output.20200227.rds')
+```
+
+```{r}
+res = out[,-1]
+colnames(res) = c('n_traits', 'method', 'resid_method', 'L', 'prior.scale','total', 'valid', 'size', 'purity', 'top_hit', 'total_true', 'total_true_included', 'overlap_var', 'overlap_cs', 'false_positive_cross_cond', 'false_negative_cross_cond', 'true_positive_cross_cond', 'converged', 'filename')
+res.prior = res %>% filter(prior.scale == FALSE | is.na(prior.scale))
+res.prior.scale = res %>% filter(prior.scale == TRUE | is.na(prior.scale))
+```
+
+## Simulated Prior
+
+### Purity
+
+```{r}
+purity = aggregate(purity~n_traits + resid_method + method + L, res.prior, mean)
+purity = purity[order(purity$n_traits, purity$L),]
+rownames(purity) = NULL
+knitr::kable(purity) %>% kable_styling(full_width = F) %>%
+  row_spec(c(5:8, 13:16, 21:24), background = "wheat")
+```
+
+### Power
+
+```{r}
+total_true_included = aggregate(total_true_included ~ n_traits + resid_method + method + L, res.prior, sum)
+total_true = aggregate(total_true ~  n_traits + resid_method + method + L, res.prior, sum)
+cs_overlap = aggregate(overlap_cs ~  n_traits + resid_method + method + L, res.prior, sum)
+snp_overlap = aggregate(overlap_var ~  n_traits + resid_method + method + L, res.prior, sum)
+power = merge(total_true_included, total_true, by = c( 'n_traits' , 'resid_method' , 'method' , 'L'))
+power = merge(power, cs_overlap,  by = c( 'n_traits' , 'resid_method' , 'method' , 'L'))
+power = merge(power, snp_overlap,  by = c( 'n_traits' , 'resid_method' , 'method' , 'L'))
+power$power = round(power$total_true_included/power$total_true,3)
+power$overlap_cs = round(power$overlap_cs, 3)
+power$overlap_var = round(power$overlap_var, 3)
+power = power[order(power$n_traits, power$L),]
+rownames(power) = NULL
+knitr::kable(power) %>% kable_styling(full_width = F) %>%
+  row_spec(c(5:8, 13:16, 21:24), background = "wheat")
+```
+
+### FDR
+
+```{r}
+valid = aggregate(valid ~ n_traits + resid_method + method + L, res.prior, sum)
+total = aggregate(total ~ n_traits + resid_method + method + L, res.prior, sum)
+fdr = merge(valid, total, by = c( 'n_traits' , 'resid_method' , 'method', 'L'))
+fdr$fdr = round((fdr$total - fdr$valid)/fdr$total,3)
+fdr = fdr[order(fdr$n_traits, fdr$L),]
+rownames(fdr) = NULL
+knitr::kable(fdr) %>% kable_styling(full_width = F) %>%
+  row_spec(c(5:8, 13:16, 21:24), background = "wheat")
+```
+
+### Convergence
+
+```{r}
+elbo_converged = aggregate(converged~n_traits + resid_method + method + L, res.prior, mean)
+elbo_converged = elbo_converged[which(elbo_converged$L!=1),]
+elbo_converged = elbo_converged[order(elbo_converged$n_traits),]
+rownames(elbo_converged) = NULL
+knitr::kable(elbo_converged) %>% kable_styling(full_width = F) %>%
+  row_spec(c(5:8, 13:16), background = "wheat")
+```
+
+## Scaled Prior
+
+### Purity
+
+```{r}
+purity = aggregate(purity~n_traits + resid_method + method + L, res.prior.scale, mean)
+purity = purity[order(purity$n_traits, purity$L),]
+rownames(purity) = NULL
+knitr::kable(purity) %>% kable_styling(full_width = F) %>%
+  row_spec(c(5:8, 13:16, 21:24), background = "wheat")
+```
+
+### Power
+
+```{r}
+total_true_included = aggregate(total_true_included ~ n_traits + resid_method + method + L, res.prior.scale, sum)
+total_true = aggregate(total_true ~  n_traits + resid_method + method + L, res.prior.scale, sum)
+cs_overlap = aggregate(overlap_cs ~  n_traits + resid_method + method + L, res.prior.scale, sum)
+snp_overlap = aggregate(overlap_var ~  n_traits + resid_method + method + L, res.prior.scale, sum)
+power = merge(total_true_included, total_true, by = c( 'n_traits' , 'resid_method' , 'method' , 'L'))
+power = merge(power, cs_overlap,  by = c( 'n_traits' , 'resid_method' , 'method' , 'L'))
+power = merge(power, snp_overlap,  by = c( 'n_traits' , 'resid_method' , 'method' , 'L'))
+power$power = round(power$total_true_included/power$total_true,3)
+power$overlap_cs = round(power$overlap_cs, 3)
+power$overlap_var = round(power$overlap_var, 3)
+power = power[order(power$n_traits, power$L),]
+rownames(power) = NULL
+knitr::kable(power) %>% kable_styling(full_width = F) %>%
+  row_spec(c(5:8, 13:16, 21:24), background = "wheat")
+```
+
+### FDR
+
+```{r}
+valid = aggregate(valid ~ n_traits + resid_method + method + L, res.prior.scale, sum)
+total = aggregate(total ~ n_traits + resid_method + method + L, res.prior.scale, sum)
+fdr = merge(valid, total, by = c( 'n_traits' , 'resid_method' , 'method', 'L'))
+fdr$fdr = round((fdr$total - fdr$valid)/fdr$total,3)
+fdr = fdr[order(fdr$n_traits, fdr$L),]
+rownames(fdr) = NULL
+knitr::kable(fdr) %>% kable_styling(full_width = F) %>%
+  row_spec(c(5:8, 13:16, 21:24), background = "wheat")
+```
+
+### Convergence
+
+```{r}
+elbo_converged = aggregate(converged~n_traits + resid_method + method + L, res.prior.scale, mean)
+elbo_converged = elbo_converged[which(elbo_converged$L!=1),]
+elbo_converged = elbo_converged[order(elbo_converged$n_traits),]
+rownames(elbo_converged) = NULL
+knitr::kable(elbo_converged) %>% kable_styling(full_width = F) %>%
+  row_spec(c(5:8, 13:16), background = "wheat")
+```
+
