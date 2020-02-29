@@ -11,7 +11,7 @@ This is result from our first M&M RSS simulation.
 
 There are 200 data sets, each with 1 causal SNP shared across conditions. The number of conditions are 5 and 10. 
 
-```{r}
+```{r message=FALSE}
 library(dplyr)
 library(kableExtra)
 library(knitr)
