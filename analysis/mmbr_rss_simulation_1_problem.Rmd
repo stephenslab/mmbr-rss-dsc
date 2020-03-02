@@ -1,0 +1,133 @@
+---
+title: "M&M RSS V Problem"
+author: "Yuxin Zou"
+date: "02/28/2020"
+output:
+  workflowr::wflow_html:
+    code_folding: hide
+---
+
+```{r}
+library(mmbr)
+DSC = dscrutils:::load_inputs(c('data/lite_data_6.rds','data/lite_data_6_shared_1.pkl', 'data/lite_data_6_shared_1_get_sumstats_1.rds', 'data/lite_data_6_shared_1_get_sumstats_1_oracle_generator_1_mnm_rss_shared_16.rds'), dscrutils:::read_dsc)
+X = DSC$X
+meta = DSC$meta
+ss = DSC$sumstats
+Z = as.matrix(ss$bhat/ss$shat)
+r = cor(X)
+prior = DSC$prior
+Y = DSC$Y_sim
+true_pos = as.integer(apply(meta$true_coef, 1, sum) != 0)
+```
+
+The simulated data has one causal SNP shared across all 5 conditions.
+\begin{align}
+Y &= XB + E, \\
+B &= \gamma b^\intercal, \\
+b &\sim N_5(0, 0.3^2 \left(\begin{matrix}
+1 & 0.999 & 0.999 & 0.999 & 0.999 \\
+0.999 & 1 & 0.999 & 0.999 & 0.999 \\
+0.999 & 0.999 & 1 & 0.999 & 0.999 \\
+0.999 & 0.999 & 0.999 & 1 & 0.999 \\
+0.999 & 0.999 & 0.999 & 0.999 & 1
+\end{matrix}\right)), \\
+E &\sim MN(0, I, \left(\begin{matrix} 
+0.0366 & 0 & 0 & 0 & 0 \\
+0 & 0.0337 & 0 & 0 & 0 \\
+0 & 0 & 0.0357 & 0 & 0 \\
+0 & 0 & 0 & 0.0351 & 0 \\
+0 & 0 & 0 & 0 & 0.036
+\end{matrix}\right)),
+\end{align}
+where $X$ is column standardized.
+
+We compute z scores from simple linear regression, which has following distribution
+\begin{align}
+\hat{Z} &\sim MN(RZ, R, V), \\
+V &= diag(sd(Y)) \left(\begin{matrix} 
+0.0366 & 0 & 0 & 0 & 0 \\
+0 & 0.0337 & 0 & 0 & 0 \\
+0 & 0 & 0.0357 & 0 & 0 \\
+0 & 0 & 0 & 0.0351 & 0 \\
+0 & 0 & 0 & 0 & 0.036
+\end{matrix}\right) diag(sd(Y)) \\
+&= \left( \begin{matrix}
+0.8977 & 0 & 0 & 0 & 0 \\
+0 & 0.896 & 0 & 0 & 0 \\
+0 & 0 & 0.9325 & 0 & 0 \\
+0 & 0 & 0 & 0.867 & 0 \\
+0 & 0 & 0 & 0 & 0.8983
+\end{matrix} \right)
+\end{align}
+
+## Oracle residual variance
+
+```{r}
+resid_Z_oracle <- meta$residual_variance/apply(Y, 2, var)
+xUlist = lapply(prior$xUlist, function(U) t(t(U*nrow(Y)/apply(Y, 2, sd))/apply(Y, 2, sd)))
+# xUlist = lapply(prior$xUlist, function(U) U*nrow(Y))
+m_init = mmbr::create_mash_prior(mixture_prior = list(matrices=xUlist, weights=prior$pi), null_weight=prior$null_weight, max_mixture_len=-1)
+fit1 = mmbr::msusie_rss(Z, r, L=1, prior_variance=m_init, residual_variance=resid_Z_oracle, compute_objective=TRUE, estimate_residual_variance=F, estimate_prior_variance=T, estimate_prior_method='simple')
+susieR::susie_plot(fit1,y='PIP', xlab = 'SNP positions', b=true_pos)
+```
+
+The elbo is
+```{r}
+fit1$elbo
+```
+
+## Estimate V from Z
+
+```{r}
+resid_Z_all = cor(Z)
+round(resid_Z_all, 4)
+```
+
+```{r}
+m_init = mmbr::create_mash_prior(mixture_prior = list(matrices=xUlist, weights=prior$pi), null_weight=prior$null_weight, max_mixture_len=-1)
+fit2 = mmbr::msusie_rss(Z, r, L=1, prior_variance=m_init, residual_variance=resid_Z_all, compute_objective=TRUE, estimate_residual_variance=F, estimate_prior_variance=T, estimate_prior_method='simple')
+susieR::susie_plot(fit2,y='PIP', xlab = 'SNP positions', b=true_pos)
+```
+
+The elbo is
+```{r}
+fit2$elbo
+```
+
+## Estimate V from null Z
+
+```{r}
+max_absz = apply(abs(Z),1, max)
+nullish = which(max_absz < 2) # length 17
+nullish_z = Z[nullish,]
+resid_Z_null <- cor(nullish_z)
+resid_Z_null
+```
+
+```{r}
+m_init = mmbr::create_mash_prior(mixture_prior = list(matrices=xUlist, weights=prior$pi), null_weight=prior$null_weight, max_mixture_len=-1)
+fit3 = mmbr::msusie_rss(Z, r, L=1, prior_variance=m_init, residual_variance=resid_Z_null, compute_objective=TRUE, estimate_residual_variance=F, estimate_prior_variance=T, estimate_prior_method='simple')
+susieR::susie_plot(fit3,y='PIP', xlab = 'SNP positions', b=true_pos)
+```
+
+The elbo is
+```{r}
+fit3$elbo
+```
+
+## Estimate V as identity
+
+```{r}
+resid_Z_identity = diag(ncol(Z))
+```
+
+```{r}
+m_init = mmbr::create_mash_prior(mixture_prior = list(matrices=xUlist, weights=prior$pi), null_weight=prior$null_weight, max_mixture_len=-1)
+fit4 = mmbr::msusie_rss(Z, r, L=1, prior_variance=m_init, residual_variance=resid_Z_identity, compute_objective=TRUE, estimate_residual_variance=F, estimate_prior_variance=T, estimate_prior_method='simple')
+susieR::susie_plot(fit4,y='PIP', xlab = 'SNP positions', b=true_pos)
+```
+
+The elbo is
+```{r}
+fit4$elbo
+```
