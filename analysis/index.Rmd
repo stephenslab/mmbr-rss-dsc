@@ -8,4 +8,10 @@ editor_options:
   chunk_output_type: console
 ---
 
-Welcome to my research website.
+This repository contains simulation results related to M&M RSS.
+
+* [20200229 First simple simulation](mmbr_rss_simulation_1.hmtl)
+
+    [Residual variance problem](mmbr_rss_simulation_1_problem.html)
+    
+    
