@@ -10,7 +10,7 @@ editor_options:
 
 This repository contains simulation results related to M&M RSS.
 
-* [20200229 First simple simulation](mmbr_rss_simulation_1.hmtl)
+* [20200229 First simple simulation](mmbr_rss_simulation_1.html)
 
     [Residual variance problem](mmbr_rss_simulation_1_problem.html)
     
