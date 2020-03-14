@@ -1,0 +1,4537 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Yuxin Zou" />
+
+<meta name="date" content="2020-03-12" />
+
+<title>M&amp;M RSS</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">mmbr-rss-dsc</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<div class="fluid-row" id="header">
+
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">M&amp;M RSS</h1>
+<h4 class="author"><em>Yuxin Zou</em></h4>
+<h4 class="date"><em>03/12/2020</em></h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2020-03-13
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>mmbr-rss-dsc/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.0). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20200227code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20200227)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20200227code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20200227)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree0de6e05bbf424e6d9781179497aab46dca561ceatargetblank0de6e05a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/0de6e05bbf424e6d9781179497aab46dca561cea" target="_blank">0de6e05</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree0de6e05bbf424e6d9781179497aab46dca561ceatargetblank0de6e05a" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Untracked files:
+    Untracked:  output/mnm_rss_lite_output.20200227.rds
+    Untracked:  output/mnm_rss_lite_output.20200310.rds
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the R Markdown and HTML files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view them.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/0de6e05bbf424e6d9781179497aab46dca561cea/analysis/mmbr_rss_simulation_2.Rmd" target="_blank">0de6e05</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-03-13
+</td>
+<td>
+wflow_publish(“analysis/mmbr_rss_simulation_2.Rmd”)
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<p>This is result from our second M&amp;M RSS simulation.</p>
+<p>There are 300 data sets using GTEx genotypes. The number of conditions are 5 and 10. The model are fitted with oracle prior and residual variance.</p>
+<pre class="r"><code>library(dplyr)
+library(kableExtra)
+library(knitr)
+out = readRDS(&#39;output/mnm_rss_lite_output.20200310.rds&#39;)</code></pre>
+<pre class="r"><code>res = out[,-1]
+colnames(res) = c(&#39;n_traits&#39;, &#39;simulate&#39;, &#39;method&#39;, &#39;resid_method&#39;, &#39;L&#39;, &#39;total&#39;, &#39;valid&#39;, &#39;size&#39;, &#39;purity&#39;, &#39;top_hit&#39;, &#39;total_true&#39;, &#39;total_true_included&#39;, &#39;overlap_var&#39;, &#39;overlap_cs&#39;, &#39;false_positive_cross_cond&#39;, &#39;false_negative_cross_cond&#39;, &#39;true_positive_cross_cond&#39;, &#39;converged&#39;, &#39;filename&#39;)
+rm(out)
+res = res %&gt;% filter(resid_method == &#39;oracle&#39;)
+res.shared = res %&gt;% filter(simulate == &#39;shared&#39;, grepl(&#39;shared&#39;, res$method))
+res.singleton = res %&gt;% filter(simulate == &#39;singleton&#39;, grepl(&#39;singleton&#39;, res$method))
+res.mid_het = res %&gt;% filter(simulate == &#39;mid_het&#39;, grepl(&#39;mid_het&#39;, res$method))
+res.mix = res %&gt;% filter(simulate == &#39;mixture01&#39;, grepl(&#39;mixture01&#39;, res$method))</code></pre>
+<div id="shared" class="section level2">
+<h2>Shared</h2>
+<div id="purity" class="section level3">
+<h3>Purity</h3>
+<pre class="r"><code>purity = aggregate(purity~n_traits + method + L, res.shared, mean)
+purity = purity[order(purity$n_traits, purity$L),]
+rownames(purity) = NULL
+knitr::kable(purity) %&gt;% kable_styling(full_width = F) %&gt;%
+  row_spec(c(1:6), background = &quot;wheat&quot;)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+n_traits
+</th>
+<th style="text-align:left;">
+method
+</th>
+<th style="text-align:right;">
+L
+</th>
+<th style="text-align:right;">
+purity
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_shared
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+1
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.9898494
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_shared
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+1
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.9895356
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_shared
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+2
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.9846422
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_shared
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+2
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.9853774
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_shared
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+10
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.9838465
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_shared
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+10
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.9838652
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_shared
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.9972510
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_shared
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.9972127
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_shared
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.9941276
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_shared
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.9948094
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_shared
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.9935605
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_shared
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.9938060
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="power" class="section level3">
+<h3>Power</h3>
+<pre class="r"><code>total_true_included = aggregate(total_true_included ~ n_traits + method + L, res.shared, sum)
+total_true = aggregate(total_true ~  n_traits + method + L, res.shared, sum)
+cs_overlap = aggregate(overlap_cs ~  n_traits + method + L, res.shared, sum)
+snp_overlap = aggregate(overlap_var ~  n_traits + method + L, res.shared, sum)
+power = merge(total_true_included, total_true, by = c( &#39;n_traits&#39;, &#39;method&#39; , &#39;L&#39;))
+power = merge(power, cs_overlap,  by = c( &#39;n_traits&#39;, &#39;method&#39; , &#39;L&#39;))
+power = merge(power, snp_overlap,  by = c( &#39;n_traits&#39;, &#39;method&#39; , &#39;L&#39;))
+power$power = round(power$total_true_included/power$total_true,3)
+power$overlap_cs = round(power$overlap_cs, 3)
+power$overlap_var = round(power$overlap_var, 3)
+power = power[order(power$n_traits, power$L, power$method),]
+rownames(power) = NULL
+knitr::kable(power) %&gt;% kable_styling(full_width = F) %&gt;%
+  row_spec(c(1:6), background = &quot;wheat&quot;)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+n_traits
+</th>
+<th style="text-align:left;">
+method
+</th>
+<th style="text-align:right;">
+L
+</th>
+<th style="text-align:right;">
+total_true_included
+</th>
+<th style="text-align:right;">
+total_true
+</th>
+<th style="text-align:right;">
+overlap_cs
+</th>
+<th style="text-align:right;">
+overlap_var
+</th>
+<th style="text-align:right;">
+power
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_shared
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+1
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+291
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+527
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.552
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_shared
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+1
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+298
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+527
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.565
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_shared
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+2
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+410
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+527
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.778
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_shared
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+2
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+416
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+527
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.789
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_shared
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+10
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+422
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+527
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+13
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+80
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.801
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_shared
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+10
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+429
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+527
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+10
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+74
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.814
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_shared
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+273
+</td>
+<td style="text-align:right;">
+501
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.545
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_shared
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+284
+</td>
+<td style="text-align:right;">
+501
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.567
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_shared
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+373
+</td>
+<td style="text-align:right;">
+501
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.745
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_shared
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+385
+</td>
+<td style="text-align:right;">
+501
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.768
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_shared
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+405
+</td>
+<td style="text-align:right;">
+501
+</td>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:right;">
+73
+</td>
+<td style="text-align:right;">
+0.808
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_shared
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+415
+</td>
+<td style="text-align:right;">
+501
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+51
+</td>
+<td style="text-align:right;">
+0.828
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="fdr" class="section level3">
+<h3>FDR</h3>
+<pre class="r"><code>valid = aggregate(valid ~ n_traits + method + L, res.shared, sum)
+total = aggregate(total ~ n_traits + method + L, res.shared, sum)
+fdr = merge(valid, total, by = c( &#39;n_traits&#39;, &#39;method&#39;, &#39;L&#39;))
+fdr$fdr = round((fdr$total - fdr$valid)/fdr$total,3)
+fdr = fdr[order(fdr$n_traits, fdr$L, fdr$method),]
+rownames(fdr) = NULL
+knitr::kable(fdr) %&gt;% kable_styling(full_width = F) %&gt;%
+  row_spec(c(1:6), background = &quot;wheat&quot;)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+n_traits
+</th>
+<th style="text-align:left;">
+method
+</th>
+<th style="text-align:right;">
+L
+</th>
+<th style="text-align:right;">
+valid
+</th>
+<th style="text-align:right;">
+total
+</th>
+<th style="text-align:right;">
+fdr
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_shared
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+1
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+280
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+299
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.064
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_shared
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+1
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+287
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+299
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.040
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_shared
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+2
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+395
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+417
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.053
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_shared
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+2
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+403
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+413
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.024
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_shared
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+10
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+419
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+449
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.067
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_shared
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+10
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+426
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+442
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.036
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_shared
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+271
+</td>
+<td style="text-align:right;">
+300
+</td>
+<td style="text-align:right;">
+0.097
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_shared
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+281
+</td>
+<td style="text-align:right;">
+300
+</td>
+<td style="text-align:right;">
+0.063
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_shared
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+371
+</td>
+<td style="text-align:right;">
+411
+</td>
+<td style="text-align:right;">
+0.097
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_shared
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+381
+</td>
+<td style="text-align:right;">
+411
+</td>
+<td style="text-align:right;">
+0.073
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_shared
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+415
+</td>
+<td style="text-align:right;">
+466
+</td>
+<td style="text-align:right;">
+0.109
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_shared
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+419
+</td>
+<td style="text-align:right;">
+458
+</td>
+<td style="text-align:right;">
+0.085
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="convergence" class="section level3">
+<h3>Convergence</h3>
+<pre class="r"><code>elbo_converged = aggregate(converged~n_traits + method + L, res.shared, mean)
+elbo_converged = elbo_converged[which(elbo_converged$L!=1),]
+elbo_converged = elbo_converged[order(elbo_converged$n_traits),]
+rownames(elbo_converged) = NULL
+knitr::kable(elbo_converged) %&gt;% kable_styling(full_width = F) %&gt;%
+  row_spec(c(1:4), background = &quot;wheat&quot;)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+n_traits
+</th>
+<th style="text-align:left;">
+method
+</th>
+<th style="text-align:right;">
+L
+</th>
+<th style="text-align:right;">
+converged
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_shared
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+2
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.9933333
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_shared
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+2
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.9533333
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_shared
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+10
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.7066667
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_shared
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+10
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.6966667
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_shared
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.9900000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_shared
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.9766667
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_shared
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.7266667
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_shared
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.7200000
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="singleton" class="section level2">
+<h2>Singleton</h2>
+<div id="purity-1" class="section level3">
+<h3>Purity</h3>
+<pre class="r"><code>purity = aggregate(purity~n_traits + method + L, res.singleton, mean)
+purity = purity[order(purity$n_traits, purity$L),]
+rownames(purity) = NULL
+knitr::kable(purity) %&gt;% kable_styling(full_width = F) %&gt;%
+  row_spec(c(1:6), background = &quot;wheat&quot;)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+n_traits
+</th>
+<th style="text-align:left;">
+method
+</th>
+<th style="text-align:right;">
+L
+</th>
+<th style="text-align:right;">
+purity
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_singleton
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+1
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.8778953
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_singleton
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+1
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.8673773
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_singleton
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+2
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.9201027
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_singleton
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+2
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.9172359
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_singleton
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+10
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.9125635
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_singleton
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+10
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.9127821
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_singleton
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.8480943
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_singleton
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.8288053
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_singleton
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.9344460
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_singleton
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.9203271
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_singleton
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.9302034
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_singleton
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.9156067
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="power-1" class="section level3">
+<h3>Power</h3>
+<pre class="r"><code>total_true_included = aggregate(total_true_included ~ n_traits + method + L, res.singleton, sum)
+total_true = aggregate(total_true ~  n_traits + method + L, res.singleton, sum)
+cs_overlap = aggregate(overlap_cs ~  n_traits + method + L, res.singleton, sum)
+snp_overlap = aggregate(overlap_var ~  n_traits + method + L, res.singleton, sum)
+power = merge(total_true_included, total_true, by = c( &#39;n_traits&#39;, &#39;method&#39; , &#39;L&#39;))
+power = merge(power, cs_overlap,  by = c( &#39;n_traits&#39;, &#39;method&#39; , &#39;L&#39;))
+power = merge(power, snp_overlap,  by = c( &#39;n_traits&#39;, &#39;method&#39; , &#39;L&#39;))
+power$power = round(power$total_true_included/power$total_true,3)
+power$overlap_cs = round(power$overlap_cs, 3)
+power$overlap_var = round(power$overlap_var, 3)
+power = power[order(power$n_traits, power$L, power$method),]
+rownames(power) = NULL
+knitr::kable(power) %&gt;% kable_styling(full_width = F) %&gt;%
+  row_spec(c(1:6), background = &quot;wheat&quot;)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+n_traits
+</th>
+<th style="text-align:left;">
+method
+</th>
+<th style="text-align:right;">
+L
+</th>
+<th style="text-align:right;">
+total_true_included
+</th>
+<th style="text-align:right;">
+total_true
+</th>
+<th style="text-align:right;">
+overlap_cs
+</th>
+<th style="text-align:right;">
+overlap_var
+</th>
+<th style="text-align:right;">
+power
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_singleton
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+1
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+273
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+487
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.561
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_singleton
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+1
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+275
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+487
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.565
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_singleton
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+2
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+381
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+487
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+10
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+184
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.782
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_singleton
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+2
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+385
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+487
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+11
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+218
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.791
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_singleton
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+10
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+395
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+487
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+14
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+232
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.811
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_singleton
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+10
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+401
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+487
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+15
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+276
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.823
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_singleton
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+279
+</td>
+<td style="text-align:right;">
+498
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.560
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_singleton
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+276
+</td>
+<td style="text-align:right;">
+498
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.554
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_singleton
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+415
+</td>
+<td style="text-align:right;">
+498
+</td>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+195
+</td>
+<td style="text-align:right;">
+0.833
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_singleton
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+410
+</td>
+<td style="text-align:right;">
+498
+</td>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+211
+</td>
+<td style="text-align:right;">
+0.823
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_singleton
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+424
+</td>
+<td style="text-align:right;">
+498
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+290
+</td>
+<td style="text-align:right;">
+0.851
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_singleton
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+418
+</td>
+<td style="text-align:right;">
+498
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+315
+</td>
+<td style="text-align:right;">
+0.839
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="fdr-1" class="section level3">
+<h3>FDR</h3>
+<pre class="r"><code>valid = aggregate(valid ~ n_traits + method + L, res.singleton, sum)
+total = aggregate(total ~ n_traits + method + L, res.singleton, sum)
+fdr = merge(valid, total, by = c( &#39;n_traits&#39;, &#39;method&#39;, &#39;L&#39;))
+fdr$fdr = round((fdr$total - fdr$valid)/fdr$total,3)
+fdr = fdr[order(fdr$n_traits, fdr$L, fdr$method),]
+rownames(fdr) = NULL
+knitr::kable(fdr) %&gt;% kable_styling(full_width = F) %&gt;%
+  row_spec(c(1:6), background = &quot;wheat&quot;)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+n_traits
+</th>
+<th style="text-align:left;">
+method
+</th>
+<th style="text-align:right;">
+L
+</th>
+<th style="text-align:right;">
+valid
+</th>
+<th style="text-align:right;">
+total
+</th>
+<th style="text-align:right;">
+fdr
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_singleton
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+1
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+263
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+277
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.051
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_singleton
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+1
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+264
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+275
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.040
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_singleton
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+2
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+376
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+394
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.046
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_singleton
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+2
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+380
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+393
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.033
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_singleton
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+10
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+391
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+411
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.049
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_singleton
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+10
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+397
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+411
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.034
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_singleton
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+261
+</td>
+<td style="text-align:right;">
+268
+</td>
+<td style="text-align:right;">
+0.026
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_singleton
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+258
+</td>
+<td style="text-align:right;">
+264
+</td>
+<td style="text-align:right;">
+0.023
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_singleton
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+408
+</td>
+<td style="text-align:right;">
+421
+</td>
+<td style="text-align:right;">
+0.031
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_singleton
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+404
+</td>
+<td style="text-align:right;">
+415
+</td>
+<td style="text-align:right;">
+0.027
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_singleton
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+421
+</td>
+<td style="text-align:right;">
+434
+</td>
+<td style="text-align:right;">
+0.030
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_singleton
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+416
+</td>
+<td style="text-align:right;">
+427
+</td>
+<td style="text-align:right;">
+0.026
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="convergence-1" class="section level3">
+<h3>Convergence</h3>
+<pre class="r"><code>elbo_converged = aggregate(converged~n_traits + method + L, res.singleton, mean)
+elbo_converged = elbo_converged[which(elbo_converged$L!=1),]
+elbo_converged = elbo_converged[order(elbo_converged$n_traits),]
+rownames(elbo_converged) = NULL
+knitr::kable(elbo_converged) %&gt;% kable_styling(full_width = F) %&gt;%
+  row_spec(c(1:4), background = &quot;wheat&quot;)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+n_traits
+</th>
+<th style="text-align:left;">
+method
+</th>
+<th style="text-align:right;">
+L
+</th>
+<th style="text-align:right;">
+converged
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_singleton
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+2
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.9800000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_singleton
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+2
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.9733333
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_singleton
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+10
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.7733333
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_singleton
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+10
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.7533333
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_singleton
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.9833333
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_singleton
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.9566667
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_singleton
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.7633333
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_singleton
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.7333333
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="mid-heterogeneity" class="section level2">
+<h2>Mid heterogeneity</h2>
+<div id="purity-2" class="section level3">
+<h3>Purity</h3>
+<pre class="r"><code>purity = aggregate(purity~n_traits + method + L, res.mid_het, mean)
+purity = purity[order(purity$n_traits, purity$L),]
+rownames(purity) = NULL
+knitr::kable(purity) %&gt;% kable_styling(full_width = F) %&gt;%
+  row_spec(c(1:6), background = &quot;wheat&quot;)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+n_traits
+</th>
+<th style="text-align:left;">
+method
+</th>
+<th style="text-align:right;">
+L
+</th>
+<th style="text-align:right;">
+purity
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_mid_het
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+1
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.9872006
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_mid_het
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+1
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.9881342
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_mid_het
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+2
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.9904160
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_mid_het
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+2
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.9913746
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_mid_het
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+10
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.9906158
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_mid_het
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+10
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.9917301
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_mid_het
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.9965997
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_mid_het
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.9975002
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_mid_het
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.9956400
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_mid_het
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.9961010
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_mid_het
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.9958651
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_mid_het
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.9961145
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="power-2" class="section level3">
+<h3>Power</h3>
+<pre class="r"><code>total_true_included = aggregate(total_true_included ~ n_traits + method + L, res.mid_het, sum)
+total_true = aggregate(total_true ~  n_traits + method + L, res.mid_het, sum)
+cs_overlap = aggregate(overlap_cs ~  n_traits  + method + L, res.mid_het, sum)
+snp_overlap = aggregate(overlap_var ~  n_traits  + method + L, res.mid_het, sum)
+power = merge(total_true_included, total_true, by = c( &#39;n_traits&#39;, &#39;method&#39; , &#39;L&#39;))
+power = merge(power, cs_overlap,  by = c( &#39;n_traits&#39;, &#39;method&#39; , &#39;L&#39;))
+power = merge(power, snp_overlap,  by = c( &#39;n_traits&#39;, &#39;method&#39; , &#39;L&#39;))
+power$power = round(power$total_true_included/power$total_true,3)
+power$overlap_cs = round(power$overlap_cs, 3)
+power$overlap_var = round(power$overlap_var, 3)
+power = power[order(power$n_traits, power$L, power$method),]
+rownames(power) = NULL
+knitr::kable(power) %&gt;% kable_styling(full_width = F) %&gt;%
+  row_spec(c(1:6), background = &quot;wheat&quot;)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+n_traits
+</th>
+<th style="text-align:left;">
+method
+</th>
+<th style="text-align:right;">
+L
+</th>
+<th style="text-align:right;">
+total_true_included
+</th>
+<th style="text-align:right;">
+total_true
+</th>
+<th style="text-align:right;">
+overlap_cs
+</th>
+<th style="text-align:right;">
+overlap_var
+</th>
+<th style="text-align:right;">
+power
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_mid_het
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+1
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+292
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+513
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.569
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_mid_het
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+1
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+283
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+513
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.552
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_mid_het
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+2
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+415
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+513
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.809
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_mid_het
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+2
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+410
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+513
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.799
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_mid_het
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+10
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+443
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+513
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+3
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+33
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.864
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_mid_het
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+10
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+439
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+513
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+3
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+31
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.856
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_mid_het
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+297
+</td>
+<td style="text-align:right;">
+510
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.582
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_mid_het
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+289
+</td>
+<td style="text-align:right;">
+510
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.567
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_mid_het
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+424
+</td>
+<td style="text-align:right;">
+510
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.831
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_mid_het
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+418
+</td>
+<td style="text-align:right;">
+510
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.820
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_mid_het
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+454
+</td>
+<td style="text-align:right;">
+510
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+21
+</td>
+<td style="text-align:right;">
+0.890
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_mid_het
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+448
+</td>
+<td style="text-align:right;">
+510
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+42
+</td>
+<td style="text-align:right;">
+0.878
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="fdr-2" class="section level3">
+<h3>FDR</h3>
+<pre class="r"><code>valid = aggregate(valid ~ n_traits + method + L, res.mid_het, sum)
+total = aggregate(total ~ n_traits + method + L, res.mid_het, sum)
+fdr = merge(valid, total, by = c( &#39;n_traits&#39;, &#39;method&#39;, &#39;L&#39;))
+fdr$fdr = round((fdr$total - fdr$valid)/fdr$total,3)
+fdr = fdr[order(fdr$n_traits, fdr$L, fdr$method),]
+rownames(fdr) = NULL
+knitr::kable(fdr) %&gt;% kable_styling(full_width = F) %&gt;%
+  row_spec(c(1:6), background = &quot;wheat&quot;)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+n_traits
+</th>
+<th style="text-align:left;">
+method
+</th>
+<th style="text-align:right;">
+L
+</th>
+<th style="text-align:right;">
+valid
+</th>
+<th style="text-align:right;">
+total
+</th>
+<th style="text-align:right;">
+fdr
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_mid_het
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+1
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+285
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+298
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.044
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_mid_het
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+1
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+277
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+298
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.070
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_mid_het
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+2
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+406
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+427
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.049
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_mid_het
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+2
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+402
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+430
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.065
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_mid_het
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+10
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+437
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+459
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.048
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_mid_het
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+10
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+434
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+464
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.065
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_mid_het
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+290
+</td>
+<td style="text-align:right;">
+300
+</td>
+<td style="text-align:right;">
+0.033
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_mid_het
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+282
+</td>
+<td style="text-align:right;">
+300
+</td>
+<td style="text-align:right;">
+0.060
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_mid_het
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+417
+</td>
+<td style="text-align:right;">
+435
+</td>
+<td style="text-align:right;">
+0.041
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_mid_het
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+410
+</td>
+<td style="text-align:right;">
+436
+</td>
+<td style="text-align:right;">
+0.060
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_mid_het
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+452
+</td>
+<td style="text-align:right;">
+473
+</td>
+<td style="text-align:right;">
+0.044
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_mid_het
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+445
+</td>
+<td style="text-align:right;">
+478
+</td>
+<td style="text-align:right;">
+0.069
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="convergence-2" class="section level3">
+<h3>Convergence</h3>
+<pre class="r"><code>elbo_converged = aggregate(converged~n_traits + method + L, res.mid_het, mean)
+elbo_converged = elbo_converged[which(elbo_converged$L!=1),]
+elbo_converged = elbo_converged[order(elbo_converged$n_traits),]
+rownames(elbo_converged) = NULL
+knitr::kable(elbo_converged) %&gt;% kable_styling(full_width = F) %&gt;%
+  row_spec(c(1:4), background = &quot;wheat&quot;)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+n_traits
+</th>
+<th style="text-align:left;">
+method
+</th>
+<th style="text-align:right;">
+L
+</th>
+<th style="text-align:right;">
+converged
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_mid_het
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+2
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.9600000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_mid_het
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+2
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.9900000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_mid_het
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+10
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.6600000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_mid_het
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+10
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.6766667
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_mid_het
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.9400000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_mid_het
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.9933333
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_mid_het
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.6066667
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_mid_het
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.6633333
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="mixture" class="section level2">
+<h2>Mixture</h2>
+<div id="purity-3" class="section level3">
+<h3>Purity</h3>
+<pre class="r"><code>purity = aggregate(purity~n_traits + method + L, res.mix, mean)
+purity = purity[order(purity$n_traits, purity$L),]
+rownames(purity) = NULL
+knitr::kable(purity) %&gt;% kable_styling(full_width = F) %&gt;%
+  row_spec(c(1:6), background = &quot;wheat&quot;)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+n_traits
+</th>
+<th style="text-align:left;">
+method
+</th>
+<th style="text-align:right;">
+L
+</th>
+<th style="text-align:right;">
+purity
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_mixture01
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+1
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.9783740
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_mixture01
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+1
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.9750908
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_mixture01
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+2
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.9825720
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_mixture01
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+2
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.9846230
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_mixture01
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+10
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.9827268
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_mixture01
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+10
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.9846824
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_mixture01
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.9865030
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_mixture01
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+0.9877358
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_mixture01
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.9891677
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_mixture01
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.9908808
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_mixture01
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.9889556
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_mixture01
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.9907812
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="power-3" class="section level3">
+<h3>Power</h3>
+<pre class="r"><code>total_true_included = aggregate(total_true_included ~ n_traits + method + L, res.mix, sum)
+total_true = aggregate(total_true ~  n_traits + method + L, res.mix, sum)
+cs_overlap = aggregate(overlap_cs ~  n_traits  + method + L, res.mix, sum)
+snp_overlap = aggregate(overlap_var ~  n_traits  + method + L, res.mix, sum)
+power = merge(total_true_included, total_true, by = c( &#39;n_traits&#39;, &#39;method&#39; , &#39;L&#39;))
+power = merge(power, cs_overlap,  by = c( &#39;n_traits&#39;, &#39;method&#39; , &#39;L&#39;))
+power = merge(power, snp_overlap,  by = c( &#39;n_traits&#39;, &#39;method&#39; , &#39;L&#39;))
+power$power = round(power$total_true_included/power$total_true,3)
+power$overlap_cs = round(power$overlap_cs, 3)
+power$overlap_var = round(power$overlap_var, 3)
+power = power[order(power$n_traits, power$L, power$method),]
+rownames(power) = NULL
+knitr::kable(power) %&gt;% kable_styling(full_width = F) %&gt;%
+  row_spec(c(1:6), background = &quot;wheat&quot;)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+n_traits
+</th>
+<th style="text-align:left;">
+method
+</th>
+<th style="text-align:right;">
+L
+</th>
+<th style="text-align:right;">
+total_true_included
+</th>
+<th style="text-align:right;">
+total_true
+</th>
+<th style="text-align:right;">
+overlap_cs
+</th>
+<th style="text-align:right;">
+overlap_var
+</th>
+<th style="text-align:right;">
+power
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_mixture01
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+1
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+303
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+510
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.594
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_mixture01
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+1
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+294
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+510
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.576
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_mixture01
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+2
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+401
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+510
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.786
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_mixture01
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+2
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+392
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+510
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.769
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_mixture01
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+10
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+417
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+510
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+3
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+16
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.818
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_mixture01
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+10
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+407
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+510
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+4
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+20
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.798
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_mixture01
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+295
+</td>
+<td style="text-align:right;">
+511
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.577
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_mixture01
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+287
+</td>
+<td style="text-align:right;">
+511
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.562
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_mixture01
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+407
+</td>
+<td style="text-align:right;">
+511
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.796
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_mixture01
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+398
+</td>
+<td style="text-align:right;">
+511
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.779
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_mixture01
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+433
+</td>
+<td style="text-align:right;">
+511
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:right;">
+0.847
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_mixture01
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+424
+</td>
+<td style="text-align:right;">
+511
+</td>
+<td style="text-align:right;">
+4
+</td>
+<td style="text-align:right;">
+27
+</td>
+<td style="text-align:right;">
+0.830
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="fdr-3" class="section level3">
+<h3>FDR</h3>
+<pre class="r"><code>valid = aggregate(valid ~ n_traits + method + L, res.mix, sum)
+total = aggregate(total ~ n_traits + method + L, res.mix, sum)
+fdr = merge(valid, total, by = c( &#39;n_traits&#39;, &#39;method&#39;, &#39;L&#39;))
+fdr$fdr = round((fdr$total - fdr$valid)/fdr$total,3)
+fdr = fdr[order(fdr$n_traits, fdr$L, fdr$method),]
+rownames(fdr) = NULL
+knitr::kable(fdr) %&gt;% kable_styling(full_width = F) %&gt;%
+  row_spec(c(1:6), background = &quot;wheat&quot;)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+n_traits
+</th>
+<th style="text-align:left;">
+method
+</th>
+<th style="text-align:right;">
+L
+</th>
+<th style="text-align:right;">
+valid
+</th>
+<th style="text-align:right;">
+total
+</th>
+<th style="text-align:right;">
+fdr
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_mixture01
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+1
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+287
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+298
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.037
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_mixture01
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+1
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+280
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+297
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.057
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_mixture01
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+2
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+384
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+400
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.040
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_mixture01
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+2
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+378
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+401
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.057
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_mixture01
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+10
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+403
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+421
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.043
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_mixture01
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+10
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+397
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+424
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.064
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_mixture01
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+290
+</td>
+<td style="text-align:right;">
+299
+</td>
+<td style="text-align:right;">
+0.030
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_mixture01
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+282
+</td>
+<td style="text-align:right;">
+298
+</td>
+<td style="text-align:right;">
+0.054
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_mixture01
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+401
+</td>
+<td style="text-align:right;">
+416
+</td>
+<td style="text-align:right;">
+0.036
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_mixture01
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+392
+</td>
+<td style="text-align:right;">
+416
+</td>
+<td style="text-align:right;">
+0.058
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_mixture01
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+428
+</td>
+<td style="text-align:right;">
+447
+</td>
+<td style="text-align:right;">
+0.043
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_mixture01
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+421
+</td>
+<td style="text-align:right;">
+450
+</td>
+<td style="text-align:right;">
+0.064
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="convergence-3" class="section level3">
+<h3>Convergence</h3>
+<pre class="r"><code>elbo_converged = aggregate(converged~n_traits + method + L, res.mix, mean)
+elbo_converged = elbo_converged[which(elbo_converged$L!=1),]
+elbo_converged = elbo_converged[order(elbo_converged$n_traits),]
+rownames(elbo_converged) = NULL
+knitr::kable(elbo_converged) %&gt;% kable_styling(full_width = F) %&gt;%
+  row_spec(c(1:4), background = &quot;wheat&quot;)</code></pre>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+n_traits
+</th>
+<th style="text-align:left;">
+method
+</th>
+<th style="text-align:right;">
+L
+</th>
+<th style="text-align:right;">
+converged
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_mixture01
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+2
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.9700000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_mixture01
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+2
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.9866667
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_mixture01
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+10
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.7600000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;background-color: wheat !important;">
+5
+</td>
+<td style="text-align:left;background-color: wheat !important;">
+mnm_rss_mixture01
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+10
+</td>
+<td style="text-align:right;background-color: wheat !important;">
+0.7700000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_mixture01
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.9833333
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_mixture01
+</td>
+<td style="text-align:right;">
+2
+</td>
+<td style="text-align:right;">
+0.9700000
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_mixture01
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.7533333
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+mnm_rss_mixture01
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+0.7533333
+</td>
+</tr>
+</tbody>
+</table>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 3.5.1 (2018-07-02)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Scientific Linux 7.4 (Nitrogen)
+
+Matrix products: default
+BLAS/LAPACK: /software/openblas-0.2.19-el7-x86_64/lib/libopenblas_haswellp-r0.2.19.so
+
+locale:
+ [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+ [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+ [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+ [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+ [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+[11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] knitr_1.20       kableExtra_1.1.0 dplyr_0.8.0.1   
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.0.3        highr_0.7         pillar_1.4.3     
+ [4] compiler_3.5.1    later_0.7.5       git2r_0.26.1     
+ [7] workflowr_1.6.0   tools_3.5.1       digest_0.6.25    
+[10] viridisLite_0.3.0 evaluate_0.12     tibble_2.1.3     
+[13] lifecycle_0.1.0   pkgconfig_2.0.3   rlang_0.4.4      
+[16] rstudioapi_0.10   yaml_2.2.0        stringr_1.4.0    
+[19] httr_1.3.1        xml2_1.2.0        fs_1.3.1         
+[22] vctrs_0.2.3       hms_0.5.3         webshot_0.5.1    
+[25] rprojroot_1.3-2   tidyselect_0.2.5  glue_1.3.1       
+[28] R6_2.4.1          rmarkdown_1.10    purrr_0.3.2      
+[31] readr_1.3.1       magrittr_1.5      whisker_0.3-2    
+[34] backports_1.1.5   scales_1.1.0      promises_1.0.1   
+[37] htmltools_0.3.6   assertthat_0.2.1  rvest_0.3.2      
+[40] colorspace_1.4-1  httpuv_1.4.5      stringi_1.4.3    
+[43] munsell_0.5.0     crayon_1.3.4     </code></pre>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
