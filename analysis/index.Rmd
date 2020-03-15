@@ -14,4 +14,4 @@ This repository contains simulation results related to M&M RSS.
 
     [Residual variance problem](mmbr_rss_simulation_1_problem.html)
     
-    
+* [20200310 Second simulation with more signal settings](mmbr_rss_simulation_2.html)
