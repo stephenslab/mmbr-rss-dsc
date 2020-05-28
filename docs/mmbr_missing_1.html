@@ -509,16 +509,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctreee7465bb323d639abecf4223867232b7cc9ef7b15targetblanke7465bba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/e7465bb323d639abecf4223867232b7cc9ef7b15" target="_blank">e7465bb</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree673e520882e50428d3ac2a5a87dc8c3a0532a500targetblank673e520a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/673e520882e50428d3ac2a5a87dc8c3a0532a500" target="_blank">673e520</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctreee7465bb323d639abecf4223867232b7cc9ef7b15targetblanke7465bba" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree673e520882e50428d3ac2a5a87dc8c3a0532a500targetblank673e520a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/e7465bb323d639abecf4223867232b7cc9ef7b15" target="_blank">e7465bb</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/673e520882e50428d3ac2a5a87dc8c3a0532a500" target="_blank">673e520</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -528,7 +528,6 @@ Ignored files:
     Ignored:    .Rproj.user/
 
 Untracked files:
-    Untracked:  analysis/mmbr_rss_missing_1.Rmd
     Untracked:  code/investigate_missing.R
     Untracked:  data/tiny_data_3.rds
     Untracked:  data/tiny_data_3_artificial_mixture_missing_1.rds
@@ -578,6 +577,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/673e520882e50428d3ac2a5a87dc8c3a0532a500/analysis/mmbr_missing_1.Rmd" target="_blank">673e520</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-05-28
+</td>
+<td>
+wflow_publish(“analysis/mmbr_missing_1.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/34e3ec06db720e77a5eff5659b90538e80293175/docs/mmbr_missing_1.html" target="_blank">34e3ec0</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-05-28
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/e7465bb323d639abecf4223867232b7cc9ef7b15/analysis/mmbr_missing_1.Rmd" target="_blank">e7465bb</a>
 </td>
 <td>
@@ -597,7 +630,7 @@ wflow_publish(“analysis/mmbr_missing_1.Rmd”)
 </div>
 </div>
 </div>
-<p>This is result with missing values. There are 500 datasets, each with 300 SNPs. There are 6 conditions and we generate signals using artificial priors (<a href="https://gaow.github.io/mvarbvs/analysis/20200402_create_prior_mixture.html#With-6-conditions">details</a>). We fit with oracle prior and reisdual variance.</p>
+<p>This is result with missing values. There are 500 datasets, each with 300 SNPs. There are 6 conditions and we generate signals using artificial priors (<a href="https://gaow.github.io/mvarbvs/analysis/20200402_create_prior_mixture.html#With-6-conditions">details</a>). We fit with oracle prior and reisdual variance. We estiamte prior weights using ‘simple’ method (comparing with 0).</p>
 <pre class="r"><code>library(dplyr)
 library(kableExtra)
 library(knitr)
