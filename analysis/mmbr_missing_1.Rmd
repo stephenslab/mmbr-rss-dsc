@@ -1,0 +1,61 @@
+---
+title: "M&M missing data"
+author: "Yuxin Zou"
+date: "05/27/2020"
+output:
+  workflowr::wflow_html:
+    code_folding: hide
+---
+
+This is result with missing values. There are 500 datasets, each with 300 SNPs. There are 6 conditions and we generate signals using artificial priors ([details](https://gaow.github.io/mvarbvs/analysis/20200402_create_prior_mixture.html#With-6-conditions)). We fit with oracle prior and reisdual variance.
+
+```{r message=FALSE}
+library(dplyr)
+library(kableExtra)
+library(knitr)
+out = readRDS('output/mnm_missing_output.20200527.rds')
+```
+
+```{r}
+res = out[,-c(1:2)]
+colnames(res) = c('missingY', 'method', 'prior.scale', 'time', 'total', 'valid', 'size', 'purity', 'top_hit', 'total_true', 'total_true_included', 'overlap_var', 'overlap_cs', 'false_positive_cross_cond', 'false_negative_cross_cond', 'true_positive_cross_cond', 'converged', 'filename')
+mmbr.out = res %>% filter(method == 'mnm_oracle')
+rm(out)
+rm(res)
+```
+
+With missing in Y, only 92 data finished in the simulation. The average running time is around 11 hr!
+
+## Purity
+
+```{r}
+purity = aggregate(purity~missingY, mmbr.out, mean)
+purity
+```
+
+## Power
+
+```{r}
+total_true_included = aggregate(total_true_included ~ missingY, mmbr.out, sum)
+total_true = aggregate(total_true ~ missingY, mmbr.out, sum)
+cs_overlap = aggregate(overlap_cs ~ missingY, mmbr.out, sum)
+snp_overlap = aggregate(overlap_var ~ missingY, mmbr.out, sum)
+power = merge(total_true_included, total_true, by = c('missingY'))
+power = merge(power, cs_overlap,  by = c('missingY'))
+power = merge(power, snp_overlap,  by = c('missingY'))
+power$power = round(power$total_true_included/power$total_true,3)
+power$overlap_cs = round(power$overlap_cs, 3)
+power$overlap_var = round(power$overlap_var, 3)
+knitr::kable(power) %>% kable_styling(full_width = F)
+```
+
+## FDR
+
+```{r}
+valid = aggregate(valid ~ missingY, mmbr.out, sum)
+total = aggregate(total ~ missingY, mmbr.out, sum)
+fdr = merge(valid, total, by = c( 'missingY'))
+fdr$fdr = round((fdr$total - fdr$valid)/fdr$total,3)
+knitr::kable(fdr) %>% kable_styling(full_width = F)
+```
+
