@@ -7,7 +7,7 @@ output:
     code_folding: hide
 ---
 
-This is result with missing values. There are 500 datasets, each with 300 SNPs. There are 6 conditions and we generate signals using artificial priors ([details](https://gaow.github.io/mvarbvs/analysis/20200402_create_prior_mixture.html#With-6-conditions)). We fit with oracle prior and reisdual variance. We estiamte prior weights using 'simple' method (comparing with 0).
+This is result with missing values. There are 500 datasets, each with 300 SNPs. There are 6 conditions and we generate signals using artificial priors ([details](https://gaow.github.io/mvarbvs/analysis/20200402_create_prior_mixture.html#With-6-conditions)). We fit with oracle prior and residual variance. We estiamte prior weights using 'simple' method (comparing with 0).
 
 ```{r message=FALSE}
 library(dplyr)
