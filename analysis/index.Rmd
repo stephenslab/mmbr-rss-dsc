@@ -18,3 +18,8 @@ This repository contains simulation results related to M&M RSS.
 
     [RSS from missing data](mmbr_rss_missing_1.html)
 
+* [20200616 Second simulation with Missing](mmbr_missing_0616.html)
+
+    Results for Missing data with individual level data seems ok. The results from RSS need further investigation, the FDR is very high.
+    
+    
