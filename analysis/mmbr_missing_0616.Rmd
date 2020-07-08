@@ -1,0 +1,35 @@
+---
+title: "M&M missing data"
+author: "Yuxin Zou"
+date: "07/06/2020"
+output:
+  workflowr::wflow_html:
+    code_folding: hide
+---
+
+```{r warning=FALSE, message=FALSE}
+library(dplyr)
+library(kableExtra)
+```
+
+This is result with missing values. There are 300 datasets, each with 300 SNPs. There are 6 conditions and we generate signals using artificial priors (details). We fit with oracle prior and residual variance. We estimate prior weights using ‘simple’ method (comparing with 0).
+
+## Without missing
+
+### PIP calibration
+
+![](assets/mnm_missing_20200616_pip_calibration/mnm_missing_pip_cali_missingYFALSE_priorsimulated.png)
+
+### Power
+
+![](assets/mnm_missing_20200616_roc/mnm_missing_roc_missingYFALSE_priorsimulated.pr.png)
+
+## With missing
+
+### PIP calibration
+
+![](assets/mnm_missing_20200616_pip_calibration/mnm_missing_pip_cali_missingYTRUE_priorsimulated.png)
+
+### Power
+
+![](assets/mnm_missing_20200616_roc/mnm_missing_roc_missingYTRUE_priorsimulated.pr.png)
