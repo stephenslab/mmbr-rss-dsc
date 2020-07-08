@@ -443,10 +443,10 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree3784fc9b90aa45eed5f5232370805a9d53c3ccb7targetblank3784fc9a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/3784fc9b90aa45eed5f5232370805a9d53c3ccb7" target="_blank">3784fc9</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree0805f5b30cc9514245434516e958504e927e540etargetblank0805f5ba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/0805f5b30cc9514245434516e958504e927e540e" target="_blank">0805f5b</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree3784fc9b90aa45eed5f5232370805a9d53c3ccb7targetblank3784fc9a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree0805f5b30cc9514245434516e958504e927e540etargetblank0805f5ba" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility. The version displayed above was the version of the Git repository at the time these results were generated. <br><br> Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -498,6 +498,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/0805f5b30cc9514245434516e958504e927e540e/analysis/mmbr_missing_0616.Rmd" target="_blank">0805f5b</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-07-08
+</td>
+<td>
+wflow_publish(“analysis/mmbr_missing_0616.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/7908346dd5a31395d0644e4cc36cb629cdaed2e6/docs/mmbr_missing_0616.html" target="_blank">7908346</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-07-08
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/3784fc9b90aa45eed5f5232370805a9d53c3ccb7/analysis/mmbr_missing_0616.Rmd" target="_blank">3784fc9</a>
 </td>
 <td>
@@ -520,38 +554,55 @@ wflow_publish(“analysis/mmbr_missing_0616.Rmd”)
 <pre class="r"><code>library(dplyr)
 library(kableExtra)</code></pre>
 <p>This is result with missing values. There are 300 datasets, each with 300 SNPs. There are 6 conditions and we generate signals using artificial priors (details). We fit with oracle prior and residual variance. We estimate prior weights using ‘simple’ method (comparing with 0).</p>
-<div id="without-missing" class="section level2">
-<h2>Without missing</h2>
+<p>Overall: mvSuSiE with missing data has lower power than full data as we expected. RSS version has very high FDR, I need to further investigate what’s happening.</p>
+<div id="conditional-specific-pip" class="section level2">
+<h2>Conditional specific PIP</h2>
 <div id="pip-calibration" class="section level3">
 <h3>PIP calibration</h3>
+<div id="without-missing" class="section level4">
+<h4>Without missing</h4>
 <div class="figure">
 <img src="assets/mnm_missing_20200616_pip_calibration/mnm_missing_pip_cali_missingYFALSE_priorsimulated.png" />
 
 </div>
 </div>
-<div id="power" class="section level3">
-<h3>Power</h3>
-<div class="figure">
-<img src="assets/mnm_missing_20200616_roc/mnm_missing_roc_missingYFALSE_priorsimulated.pr.png" />
-
-</div>
-</div>
-</div>
-<div id="with-missing" class="section level2">
-<h2>With missing</h2>
-<div id="pip-calibration-1" class="section level3">
-<h3>PIP calibration</h3>
+<div id="with-missing" class="section level4">
+<h4>With missing</h4>
 <div class="figure">
 <img src="assets/mnm_missing_20200616_pip_calibration/mnm_missing_pip_cali_missingYTRUE_priorsimulated.png" />
 
 </div>
 </div>
-<div id="power-1" class="section level3">
+</div>
+<div id="power" class="section level3">
 <h3>Power</h3>
+<p>Left: without missing. Right: with missing</p>
+<p><img src="assets/mnm_missing_20200616_roc/mnm_missing_roc_missingYFALSE_priorsimulated.pr.png" style="width:40.0%" /> <img src="assets/mnm_missing_20200616_roc/mnm_missing_roc_missingYTRUE_priorsimulated.pr.png" style="width:40.0%" /></p>
+</div>
+</div>
+<div id="global-pip" class="section level2">
+<h2>Global PIP</h2>
+<div id="pip-calibration-1" class="section level3">
+<h3>PIP calibration</h3>
+<div id="without-missing-1" class="section level4">
+<h4>Without missing</h4>
 <div class="figure">
-<img src="assets/mnm_missing_20200616_roc/mnm_missing_roc_missingYTRUE_priorsimulated.pr.png" />
+<img src="assets/mnm_missing_20200616_pip_calibration/mnm_missing_pip_cali_global_missingYFALSE_priorsimulated.png" />
 
 </div>
+</div>
+<div id="with-missing-1" class="section level4">
+<h4>With missing</h4>
+<div class="figure">
+<img src="assets/mnm_missing_20200616_pip_calibration/mnm_missing_pip_cali_global_missingYTRUE_priorsimulated.png" />
+
+</div>
+</div>
+</div>
+<div id="power-1" class="section level3">
+<h3>Power</h3>
+<p>Left: without missing. Right: with missing</p>
+<p><img src="assets/mnm_missing_20200616_roc/mnm_missing_roc_global_missingYFALSE_priorsimulated.pr.png" style="width:40.0%" /> <img src="assets/mnm_missing_20200616_roc/mnm_missing_roc_global_missingYTRUE_priorsimulated.pr.png" style="width:40.0%" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
