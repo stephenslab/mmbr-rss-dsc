@@ -14,22 +14,40 @@ library(kableExtra)
 
 This is result with missing values. There are 300 datasets, each with 300 SNPs. There are 6 conditions and we generate signals using artificial priors (details). We fit with oracle prior and residual variance. We estimate prior weights using ‘simple’ method (comparing with 0).
 
-## Without missing
+Overall: mvSuSiE with missing data has lower power than full data as we expected. RSS version has very high FDR, I need to further investigate what's happening.
+
+## Conditional specific PIP
 
 ### PIP calibration
+
+#### Without missing
 
 ![](assets/mnm_missing_20200616_pip_calibration/mnm_missing_pip_cali_missingYFALSE_priorsimulated.png)
 
-### Power
-
-![](assets/mnm_missing_20200616_roc/mnm_missing_roc_missingYFALSE_priorsimulated.pr.png)
-
-## With missing
-
-### PIP calibration
+#### With missing
 
 ![](assets/mnm_missing_20200616_pip_calibration/mnm_missing_pip_cali_missingYTRUE_priorsimulated.png)
 
 ### Power
 
-![](assets/mnm_missing_20200616_roc/mnm_missing_roc_missingYTRUE_priorsimulated.pr.png)
+Left: without missing. Right: with missing
+
+![](assets/mnm_missing_20200616_roc/mnm_missing_roc_missingYFALSE_priorsimulated.pr.png){ width=40%} ![](assets/mnm_missing_20200616_roc/mnm_missing_roc_missingYTRUE_priorsimulated.pr.png){width=40%}
+
+## Global PIP
+
+### PIP calibration
+
+#### Without missing
+
+![](assets/mnm_missing_20200616_pip_calibration/mnm_missing_pip_cali_global_missingYFALSE_priorsimulated.png)
+
+#### With missing
+
+![](assets/mnm_missing_20200616_pip_calibration/mnm_missing_pip_cali_global_missingYTRUE_priorsimulated.png)
+
+### Power
+
+Left: without missing. Right: with missing
+
+![](assets/mnm_missing_20200616_roc/mnm_missing_roc_global_missingYFALSE_priorsimulated.pr.png){ width=40%} ![](assets/mnm_missing_20200616_roc/mnm_missing_roc_global_missingYTRUE_priorsimulated.pr.png){width=40%}
