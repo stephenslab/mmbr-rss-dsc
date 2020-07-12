@@ -1,0 +1,141 @@
+---
+title: "RSS problem data 2"
+author: "Yuxin Zou"
+date: "7/11/2020"
+output:
+  workflowr::wflow_html:
+    code_folding: hide
+---
+
+There are 4 causals in this dataset.
+
+```{r}
+library(mmbr)
+X = readRDS('data/tiny_data_4.rds')
+simu = readRDS('data/tiny_data_4_artificial_mixture_small_missing_2.rds')
+b = simu$meta$true_coef
+Z = simu$sumstats$bhat/simu$sumstats$sbhat
+r = X$ld
+prior = simu$meta$prior[["oracle"]]
+resid_Z <- simu$meta$residual_variance
+xUlist = prior$xUlist
+m_init = mmbr::create_mash_prior(mixture_prior = list(matrices=xUlist, weights=prior$pi), null_weight=prior$null_weight, max_mixture_len=-1)
+```
+
+The total PVE for each condition is
+```{r}
+0.15 * apply(b, 2, function(x) length(which(x!=0)))
+```
+
+The true effects are at `r which(rowSums(b!=0) !=0)`.
+```{r}
+b[which(rowSums(b!=0) !=0),]
+```
+
+The Z scores at causal are
+```{r}
+Z[which(rowSums(b!=0) !=0),]
+```
+
+The model with individual level is
+```{r}
+m_init = mmbr::create_mash_prior(mixture_prior = list(matrices=xUlist, weights=prior$pi), null_weight=prior$null_weight, max_mixture_len=-1)
+result0 = mmbr::msusie(X$X, simu$Y, L = 10, 
+                       prior_variance=m_init, residual_variance=resid_Z, 
+                       compute_objective=T, estimate_residual_variance=F,
+                       estimate_prior_variance=T, estimate_prior_method='EM', 
+                       precompute_covariances=T, n_thread=1, max_iter=1000)
+susie_plot(result0,y='PIP',b=b)
+```
+
+The model using summary data is
+```{r}
+result = mmbr::msusie_rss(Z, r, L=10, 
+                          prior_variance=m_init, residual_variance=resid_Z, 
+                          compute_objective=TRUE, estimate_residual_variance=F, 
+                          estimate_prior_variance=T, estimate_prior_method='EM', 
+                          precompute_covariances=T, n_thread=1, max_iter=1000, track_fit = T)
+susie_plot(result,y='PIP',b=b)
+```
+There is only one CS containing causal, the rest 8 CSs are all false discoveries.
+
+Change residual variance to residual correlation matrix (encourage conservative),
+```{r}
+result.cor = mmbr::msusie_rss(Z, r, L=10, 
+                          prior_variance=m_init, residual_variance=cov2cor(resid_Z), 
+                          compute_objective=TRUE, estimate_residual_variance=F, 
+                          estimate_prior_variance=T, estimate_prior_method='EM', 
+                          precompute_covariances=T, n_thread=1, max_iter=1000, track_fit = T)
+susie_plot(result.cor,y='PIP',b=b)
+```
+The elbo becomes higher (`r susie_get_objective(result.cor)` vs `r susie_get_objective(result)`).
+
+Try initialize at truth:
+```{r}
+init_true = list()
+init_true$b1 = array(0, dim = c(4,301,6))
+init_true$b1[1,8,] = (b[8,]/sqrt(diag(resid_Z))) * sqrt(837)
+init_true$b1[2,147,] = (b[147,]/sqrt(diag(resid_Z))) * sqrt(837)
+init_true$b1[3,166,] = (b[166,]/sqrt(diag(resid_Z))) * sqrt(837)
+init_true$b1[4,217,] = (b[217,]/sqrt(diag(resid_Z))) * sqrt(837)
+init_true$alpha = matrix(0, 4, 301)
+init_true$alpha[1,8] = 1
+init_true$alpha[2,147] = 1
+init_true$alpha[3,166] = 1
+init_true$alpha[4,217] = 1
+xUlist.true = lapply(prior$xUlist, function(U) U * nrow(X$X))
+m.init.true = mmbr::create_mash_prior(mixture_prior = list(matrices=xUlist.true, weights=prior$pi), null_weight=prior$null_weight, max_mixture_len=-1)
+result.init.true = msusie_rss(Z, r, L=4, s_init = init_true,
+                              prior_variance=m.init.true, residual_variance=cov2cor(resid_Z), 
+                              compute_objective=TRUE, estimate_residual_variance=F, 
+                              estimate_prior_variance=F, estimate_prior_method='EM', 
+                              precompute_covariances=T, n_thread=1, max_iter=1000,track_fit=T)
+susie_plot(result.init.true, y='PIP',b=b)
+```
+
+The correlation between SNP 73 and causal signals are
+```{r}
+r[73, which(rowSums(b!=0)!=0)]
+```
+
+L = 1:
+```{r}
+result.1 = mmbr::msusie_rss(Z, r, L=1, 
+                            prior_variance=m_init, residual_variance=resid_Z, 
+                            compute_objective=TRUE, estimate_residual_variance=F, 
+                            estimate_prior_variance=T, estimate_prior_method='EM', 
+                            precompute_covariances=T, n_thread=1, max_iter=1000, track_fit = T)
+susie_plot(result.1,y='PIP',b=b)
+```
+
+L = 2:
+```{r}
+result.2 = mmbr::msusie_rss(Z, r, L=2, 
+                            prior_variance=m_init, residual_variance=resid_Z, 
+                            compute_objective=TRUE, estimate_residual_variance=F, 
+                            estimate_prior_variance=T, estimate_prior_method='EM', 
+                            precompute_covariances=T, n_thread=1, max_iter=1000, track_fit = T)
+susie_plot(result.2,y='PIP',b=b)
+```
+
+L = 3:
+```{r}
+result.3 = mmbr::msusie_rss(Z, r, L=3, 
+                            prior_variance=m_init, residual_variance=resid_Z, 
+                            compute_objective=TRUE, estimate_residual_variance=F, 
+                            estimate_prior_variance=T, estimate_prior_method='EM', 
+                            precompute_covariances=T, n_thread=1, max_iter=1000, track_fit = T)
+susie_plot(result.3,y='PIP',b=b)
+```
+SNP 73 appears...
+
+L = 4:
+```{r}
+result.4 = mmbr::msusie_rss(Z, r, L=4, 
+                            prior_variance=m_init, residual_variance=resid_Z, 
+                            compute_objective=TRUE, estimate_residual_variance=F, 
+                            estimate_prior_variance=T, estimate_prior_method='EM', 
+                            precompute_covariances=T, n_thread=1, max_iter=1000, track_fit = T)
+susie_plot(result.4,y='PIP',b=b)
+```
+
