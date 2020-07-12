@@ -24,6 +24,7 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 
@@ -257,6 +258,9 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
 
 
@@ -374,6 +378,14 @@ div.tocify {
 </div><!--/.navbar -->
 
 <div class="fluid-row" id="header">
+
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
 
 
 
@@ -495,16 +507,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree207e289eeba134472f72513b69fd9d8f78b1d3datargetblank207e289a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/207e289eeba134472f72513b69fd9d8f78b1d3da" target="_blank">207e289</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree1d5fb892e7150189cd59772fa761cc4361257969targetblank1d5fb89a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/1d5fb892e7150189cd59772fa761cc4361257969" target="_blank">1d5fb89</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree207e289eeba134472f72513b69fd9d8f78b1d3datargetblank207e289a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree1d5fb892e7150189cd59772fa761cc4361257969targetblank1d5fb89a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/207e289eeba134472f72513b69fd9d8f78b1d3da" target="_blank">207e289</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/1d5fb892e7150189cd59772fa761cc4361257969" target="_blank">1d5fb89</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -555,6 +567,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/1d5fb892e7150189cd59772fa761cc4361257969/analysis/mmbr_missing_rss_problem1.Rmd" target="_blank">1d5fb89</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-07-12
+</td>
+<td>
+wflow_publish(“analysis/mmbr_missing_rss_problem1.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/bf86c050600471d4f2df558693fb4be922d6a6d0/docs/mmbr_missing_rss_problem1.html" target="_blank">bf86c05</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-07-12
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -622,6 +668,43 @@ result0 = mmbr::msusie(X$X, simu$Y, L = 10,
                        precompute_covariances=T, n_thread=1, max_iter=1000)
 susie_plot(result0,y=&#39;PIP&#39;,b=b)</code></pre>
 <p><img src="figure/mmbr_missing_rss_problem1.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
+Past versions of unnamed-chunk-5-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/bf86c050600471d4f2df558693fb4be922d6a6d0/docs/figure/mmbr_missing_rss_problem1.Rmd/unnamed-chunk-5-1.png" target="_blank">bf86c05</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-07-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>The model using summary data is</p>
 <pre class="r"><code>result = mmbr::msusie_rss(Z, r, L=10, 
                           prior_variance=m_init, residual_variance=resid_Z, 
@@ -629,7 +712,45 @@ susie_plot(result0,y=&#39;PIP&#39;,b=b)</code></pre>
                           estimate_prior_variance=T, estimate_prior_method=&#39;EM&#39;, 
                           precompute_covariances=T, n_thread=1, max_iter=1000, track_fit = T)
 susie_plot(result,y=&#39;PIP&#39;,b=b)</code></pre>
-<p><img src="figure/mmbr_missing_rss_problem1.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /> There is only one CS containing causal, the rest 8 CSs are all false discoveries.</p>
+<p><img src="figure/mmbr_missing_rss_problem1.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
+Past versions of unnamed-chunk-6-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-6-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/bf86c050600471d4f2df558693fb4be922d6a6d0/docs/figure/mmbr_missing_rss_problem1.Rmd/unnamed-chunk-6-1.png" target="_blank">bf86c05</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-07-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>There is only one CS containing causal, the rest 8 CSs are all false discoveries.</p>
 <p>Change residual variance to residual correlation matrix (encourage conservative),</p>
 <pre class="r"><code>result.cor = mmbr::msusie_rss(Z, r, L=10, 
                           prior_variance=m_init, residual_variance=cov2cor(resid_Z), 
@@ -637,7 +758,45 @@ susie_plot(result,y=&#39;PIP&#39;,b=b)</code></pre>
                           estimate_prior_variance=T, estimate_prior_method=&#39;EM&#39;, 
                           precompute_covariances=T, n_thread=1, max_iter=1000, track_fit = T)
 susie_plot(result.cor,y=&#39;PIP&#39;,b=b)</code></pre>
-<p><img src="figure/mmbr_missing_rss_problem1.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /> None if CS contain signal, but the elbo is higher (-1.437544810^{4} vs -2.55880110^{4}).</p>
+<p><img src="figure/mmbr_missing_rss_problem1.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-1">
+Past versions of unnamed-chunk-7-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-7-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/bf86c050600471d4f2df558693fb4be922d6a6d0/docs/figure/mmbr_missing_rss_problem1.Rmd/unnamed-chunk-7-1.png" target="_blank">bf86c05</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-07-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>None if CS contain signal, but the elbo is higher (-1.437544810^{4} vs -2.55880110^{4}).</p>
 <p>Try initialize at truth:</p>
 <pre class="r"><code>init_true = list()
 init_true$b1 = array(0, dim = c(3,301,6))
@@ -655,6 +814,43 @@ result.init.true = msusie_rss(Z, r, L=3, s_init = init_true,
                               precompute_covariances=T, n_thread=1, max_iter=1000,track_fit=T)
 susie_plot(result.init.true, y=&#39;PIP&#39;,b=b)</code></pre>
 <p><img src="figure/mmbr_missing_rss_problem1.Rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-1">
+Past versions of unnamed-chunk-8-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-8-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/bf86c050600471d4f2df558693fb4be922d6a6d0/docs/figure/mmbr_missing_rss_problem1.Rmd/unnamed-chunk-8-1.png" target="_blank">bf86c05</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-07-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>L = 1:</p>
 <pre class="r"><code>result.1 = mmbr::msusie_rss(Z, r, L=1, 
                             prior_variance=m_init, residual_variance=resid_Z, 
@@ -662,7 +858,45 @@ susie_plot(result.init.true, y=&#39;PIP&#39;,b=b)</code></pre>
                             estimate_prior_variance=T, estimate_prior_method=&#39;EM&#39;, 
                             precompute_covariances=T, n_thread=1, max_iter=1000, track_fit = T)
 susie_plot(result.1,y=&#39;PIP&#39;,b=b)</code></pre>
-<p><img src="figure/mmbr_missing_rss_problem1.Rmd/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /> The correlation between SNP 30 and causal 236 is 0.8596009.</p>
+<p><img src="figure/mmbr_missing_rss_problem1.Rmd/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-9-1">
+Past versions of unnamed-chunk-9-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-9-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/bf86c050600471d4f2df558693fb4be922d6a6d0/docs/figure/mmbr_missing_rss_problem1.Rmd/unnamed-chunk-9-1.png" target="_blank">bf86c05</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-07-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>The correlation between SNP 30 and causal 236 is 0.8596009.</p>
 <p>L = 2:</p>
 <pre class="r"><code>result.2 = mmbr::msusie_rss(Z, r, L=2, 
                             prior_variance=m_init, residual_variance=resid_Z, 
@@ -671,6 +905,43 @@ susie_plot(result.1,y=&#39;PIP&#39;,b=b)</code></pre>
                             precompute_covariances=T, n_thread=1, max_iter=1000, track_fit = T)
 susie_plot(result.2,y=&#39;PIP&#39;,b=b)</code></pre>
 <p><img src="figure/mmbr_missing_rss_problem1.Rmd/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-10-1">
+Past versions of unnamed-chunk-10-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-10-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/bf86c050600471d4f2df558693fb4be922d6a6d0/docs/figure/mmbr_missing_rss_problem1.Rmd/unnamed-chunk-10-1.png" target="_blank">bf86c05</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-07-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>L = 3:</p>
 <pre class="r"><code>result.3 = mmbr::msusie_rss(Z, r, L=3, 
                             prior_variance=m_init, residual_variance=resid_Z, 
@@ -679,6 +950,43 @@ susie_plot(result.2,y=&#39;PIP&#39;,b=b)</code></pre>
                             precompute_covariances=T, n_thread=1, max_iter=1000, track_fit = T)
 susie_plot(result.3,y=&#39;PIP&#39;,b=b)</code></pre>
 <p><img src="figure/mmbr_missing_rss_problem1.Rmd/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-11-1">
+Past versions of unnamed-chunk-11-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-11-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/bf86c050600471d4f2df558693fb4be922d6a6d0/docs/figure/mmbr_missing_rss_problem1.Rmd/unnamed-chunk-11-1.png" target="_blank">bf86c05</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-07-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>result.3$sets</code></pre>
 <pre><code>$cs
 $cs$L1
@@ -716,6 +1024,43 @@ $coverage
                             precompute_covariances=T, n_thread=1, max_iter=1000, track_fit = T)
 susie_plot(result.4,y=&#39;PIP&#39;,b=b)</code></pre>
 <p><img src="figure/mmbr_missing_rss_problem1.Rmd/unnamed-chunk-14-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-14-1">
+Past versions of unnamed-chunk-14-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-14-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/bf86c050600471d4f2df558693fb4be922d6a6d0/docs/figure/mmbr_missing_rss_problem1.Rmd/unnamed-chunk-14-1.png" target="_blank">bf86c05</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-07-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -803,6 +1148,11 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
 
 <script>
 $(document).ready(function ()  {
