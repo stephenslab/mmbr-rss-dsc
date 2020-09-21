@@ -7,7 +7,7 @@ output:
     code_folding: hide
 ---
 
-This is result from our M&M RSS simulation. There are 300 datasets, each with 1000 SNPs. 
+This is result from our M&M RSS simulation. There are 300 datasets, each with 1000 SNPs. Per signal PVE is 0.05.
 
 For each dataset, we simulate signals using 2 type of priors:
 
