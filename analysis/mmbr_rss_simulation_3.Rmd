@@ -1,0 +1,59 @@
+---
+title: "M&M RSS"
+author: "Yuxin Zou"
+date: "07/21/2020"
+output:
+  workflowr::wflow_html:
+    code_folding: hide
+---
+
+This is result from our M&M RSS simulation. There are 300 datasets, each with 1000 SNPs. 
+
+For each dataset, we simulate signals using 2 type of priors:
+
+1. Artificial mixture: 50 conditions.
+
+   The detail about prior is [here](https://gaow.github.io/mvarbvs/analysis/20200402_create_prior_mixture.html#With-6-conditions).
+   
+   The oracle residual variance is a diagonal matrix.
+   
+2. GTEx mixture: 50 conditions.
+
+   The detail about prior is [here](https://gaow.github.io/mvarbvs/analysis/20200402_create_prior_mixture.html#Mixture-from-GTEx).
+
+   The oracle residual variance is a dense matrix.
+   
+We estimate prior weights using ‘EM’ method.
+
+Overall: Ignoring correlation between conditions in residual matrix results in poor fit.
+
+## PIP calibration
+
+Artificial Mixture
+
+![](assets/mnm_rss_20200721_pip_calibration/mnm_rss_pip_cali_simuartificial_mixture_priorsimulated.png)
+
+GTEx Mixture
+
+![](assets/mnm_rss_20200721_pip_calibration/mnm_rss_pip_cali_simugtex_mixture_priorsimulated.png)
+
+## Power
+
+Artificial Mixture
+
+![](assets/mnm_rss_20200721_roc/mnm_rss_roc_simuartificial_mixture_priorsimulated.pr.png)
+
+GTEx Mixture
+
+![](assets/mnm_rss_20200721_roc/mnm_rss_roc_simugtex_mixture_priorsimulated.pr.png)
+
+## CS
+
+Artificial Mixture
+
+![](assets/mnm_rss_20200721_cs/mnm_rss_cs_simuartificial_mixture_priorsimulated_plots.png)
+
+GTEx Mixture
+
+![](assets/mnm_rss_20200721_cs/mnm_rss_cs_simugtex_mixture_priorsimulated_plots.png)
+
