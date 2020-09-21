@@ -23,3 +23,5 @@ This repository contains simulation results related to M&M RSS.
     Results for Missing data with individual level data seems ok. The results from RSS need further investigation, the FDR is very high.
     
     RSS problem example: [Eg1](mmbr_missing_rss_problem1.html), [Eg2](mmbr_missing_rss_problem2.html)
+
+* [20200721 Second simulation for RSS using GTEx](mmbr_rss_simulation_3.html)
