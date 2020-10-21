@@ -193,3 +193,38 @@ Model 1 and 3 gives same Credible Sets.
 | model 4 | `r res4$result_time['elapsed']` | `r res4$result$walltime['elapsed']` | `r res1$result$niter` |
 
 
+```{r, eval=FALSE}
+univariate_res = lapply(1:ncol(Y), function(i) susieR:::univariate_regression(X,Y[,i]))
+res1$result$bhat = do.call(cbind, lapply(1:ncol(Y), function(i) univariate_res[[i]]$betahat))
+res1$result$shat = do.call(cbind, lapply(1:ncol(Y), function(i) univariate_res[[i]]$sebetahat))
+rownames(res1$result$bhat) = 1:501
+p = mmbr::mmbr_plot(res1$result, original_sumstat = TRUE)
+pdf('output/GTExprofile_univ.pdf', width = 60, height = 15)
+print(p$plot)
+dev.off()
+```
+[Univariate Effects](../output/GTExprofile_univ.pdf)
+
+```{r, eval=FALSE}
+p = mmbr::mmbr_plot(res1$result)
+pdf('output/GTExprofile_res.pdf', width = 60, height = 15)
+print(p$plot)
+dev.off()
+```
+[Model 1 Effects](../output/GTExprofile_res.pdf)
+
+```{r, eval=FALSE}
+p = mmbr::mmbr_plot(res3$result)
+pdf('output/GTExprofile_resapprox.pdf', width = 60, height = 15)
+print(p$plot)
+dev.off()
+```
+[Model 3 Effects](../output/GTExprofile_resapprox.pdf)
+
+```{r}
+p = mmbr::mmbr_plot(res4$result)
+pdf('output/GTExprofile_resapproxdiag.pdf', width = 5, height = 15)
+print(p$plot)
+dev.off()
+```
+[Model 4 result](../output/GTExprofile_resapproxdiag.pdf)
