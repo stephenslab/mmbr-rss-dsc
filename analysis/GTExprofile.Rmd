@@ -203,7 +203,7 @@ pdf('output/GTExprofile_univ.pdf', width = 60, height = 15)
 print(p$plot)
 dev.off()
 ```
-[Univariate Effects](../output/GTExprofile_univ.pdf)
+[Univariate Effects](output/GTExprofile_univ.pdf)
 
 ```{r, eval=FALSE}
 p = mmbr::mmbr_plot(res1$result)
@@ -211,7 +211,7 @@ pdf('output/GTExprofile_res.pdf', width = 60, height = 15)
 print(p$plot)
 dev.off()
 ```
-[Model 1 Effects](../output/GTExprofile_res.pdf)
+[Model 1 Effects](output/GTExprofile_res.pdf)
 
 ```{r, eval=FALSE}
 p = mmbr::mmbr_plot(res3$result)
@@ -219,7 +219,7 @@ pdf('output/GTExprofile_resapprox.pdf', width = 60, height = 15)
 print(p$plot)
 dev.off()
 ```
-[Model 3 Effects](../output/GTExprofile_resapprox.pdf)
+[Model 3 Effects](output/GTExprofile_resapprox.pdf)
 
 ```{r}
 p = mmbr::mmbr_plot(res4$result)
@@ -227,4 +227,4 @@ pdf('output/GTExprofile_resapproxdiag.pdf', width = 5, height = 15)
 print(p$plot)
 dev.off()
 ```
-[Model 4 result](../output/GTExprofile_resapproxdiag.pdf)
+[Model 4 result](output/GTExprofile_resapproxdiag.pdf)
