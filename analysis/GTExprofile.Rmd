@@ -100,9 +100,13 @@ Y = dat$y_res
 ```
 
 We fit 4 models:
+
 1. model with exact computation
+
 2. model with exact computation using diagonal residual variance
+
 3. model with approximate computation
+
 4. model with approximate computation using diagonal residual variance
 
 We expect model 2 and 4 have same results.
