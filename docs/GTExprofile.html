@@ -508,16 +508,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctreeedc73ea1d5b0e94f0822858528e244076d72e659targetblankedc73eaa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/edc73ea1d5b0e94f0822858528e244076d72e659" target="_blank">edc73ea</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree92878b8aefb60db6c4fa387eda1d13d7888e7f73targetblank92878b8a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/92878b8aefb60db6c4fa387eda1d13d7888e7f73" target="_blank">92878b8</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctreeedc73ea1d5b0e94f0822858528e244076d72e659targetblankedc73eaa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree92878b8aefb60db6c4fa387eda1d13d7888e7f73targetblank92878b8a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/edc73ea1d5b0e94f0822858528e244076d72e659" target="_blank">edc73ea</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/92878b8aefb60db6c4fa387eda1d13d7888e7f73" target="_blank">92878b8</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -593,6 +593,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/92878b8aefb60db6c4fa387eda1d13d7888e7f73/analysis/GTExprofile.Rmd" target="_blank">92878b8</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-10-22
+</td>
+<td>
+wflow_publish(“analysis/GTExprofile.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/6bd95e382addcb54cbb23d01b819a524b9ab5708/docs/GTExprofile.html" target="_blank">6bd95e3</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-10-22
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -923,7 +957,7 @@ wflow_publish(“analysis/GTExprofile.Rmd”)
 </div>
 </div>
 </div>
-<p>Here is one gene that identified in MASH paper that seems to have different direction of effects in brain vs non-brain tissues.</p>
+<p>Here is one gene identified in MASH paper that have different signs for brain vs non brain tissues.</p>
 <pre class="r"><code># processing code
 compute_maf &lt;- function(geno){
   f &lt;- mean(geno,na.rm = TRUE)/2
