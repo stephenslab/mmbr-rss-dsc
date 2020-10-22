@@ -198,8 +198,8 @@ univariate_res = lapply(1:ncol(Y), function(i) susieR:::univariate_regression(X,
 res1$result$bhat = do.call(cbind, lapply(1:ncol(Y), function(i) univariate_res[[i]]$betahat))
 res1$result$shat = do.call(cbind, lapply(1:ncol(Y), function(i) univariate_res[[i]]$sebetahat))
 rownames(res1$result$bhat) = 1:501
-p = mmbr::mmbr_plot(res1$result, original_sumstat = TRUE)
-pdf('docs/assets/GRExProfile/GTExprofile_univ.pdf', width = 60, height = 15)
+p = mmbr::mmbr_plot(res1$result, original_sumstat = TRUE, cs_only = FALSE)
+pdf('docs/assets/GRExProfile/GTExprofile_univ.pdf', width = 100, height = 15)
 print(p$plot)
 dev.off()
 ```
