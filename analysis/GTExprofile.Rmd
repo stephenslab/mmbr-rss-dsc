@@ -221,7 +221,7 @@ dev.off()
 ```
 [Model 3 Effects](output/GTExprofile_resapprox.pdf)
 
-```{r}
+```{r, eval=FALSE}
 p = mmbr::mmbr_plot(res4$result)
 pdf('output/GTExprofile_resapproxdiag.pdf', width = 5, height = 15)
 print(p$plot)
