@@ -417,7 +417,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-10-21
+<strong>Last updated:</strong> 2020-10-22
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -508,16 +508,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree720a822eae7fb7b0cf9cbc44fd968a0e573c713ftargetblank720a822a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/720a822eae7fb7b0cf9cbc44fd968a0e573c713f" target="_blank">720a822</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree6bc17730b9f7fdfce8c088357a8052a94b54e99dtargetblank6bc1773a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/6bc17730b9f7fdfce8c088357a8052a94b54e99d" target="_blank">6bc1773</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree720a822eae7fb7b0cf9cbc44fd968a0e573c713ftargetblank720a822a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree6bc17730b9f7fdfce8c088357a8052a94b54e99dtargetblank6bc1773a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/720a822eae7fb7b0cf9cbc44fd968a0e573c713f" target="_blank">720a822</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/6bc17730b9f7fdfce8c088357a8052a94b54e99d" target="_blank">6bc1773</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -534,8 +534,11 @@ Untracked files:
     Untracked:  data/FastQTLSumStats.mash.FL_PC3.rds
     Untracked:  output/GTExProfile.zip
     Untracked:  output/GTExprofile_res.rds
+    Untracked:  output/GTExprofile_resL3.rds
     Untracked:  output/GTExprofile_resapprox.rds
+    Untracked:  output/GTExprofile_resapproxL3.rds
     Untracked:  output/GTExprofile_resapproxdiag.rds
+    Untracked:  output/GTExprofile_resapproxdiagL3.rds
     Untracked:  output/GTExprofile_resdiag.rds
     Untracked:  output/mmbr_gtex_res.Rprof
     Untracked:  output/mmbr_gtex_res_approx.Rprof
@@ -590,6 +593,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/6bc17730b9f7fdfce8c088357a8052a94b54e99d/analysis/GTExprofile.Rmd" target="_blank">6bc1773</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-10-22
+</td>
+<td>
+wflow_publish(“analysis/GTExprofile.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/59e84148966381b6dcaa0f3298bcacec9fa27124/docs/GTExprofile.html" target="_blank">59e8414</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-10-21
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -968,7 +1005,7 @@ rm(prof2)
 
 prof3 = profvis({
   stime &lt;- proc.time()
-  res_approx &lt;- mmbr::msusie(X, Y, prior_variance=prior, residual_variance=resid_Y, approximate=TRUE)
+  res_approx &lt;- mmbr::msusie(X, Y, prior_variance=prior, residual_variance=resid_Y, approximate=TRUE,, L=3)
   etime &lt;- proc.time()
   time_res_approx &lt;- etime - stime
   },prof_output=&#39;output/mmbr_gtex_res_approx.Rprof&#39;)
@@ -978,7 +1015,7 @@ rm(prof3)
 
 prof4 = profvis({
   stime &lt;- proc.time()
-  res_approx_diag &lt;- mmbr::msusie(X, Y, prior_variance=prior, residual_variance=diag(diag(resid_Y)), approximate=TRUE)
+  res_approx_diag &lt;- mmbr::msusie(X, Y, prior_variance=prior, residual_variance=diag(diag(resid_Y)), approximate=TRUE, L=3)
   etime &lt;- proc.time()
   time_res_approx_diag &lt;- etime - stime
   },prof_output=&#39;output/mmbr_gtex_res_approx_diag.Rprof&#39;)
@@ -1179,6 +1216,69 @@ pdf(&#39;docs/assets/GRExProfile/GTExprofile_resapproxdiag.pdf&#39;, width = 5, 
 print(p$plot)
 dev.off()</code></pre>
 <p><a href="assets/GRExProfile/GTExprofile_resapproxdiag.pdf">Model 4 result</a></p>
+<p>Models with L = 3:</p>
+<pre class="r"><code>stime &lt;- proc.time()
+res &lt;- mmbr::msusie(X, Y, prior_variance=prior, residual_variance=resid_Y, approximate=FALSE, L=3)
+etime &lt;- proc.time()
+time_res &lt;- etime - stime
+saveRDS(list(result = res, result_time = time_res), &#39;output/GTExprofile_resL3.rds&#39;)
+
+stime &lt;- proc.time()
+res_approx &lt;- mmbr::msusie(X, Y, prior_variance=prior, residual_variance=resid_Y, approximate=TRUE, L=3)
+etime &lt;- proc.time()
+time_res_approx &lt;- etime - stime
+saveRDS(list(result = res_approx, result_time = time_res_approx), &#39;output/GTExprofile_resapproxL3.rds&#39;)
+
+stime &lt;- proc.time()
+res_approx_diag &lt;- mmbr::msusie(X, Y, prior_variance=prior, residual_variance=diag(diag(resid_Y)), approximate=TRUE, L=3)
+etime &lt;- proc.time()
+time_res_approx_diag &lt;- etime - stime
+saveRDS(list(result = res_approx_diag, result_time = time_res_approx_diag), &#39;output/GTExprofile_resapproxdiagL3.rds&#39;)</code></pre>
+<pre class="r"><code>res1_L3 = readRDS(&#39;output/GTExprofile_resL3.rds&#39;)
+res3_L3 = readRDS(&#39;output/GTExprofile_resapproxL3.rds&#39;)
+res4_L3 = readRDS(&#39;output/GTExprofile_resapproxdiagL3.rds&#39;)</code></pre>
+<p>Model 1 credible sets:</p>
+<pre class="r"><code>susie_plot(res1_L3$result, y=&#39;PIP&#39;)</code></pre>
+<p><img src="figure/GTExprofile.Rmd/unnamed-chunk-15-1.png" width="672" style="display: block; margin: auto;" /> Model 3 credible sets:</p>
+<pre class="r"><code>susie_plot(res3_L3$result, y=&#39;PIP&#39;)</code></pre>
+<p><img src="figure/GTExprofile.Rmd/unnamed-chunk-16-1.png" width="672" style="display: block; margin: auto;" /> Model 4 credible sets:</p>
+<pre class="r"><code>susie_plot(res4_L3$result, y=&#39;PIP&#39;)</code></pre>
+<p><img src="figure/GTExprofile.Rmd/unnamed-chunk-17-1.png" width="672" style="display: block; margin: auto;" /></p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>Total Time</th>
+<th>Algorithm Time</th>
+<th># iterations</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>model 1</td>
+<td>5793.07</td>
+<td>5558.434</td>
+<td>10</td>
+</tr>
+<tr class="even">
+<td>model 3</td>
+<td>484.594</td>
+<td>447.362</td>
+<td>10</td>
+</tr>
+<tr class="odd">
+<td>model 4</td>
+<td>1232.319</td>
+<td>1196.183</td>
+<td>10</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>p = mmbr::mmbr_plot(res1_L3$result)
+pdf(&#39;docs/assets/GRExProfile/GTExprofile_resL3.pdf&#39;, width = 17, height = 15)
+print(p$plot)
+dev.off()</code></pre>
+<p><a href="assets/GRExProfile/GTExprofile_resL3.pdf">Model 1 L3 Effects</a></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
