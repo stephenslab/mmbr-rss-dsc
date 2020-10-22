@@ -508,16 +508,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree5991fb8678d10c44b133e1e50737d6a6c1bb1e7ctargetblank5991fb8a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/5991fb8678d10c44b133e1e50737d6a6c1bb1e7c" target="_blank">5991fb8</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree720a822eae7fb7b0cf9cbc44fd968a0e573c713ftargetblank720a822a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/720a822eae7fb7b0cf9cbc44fd968a0e573c713f" target="_blank">720a822</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree5991fb8678d10c44b133e1e50737d6a6c1bb1e7ctargetblank5991fb8a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree720a822eae7fb7b0cf9cbc44fd968a0e573c713ftargetblank720a822a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/5991fb8678d10c44b133e1e50737d6a6c1bb1e7c" target="_blank">5991fb8</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/720a822eae7fb7b0cf9cbc44fd968a0e573c713f" target="_blank">720a822</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -552,10 +552,6 @@ Untracked files:
 
 Unstaged changes:
     Modified:   analysis/mmbr_missing_rss_problem1.Rmd
-    Deleted:    output/GTExprofile_res.pdf
-    Deleted:    output/GTExprofile_resapprox.pdf
-    Deleted:    output/GTExprofile_resapproxdiag.pdf
-    Deleted:    output/GTExprofile_univ.pdf
 
 </code></pre>
 <p>
@@ -594,6 +590,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/720a822eae7fb7b0cf9cbc44fd968a0e573c713f/analysis/GTExprofile.Rmd" target="_blank">720a822</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-10-21
+</td>
+<td>
+wflow_publish(“analysis/GTExprofile.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/2ad4ce9610f7a28d7514af8edbba5d4ac0cae819/docs/GTExprofile.html" target="_blank">2ad4ce9</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-10-21
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1129,8 +1159,8 @@ zouyuxin
 res1$result$bhat = do.call(cbind, lapply(1:ncol(Y), function(i) univariate_res[[i]]$betahat))
 res1$result$shat = do.call(cbind, lapply(1:ncol(Y), function(i) univariate_res[[i]]$sebetahat))
 rownames(res1$result$bhat) = 1:501
-p = mmbr::mmbr_plot(res1$result, original_sumstat = TRUE)
-pdf(&#39;docs/assets/GRExProfile/GTExprofile_univ.pdf&#39;, width = 60, height = 15)
+p = mmbr::mmbr_plot(res1$result, original_sumstat = TRUE, cs_only = FALSE)
+pdf(&#39;docs/assets/GRExProfile/GTExprofile_univ.pdf&#39;, width = 100, height = 15)
 print(p$plot)
 dev.off()</code></pre>
 <p><a href="assets/GRExProfile/GTExprofile_univ.pdf">Univariate Effects</a></p>
