@@ -40,7 +40,6 @@ Z[which(rowSums(b!=0) !=0),]
 
 The model with individual level is
 ```{r}
-m_init = mmbr::create_mash_prior(mixture_prior = list(matrices=xUlist, weights=prior$pi), null_weight=prior$null_weight, max_mixture_len=-1)
 result0 = mmbr::msusie(X$X, simu$Y, L = 10, 
                        prior_variance=m_init, residual_variance=resid_Z, 
                        compute_objective=T, estimate_residual_variance=F,
