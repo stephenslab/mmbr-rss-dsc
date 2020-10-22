@@ -508,16 +508,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctreed1ea2ba76e3ecf8a170625d643ecb42690bfe17ctargetblankd1ea2baa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/d1ea2ba76e3ecf8a170625d643ecb42690bfe17c" target="_blank">d1ea2ba</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree40a38697c74b21c59c7db208a3853e96e59150e3targetblank40a3869a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/40a38697c74b21c59c7db208a3853e96e59150e3" target="_blank">40a3869</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctreed1ea2ba76e3ecf8a170625d643ecb42690bfe17ctargetblankd1ea2baa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree40a38697c74b21c59c7db208a3853e96e59150e3targetblank40a3869a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/d1ea2ba76e3ecf8a170625d643ecb42690bfe17c" target="_blank">d1ea2ba</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/40a38697c74b21c59c7db208a3853e96e59150e3" target="_blank">40a3869</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -594,6 +594,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/40a38697c74b21c59c7db208a3853e96e59150e3/analysis/GTExprofile.Rmd" target="_blank">40a3869</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-10-21
+</td>
+<td>
+wflow_publish(“analysis/GTExprofile.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/16ee453593b293e2d1fc534526ffeed3d779f471/docs/GTExprofile.html" target="_blank">16ee453</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-10-21
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1042,15 +1076,10 @@ pdf(&#39;output/GTExprofile_resapprox.pdf&#39;, width = 60, height = 15)
 print(p$plot)
 dev.off()</code></pre>
 <p><a href="output/GTExprofile_resapprox.pdf">Model 3 Effects</a></p>
-<pre class="r"><code>p = mmbr::mmbr_plot(res4$result)</code></pre>
-<pre><code>Warning: Vectorized input to `element_text()` is not officially supported.
-Results may be unexpected or may change in future versions of ggplot2.</code></pre>
-<pre><code>Suggested PDF canvas width: 4.5 height: 44.1 </code></pre>
-<pre class="r"><code>pdf(&#39;output/GTExprofile_resapproxdiag.pdf&#39;, width = 5, height = 15)
+<pre class="r"><code>p = mmbr::mmbr_plot(res4$result)
+pdf(&#39;output/GTExprofile_resapproxdiag.pdf&#39;, width = 5, height = 15)
 print(p$plot)
 dev.off()</code></pre>
-<pre><code>quartz_off_screen 
-                2 </code></pre>
 <p><a href="output/GTExprofile_resapproxdiag.pdf">Model 4 result</a></p>
 <br>
 <p>
@@ -1075,26 +1104,25 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] ggplot2_3.3.2   mmbr_0.0.1.0305 susieR_0.9.26   mashr_0.2.40   
-[5] ashr_2.2-51     workflowr_1.6.1
+[1] mmbr_0.0.1.0305 susieR_0.9.26   mashr_0.2.40    ashr_2.2-51    
+[5] workflowr_1.6.1
 
 loaded via a namespace (and not attached):
  [1] progress_1.2.2     tidyselect_1.0.0   xfun_0.13          purrr_0.3.4       
  [5] lattice_0.20-41    colorspace_1.4-1   vctrs_0.3.4        htmltools_0.4.0   
  [9] yaml_2.2.1         rlang_0.4.8        mixsqp_0.3-46      later_1.0.0       
-[13] pillar_1.4.6       withr_2.3.0        glue_1.4.2         plyr_1.8.6        
-[17] matrixStats_0.57.0 lifecycle_0.2.0    stringr_1.4.0      munsell_0.5.0     
-[21] gtable_0.3.0       flashier_0.2.7     mvtnorm_1.1-1      evaluate_0.14     
-[25] labeling_0.3       knitr_1.28         httpuv_1.5.2       invgamma_1.1      
-[29] parallel_3.6.3     irlba_2.3.3        Rcpp_1.0.5         promises_1.1.0    
-[33] backports_1.1.10   scales_1.1.1       rmeta_3.0          truncnorm_1.0-8   
-[37] abind_1.4-5        farver_2.0.3       fs_1.4.1           hms_0.5.3         
-[41] digest_0.6.26      stringi_1.4.6      dplyr_0.8.5        ebnm_0.1-24       
-[45] grid_3.6.3         rprojroot_1.3-2    tools_3.6.3        magrittr_1.5      
-[49] tibble_3.0.4       crayon_1.3.4       whisker_0.4        pkgconfig_2.0.3   
-[53] ellipsis_0.3.1     Matrix_1.2-18      SQUAREM_2020.4     prettyunits_1.1.1 
-[57] reshape_0.8.8      assertthat_0.2.1   rmarkdown_2.1      R6_2.4.1.9001     
-[61] git2r_0.26.1       compiler_3.6.3    </code></pre>
+[13] pillar_1.4.6       glue_1.4.2         plyr_1.8.6         matrixStats_0.57.0
+[17] lifecycle_0.2.0    stringr_1.4.0      munsell_0.5.0      gtable_0.3.0      
+[21] flashier_0.2.7     mvtnorm_1.1-1      evaluate_0.14      knitr_1.28        
+[25] httpuv_1.5.2       invgamma_1.1       parallel_3.6.3     irlba_2.3.3       
+[29] Rcpp_1.0.5         promises_1.1.0     backports_1.1.10   scales_1.1.1      
+[33] rmeta_3.0          truncnorm_1.0-8    abind_1.4-5        fs_1.4.1          
+[37] ggplot2_3.3.2      hms_0.5.3          digest_0.6.26      stringi_1.4.6     
+[41] dplyr_0.8.5        ebnm_0.1-24        grid_3.6.3         rprojroot_1.3-2   
+[45] tools_3.6.3        magrittr_1.5       tibble_3.0.4       crayon_1.3.4      
+[49] whisker_0.4        pkgconfig_2.0.3    ellipsis_0.3.1     Matrix_1.2-18     
+[53] SQUAREM_2020.4     prettyunits_1.1.1  reshape_0.8.8      assertthat_0.2.1  
+[57] rmarkdown_2.1      R6_2.4.1.9001      git2r_0.26.1       compiler_3.6.3    </code></pre>
 </div>
 
 
