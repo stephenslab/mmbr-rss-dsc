@@ -7,7 +7,7 @@ output:
     code_folding: hide
 ---
 
-Here is one gene that identified in MASH paper that seems to have different direction of effects in brain vs non-brain tissues.
+Here is one gene identified in MASH paper that have different signs for brain vs non brain tissues.
 
 ```{r}
 # processing code
