@@ -199,32 +199,32 @@ res1$result$bhat = do.call(cbind, lapply(1:ncol(Y), function(i) univariate_res[[
 res1$result$shat = do.call(cbind, lapply(1:ncol(Y), function(i) univariate_res[[i]]$sebetahat))
 rownames(res1$result$bhat) = 1:501
 p = mmbr::mmbr_plot(res1$result, original_sumstat = TRUE)
-pdf('output/GTExprofile_univ.pdf', width = 60, height = 15)
+pdf('docs/assets/GRExProfile/GTExprofile_univ.pdf', width = 60, height = 15)
 print(p$plot)
 dev.off()
 ```
-[Univariate Effects](../output/GTExprofile_univ.pdf)
+[Univariate Effects](assets/GRExProfile/GTExprofile_univ.pdf)
 
 ```{r, eval=FALSE}
 p = mmbr::mmbr_plot(res1$result)
-pdf('output/GTExprofile_res.pdf', width = 60, height = 15)
+pdf('docs/assets/GRExProfile/GTExprofile_res.pdf', width = 60, height = 15)
 print(p$plot)
 dev.off()
 ```
-[Model 1 Effects](../output/GTExprofile_res.pdf)
+[Model 1 Effects](assets/GRExProfile/GTExprofile_res.pdf)
 
 ```{r, eval=FALSE}
 p = mmbr::mmbr_plot(res3$result)
-pdf('output/GTExprofile_resapprox.pdf', width = 60, height = 15)
+pdf('docs/assets/GRExProfile/GTExprofile_resapprox.pdf', width = 60, height = 15)
 print(p$plot)
 dev.off()
 ```
-[Model 3 Effects](../output/GTExprofile_resapprox.pdf)
+[Model 3 Effects](assets/GRExProfile/GTExprofile_resapprox.pdf)
 
 ```{r, eval=FALSE}
 p = mmbr::mmbr_plot(res4$result)
-pdf('output/GTExprofile_resapproxdiag.pdf', width = 5, height = 15)
+pdf('docs/assets/GRExProfile/GTExprofile_resapproxdiag.pdf', width = 5, height = 15)
 print(p$plot)
 dev.off()
 ```
-[Model 4 result](../output/GTExprofile_resapproxdiag.pdf)
+[Model 4 result](assets/GRExProfile/GTExprofile_resapproxdiag.pdf)
