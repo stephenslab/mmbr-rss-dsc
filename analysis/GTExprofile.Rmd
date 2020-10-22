@@ -99,7 +99,7 @@ X = X[,get_center(cis, ncol(X))]
 Y = dat$y_res
 ```
 
-We fit 4 models:
+We fit 4 models with L = 10:
 
 1. model with exact computation
 
