@@ -99,6 +99,8 @@ X = X[,get_center(cis, ncol(X))]
 Y = dat$y_res
 ```
 
+## Models with L = 10
+
 We fit 4 models with L = 10:
 
 1. model with exact computation
@@ -183,7 +185,8 @@ Model 4 credible sets:
 susie_plot(res4$result, y='PIP')
 ```
 
-Model 1 and 3 gives same Credible Sets. 
+Model 1 and 3 both give 5 same Credible Sets. There are 3 CSs have overlapped SNPs.
+
 
 |         | Total Time                      |  Algorithm Time                     | # iterations          |
 |---------|---------------------------------|-------------------------------------|-----------------------|
@@ -229,7 +232,7 @@ dev.off()
 ```
 [Model 4 result](assets/GRExProfile/GTExprofile_resapproxdiag.pdf)
 
-Models with L = 3:
+## Models with L = 3:
 ```{r, eval=FALSE}
 stime <- proc.time()
 res <- mmbr::msusie(X, Y, prior_variance=prior, residual_variance=resid_Y, approximate=FALSE, L=3)
