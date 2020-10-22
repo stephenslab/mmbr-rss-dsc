@@ -135,7 +135,7 @@ rm(prof2)
 
 prof3 = profvis({
   stime <- proc.time()
-  res_approx <- mmbr::msusie(X, Y, prior_variance=prior, residual_variance=resid_Y, approximate=TRUE)
+  res_approx <- mmbr::msusie(X, Y, prior_variance=prior, residual_variance=resid_Y, approximate=TRUE,, L=3)
   etime <- proc.time()
   time_res_approx <- etime - stime
   },prof_output='output/mmbr_gtex_res_approx.Rprof')
@@ -145,7 +145,7 @@ rm(prof3)
 
 prof4 = profvis({
   stime <- proc.time()
-  res_approx_diag <- mmbr::msusie(X, Y, prior_variance=prior, residual_variance=diag(diag(resid_Y)), approximate=TRUE)
+  res_approx_diag <- mmbr::msusie(X, Y, prior_variance=prior, residual_variance=diag(diag(resid_Y)), approximate=TRUE, L=3)
   etime <- proc.time()
   time_res_approx_diag <- etime - stime
   },prof_output='output/mmbr_gtex_res_approx_diag.Rprof')
@@ -228,3 +228,57 @@ print(p$plot)
 dev.off()
 ```
 [Model 4 result](assets/GRExProfile/GTExprofile_resapproxdiag.pdf)
+
+Models with L = 3:
+```{r, eval=FALSE}
+stime <- proc.time()
+res <- mmbr::msusie(X, Y, prior_variance=prior, residual_variance=resid_Y, approximate=FALSE, L=3)
+etime <- proc.time()
+time_res <- etime - stime
+saveRDS(list(result = res, result_time = time_res), 'output/GTExprofile_resL3.rds')
+
+stime <- proc.time()
+res_approx <- mmbr::msusie(X, Y, prior_variance=prior, residual_variance=resid_Y, approximate=TRUE, L=3)
+etime <- proc.time()
+time_res_approx <- etime - stime
+saveRDS(list(result = res_approx, result_time = time_res_approx), 'output/GTExprofile_resapproxL3.rds')
+
+stime <- proc.time()
+res_approx_diag <- mmbr::msusie(X, Y, prior_variance=prior, residual_variance=diag(diag(resid_Y)), approximate=TRUE, L=3)
+etime <- proc.time()
+time_res_approx_diag <- etime - stime
+saveRDS(list(result = res_approx_diag, result_time = time_res_approx_diag), 'output/GTExprofile_resapproxdiagL3.rds')
+```
+
+```{r}
+res1_L3 = readRDS('output/GTExprofile_resL3.rds')
+res3_L3 = readRDS('output/GTExprofile_resapproxL3.rds')
+res4_L3 = readRDS('output/GTExprofile_resapproxdiagL3.rds')
+```
+
+Model 1 credible sets:
+```{r}
+susie_plot(res1_L3$result, y='PIP')
+```
+Model 3 credible sets:
+```{r}
+susie_plot(res3_L3$result, y='PIP')
+```
+Model 4 credible sets:
+```{r}
+susie_plot(res4_L3$result, y='PIP')
+```
+
+|         | Total Time                      |  Algorithm Time                     | # iterations          |
+|---------|---------------------------------|-------------------------------------|-----------------------|
+| model 1 | `r res1_L3$result_time['elapsed']` | `r res1_L3$result$walltime['elapsed']` | `r res1$result$niter` |
+| model 3 | `r res3_L3$result_time['elapsed']` | `r res3_L3$result$walltime['elapsed']` | `r res1$result$niter` |
+| model 4 | `r res4_L3$result_time['elapsed']` | `r res4_L3$result$walltime['elapsed']` | `r res1$result$niter` |
+
+```{r, eval=FALSE}
+p = mmbr::mmbr_plot(res1_L3$result)
+pdf('docs/assets/GRExProfile/GTExprofile_resL3.pdf', width = 17, height = 15)
+print(p$plot)
+dev.off()
+```
+[Model 1 L3 Effects](assets/GRExProfile/GTExprofile_resL3.pdf)
