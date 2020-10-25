@@ -99,7 +99,7 @@ X = X[,get_center(cis, ncol(X))]
 Y = dat$y_res
 ```
 
-The correlation matrix of Y using pairwise complete observations:
+The covariance matrix of Y using pairwise complete observations:
 ```{r, fig.width = 15, fig.height = 15}
 library(corrplot)
 corrplot(cov(Y, use='pairwise.complete.obs'), method='color', type='upper', tl.col="black", tl.srt=45, is.corr = FALSE)
