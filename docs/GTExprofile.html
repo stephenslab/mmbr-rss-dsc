@@ -508,16 +508,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree0b6e539822af565b6fa89412b778eb5410e8602btargetblank0b6e539a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/0b6e539822af565b6fa89412b778eb5410e8602b" target="_blank">0b6e539</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctreec70e15bae690afff315bd478d12d701d59bdfc87targetblankc70e15ba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/c70e15bae690afff315bd478d12d701d59bdfc87" target="_blank">c70e15b</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree0b6e539822af565b6fa89412b778eb5410e8602btargetblank0b6e539a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctreec70e15bae690afff315bd478d12d701d59bdfc87targetblankc70e15ba" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/0b6e539822af565b6fa89412b778eb5410e8602b" target="_blank">0b6e539</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/c70e15bae690afff315bd478d12d701d59bdfc87" target="_blank">c70e15b</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -592,6 +592,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/c70e15bae690afff315bd478d12d701d59bdfc87/analysis/GTExprofile.Rmd" target="_blank">c70e15b</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-10-25
+</td>
+<td>
+wflow_publish(“analysis/GTExprofile.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/048c109b028a1d5090401aff18adabbc415b0e03/docs/GTExprofile.html" target="_blank">048c109</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-10-25
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1113,11 +1147,85 @@ Y = dat$y_res</code></pre>
 <pre class="r"><code>library(corrplot)</code></pre>
 <pre><code>corrplot 0.84 loaded</code></pre>
 <pre class="r"><code>corrplot(cov(Y, use=&#39;pairwise.complete.obs&#39;), method=&#39;color&#39;, type=&#39;upper&#39;, tl.col=&quot;black&quot;, tl.srt=45, is.corr = FALSE)</code></pre>
-<p><img src="figure/GTExprofile.Rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/GTExprofile.Rmd/unnamed-chunk-3-1.png" width="1440" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
+Past versions of unnamed-chunk-3-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/048c109b028a1d5090401aff18adabbc415b0e03/docs/figure/GTExprofile.Rmd/unnamed-chunk-3-1.png" target="_blank">048c109</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-10-25
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>The covarince matrix of Y using FLASH:</p>
 <pre class="r"><code>colnames(resid_Y) = rownames(resid_Y) = colnames(Y)
 corrplot(resid_Y, method=&#39;color&#39;, type=&#39;upper&#39;, tl.col=&quot;black&quot;, tl.srt=45, is.corr = FALSE)</code></pre>
-<p><img src="figure/GTExprofile.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/GTExprofile.Rmd/unnamed-chunk-4-1.png" width="1440" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
+Past versions of unnamed-chunk-4-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-4-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/048c109b028a1d5090401aff18adabbc415b0e03/docs/figure/GTExprofile.Rmd/unnamed-chunk-4-1.png" target="_blank">048c109</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-10-25
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <div id="models-with-l-10" class="section level2">
 <h2>Models with L = 10</h2>
 <p>We fit 4 models with L = 10:</p>
@@ -1208,6 +1316,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/048c109b028a1d5090401aff18adabbc415b0e03/docs/figure/GTExprofile.Rmd/unnamed-chunk-8-1.png" target="_blank">048c109</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-10-25
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/1ff70cd8bf9314c30b36950b24facac9764a4000/docs/figure/GTExprofile.Rmd/unnamed-chunk-8-1.png" target="_blank">1ff70cd</a>
 </td>
 <td>
@@ -1223,9 +1342,84 @@ zouyuxin
 </div>
 <p>Model 3 credible sets:</p>
 <pre class="r"><code>susie_plot(res1$result, y=&#39;PIP&#39;)</code></pre>
-<p><img src="figure/GTExprofile.Rmd/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /> Model 4 credible sets:</p>
+<p><img src="figure/GTExprofile.Rmd/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-9-1">
+Past versions of unnamed-chunk-9-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-9-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/048c109b028a1d5090401aff18adabbc415b0e03/docs/figure/GTExprofile.Rmd/unnamed-chunk-9-1.png" target="_blank">048c109</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-10-25
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Model 4 credible sets:</p>
 <pre class="r"><code>susie_plot(res4$result, y=&#39;PIP&#39;)</code></pre>
 <p><img src="figure/GTExprofile.Rmd/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-10-1">
+Past versions of unnamed-chunk-10-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-10-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/048c109b028a1d5090401aff18adabbc415b0e03/docs/figure/GTExprofile.Rmd/unnamed-chunk-10-1.png" target="_blank">048c109</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-10-25
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>Model 1 and 3 both give 5 same Credible Sets. There are 3 CSs have overlapped SNPs.</p>
 <table>
 <thead>
@@ -1289,7 +1483,7 @@ dev.off()</code></pre>
 <p><a href="assets/GRExProfile/GTExprofile_resapproxdiag.pdf">Model 4 result</a></p>
 </div>
 <div id="models-with-l-3" class="section level2">
-<h2>Models with L = 3:</h2>
+<h2>Models with L = 3</h2>
 <pre class="r"><code>stime &lt;- proc.time()
 res &lt;- mmbr::msusie(X, Y, prior_variance=prior, residual_variance=resid_Y, approximate=FALSE, L=3)
 etime &lt;- proc.time()
@@ -1337,6 +1531,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/048c109b028a1d5090401aff18adabbc415b0e03/docs/figure/GTExprofile.Rmd/unnamed-chunk-17-1.png" target="_blank">048c109</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-10-25
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/b88f57a67d8d1b81511c1c13919d8643365df056/docs/figure/GTExprofile.Rmd/unnamed-chunk-17-1.png" target="_blank">b88f57a</a>
 </td>
 <td>
@@ -1352,9 +1557,84 @@ zouyuxin
 </div>
 <p>Model 3 credible sets:</p>
 <pre class="r"><code>susie_plot(res3_L3$result, y=&#39;PIP&#39;)</code></pre>
-<p><img src="figure/GTExprofile.Rmd/unnamed-chunk-18-1.png" width="672" style="display: block; margin: auto;" /> Model 4 credible sets:</p>
+<p><img src="figure/GTExprofile.Rmd/unnamed-chunk-18-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-18-1">
+Past versions of unnamed-chunk-18-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-18-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/048c109b028a1d5090401aff18adabbc415b0e03/docs/figure/GTExprofile.Rmd/unnamed-chunk-18-1.png" target="_blank">048c109</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-10-25
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Model 4 credible sets:</p>
 <pre class="r"><code>susie_plot(res4_L3$result, y=&#39;PIP&#39;)</code></pre>
 <p><img src="figure/GTExprofile.Rmd/unnamed-chunk-19-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-19-1">
+Past versions of unnamed-chunk-19-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-19-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/048c109b028a1d5090401aff18adabbc415b0e03/docs/figure/GTExprofile.Rmd/unnamed-chunk-19-1.png" target="_blank">048c109</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-10-25
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <table>
 <thead>
 <tr class="header">
@@ -1405,6 +1685,43 @@ slower as a result. It is recommended that you try setting it to TRUE, see if
 there is a memory usage issue and only switch back if it is a problem.</code></pre>
 <pre class="r"><code>susie_plot(res_rss, y=&#39;PIP&#39;)</code></pre>
 <p><img src="figure/GTExprofile.Rmd/unnamed-chunk-21-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-21-1">
+Past versions of unnamed-chunk-21-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-21-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/048c109b028a1d5090401aff18adabbc415b0e03/docs/figure/GTExprofile.Rmd/unnamed-chunk-21-1.png" target="_blank">048c109</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-10-25
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
