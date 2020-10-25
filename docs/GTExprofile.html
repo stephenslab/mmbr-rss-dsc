@@ -508,16 +508,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctreec70e15bae690afff315bd478d12d701d59bdfc87targetblankc70e15ba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/c70e15bae690afff315bd478d12d701d59bdfc87" target="_blank">c70e15b</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctreee1d8a6c13cb2565dd9d520f63b041522884d1ccftargetblanke1d8a6ca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/e1d8a6c13cb2565dd9d520f63b041522884d1ccf" target="_blank">e1d8a6c</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctreec70e15bae690afff315bd478d12d701d59bdfc87targetblankc70e15ba" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctreee1d8a6c13cb2565dd9d520f63b041522884d1ccftargetblanke1d8a6ca" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/c70e15bae690afff315bd478d12d701d59bdfc87" target="_blank">c70e15b</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/e1d8a6c13cb2565dd9d520f63b041522884d1ccf" target="_blank">e1d8a6c</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -592,6 +592,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/e1d8a6c13cb2565dd9d520f63b041522884d1ccf/analysis/GTExprofile.Rmd" target="_blank">e1d8a6c</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-10-25
+</td>
+<td>
+wflow_publish(“analysis/GTExprofile.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/c935589f61a228d09c09baaa965f6cfa04d8877a/docs/GTExprofile.html" target="_blank">c935589</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-10-25
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1143,7 +1177,7 @@ resid_Y = compute_cov_flash(dat$y_res)
 X = filter_X(dat$X, 0.1, 0.05)
 X = X[,get_center(cis, ncol(X))]
 Y = dat$y_res</code></pre>
-<p>The correlation matrix of Y using pairwise complete observations:</p>
+<p>The covariance matrix of Y using pairwise complete observations:</p>
 <pre class="r"><code>library(corrplot)</code></pre>
 <pre><code>corrplot 0.84 loaded</code></pre>
 <pre class="r"><code>corrplot(cov(Y, use=&#39;pairwise.complete.obs&#39;), method=&#39;color&#39;, type=&#39;upper&#39;, tl.col=&quot;black&quot;, tl.srt=45, is.corr = FALSE)</code></pre>
@@ -1170,6 +1204,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/c935589f61a228d09c09baaa965f6cfa04d8877a/docs/figure/GTExprofile.Rmd/unnamed-chunk-3-1.png" target="_blank">c935589</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-10-25
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/048c109b028a1d5090401aff18adabbc415b0e03/docs/figure/GTExprofile.Rmd/unnamed-chunk-3-1.png" target="_blank">048c109</a>
@@ -1211,6 +1256,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/c935589f61a228d09c09baaa965f6cfa04d8877a/docs/figure/GTExprofile.Rmd/unnamed-chunk-4-1.png" target="_blank">c935589</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-10-25
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/048c109b028a1d5090401aff18adabbc415b0e03/docs/figure/GTExprofile.Rmd/unnamed-chunk-4-1.png" target="_blank">048c109</a>
