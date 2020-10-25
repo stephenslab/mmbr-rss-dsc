@@ -417,7 +417,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-10-22
+<strong>Last updated:</strong> 2020-10-25
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -508,16 +508,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree8a5817bfec00a224109761f9091a530a6927b09btargetblank8a5817ba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/8a5817bfec00a224109761f9091a530a6927b09b" target="_blank">8a5817b</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree0b6e539822af565b6fa89412b778eb5410e8602btargetblank0b6e539a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/0b6e539822af565b6fa89412b778eb5410e8602b" target="_blank">0b6e539</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree8a5817bfec00a224109761f9091a530a6927b09btargetblank8a5817ba" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree0b6e539822af565b6fa89412b778eb5410e8602btargetblank0b6e539a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/8a5817bfec00a224109761f9091a530a6927b09b" target="_blank">8a5817b</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/0b6e539822af565b6fa89412b778eb5410e8602b" target="_blank">0b6e539</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -532,7 +532,6 @@ Ignored files:
 Untracked files:
     Untracked:  data/ENSG00000140265.12.Multi_Tissues.rds
     Untracked:  data/FastQTLSumStats.mash.FL_PC3.rds
-    Untracked:  output/GTExProfile.zip
     Untracked:  output/GTExprofile_res.rds
     Untracked:  output/GTExprofile_resL3.rds
     Untracked:  output/GTExprofile_resapprox.rds
@@ -593,6 +592,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/0b6e539822af565b6fa89412b778eb5410e8602b/analysis/GTExprofile.Rmd" target="_blank">0b6e539</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-10-25
+</td>
+<td>
+wflow_publish(“analysis/GTExprofile.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/d73c578fa67bdc7759e8ca0842d00d031ee62d1a/docs/GTExprofile.html" target="_blank">d73c578</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-10-22
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1076,6 +1109,15 @@ resid_Y = compute_cov_flash(dat$y_res)
 X = filter_X(dat$X, 0.1, 0.05)
 X = X[,get_center(cis, ncol(X))]
 Y = dat$y_res</code></pre>
+<p>The correlation matrix of Y using pairwise complete observations:</p>
+<pre class="r"><code>library(corrplot)</code></pre>
+<pre><code>corrplot 0.84 loaded</code></pre>
+<pre class="r"><code>corrplot(cov(Y, use=&#39;pairwise.complete.obs&#39;), method=&#39;color&#39;, type=&#39;upper&#39;, tl.col=&quot;black&quot;, tl.srt=45, is.corr = FALSE)</code></pre>
+<p><img src="figure/GTExprofile.Rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>The covarince matrix of Y using FLASH:</p>
+<pre class="r"><code>colnames(resid_Y) = rownames(resid_Y) = colnames(Y)
+corrplot(resid_Y, method=&#39;color&#39;, type=&#39;upper&#39;, tl.col=&quot;black&quot;, tl.srt=45, is.corr = FALSE)</code></pre>
+<p><img src="figure/GTExprofile.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
 <div id="models-with-l-10" class="section level2">
 <h2>Models with L = 10</h2>
 <p>We fit 4 models with L = 10:</p>
@@ -1141,86 +1183,6 @@ res4 = readRDS(&#39;output/GTExprofile_resapproxdiag.rds&#39;)</code></pre>
 <p>We check results from model 1, 3 and 4.</p>
 <p>Model 1 credible sets:</p>
 <pre class="r"><code>susie_plot(res1$result, y=&#39;PIP&#39;)</code></pre>
-<p><img src="figure/GTExprofile.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
-Past versions of unnamed-chunk-6-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-6-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/1ff70cd8bf9314c30b36950b24facac9764a4000/docs/figure/GTExprofile.Rmd/unnamed-chunk-6-1.png" target="_blank">1ff70cd</a>
-</td>
-<td>
-zouyuxin
-</td>
-<td>
-2020-10-21
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p>Model 3 credible sets:</p>
-<pre class="r"><code>susie_plot(res1$result, y=&#39;PIP&#39;)</code></pre>
-<p><img src="figure/GTExprofile.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-1">
-Past versions of unnamed-chunk-7-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-7-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/1ff70cd8bf9314c30b36950b24facac9764a4000/docs/figure/GTExprofile.Rmd/unnamed-chunk-7-1.png" target="_blank">1ff70cd</a>
-</td>
-<td>
-zouyuxin
-</td>
-<td>
-2020-10-21
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p>Model 4 credible sets:</p>
-<pre class="r"><code>susie_plot(res4$result, y=&#39;PIP&#39;)</code></pre>
 <p><img src="figure/GTExprofile.Rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-1">
@@ -1259,6 +1221,11 @@ zouyuxin
 </table>
 </div>
 </div>
+<p>Model 3 credible sets:</p>
+<pre class="r"><code>susie_plot(res1$result, y=&#39;PIP&#39;)</code></pre>
+<p><img src="figure/GTExprofile.Rmd/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /> Model 4 credible sets:</p>
+<pre class="r"><code>susie_plot(res4$result, y=&#39;PIP&#39;)</code></pre>
+<p><img src="figure/GTExprofile.Rmd/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Model 1 and 3 both give 5 same Credible Sets. There are 3 CSs have overlapped SNPs.</p>
 <table>
 <thead>
@@ -1345,86 +1312,6 @@ res3_L3 = readRDS(&#39;output/GTExprofile_resapproxL3.rds&#39;)
 res4_L3 = readRDS(&#39;output/GTExprofile_resapproxdiagL3.rds&#39;)</code></pre>
 <p>Model 1 credible sets:</p>
 <pre class="r"><code>susie_plot(res1_L3$result, y=&#39;PIP&#39;)</code></pre>
-<p><img src="figure/GTExprofile.Rmd/unnamed-chunk-15-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-15-1">
-Past versions of unnamed-chunk-15-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-15-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/b88f57a67d8d1b81511c1c13919d8643365df056/docs/figure/GTExprofile.Rmd/unnamed-chunk-15-1.png" target="_blank">b88f57a</a>
-</td>
-<td>
-zouyuxin
-</td>
-<td>
-2020-10-22
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p>Model 3 credible sets:</p>
-<pre class="r"><code>susie_plot(res3_L3$result, y=&#39;PIP&#39;)</code></pre>
-<p><img src="figure/GTExprofile.Rmd/unnamed-chunk-16-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-16-1">
-Past versions of unnamed-chunk-16-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-16-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/b88f57a67d8d1b81511c1c13919d8643365df056/docs/figure/GTExprofile.Rmd/unnamed-chunk-16-1.png" target="_blank">b88f57a</a>
-</td>
-<td>
-zouyuxin
-</td>
-<td>
-2020-10-22
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p>Model 4 credible sets:</p>
-<pre class="r"><code>susie_plot(res4_L3$result, y=&#39;PIP&#39;)</code></pre>
 <p><img src="figure/GTExprofile.Rmd/unnamed-chunk-17-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-17-1">
@@ -1463,6 +1350,11 @@ zouyuxin
 </table>
 </div>
 </div>
+<p>Model 3 credible sets:</p>
+<pre class="r"><code>susie_plot(res3_L3$result, y=&#39;PIP&#39;)</code></pre>
+<p><img src="figure/GTExprofile.Rmd/unnamed-chunk-18-1.png" width="672" style="display: block; margin: auto;" /> Model 4 credible sets:</p>
+<pre class="r"><code>susie_plot(res4_L3$result, y=&#39;PIP&#39;)</code></pre>
+<p><img src="figure/GTExprofile.Rmd/unnamed-chunk-19-1.png" width="672" style="display: block; margin: auto;" /></p>
 <table>
 <thead>
 <tr class="header">
@@ -1498,6 +1390,21 @@ pdf(&#39;docs/assets/GRExProfile/GTExprofile_resL3.pdf&#39;, width = 17, height 
 print(p$plot)
 dev.off()</code></pre>
 <p><a href="assets/GRExProfile/GTExprofile_resL3.pdf">Model 1 L3 Effects</a></p>
+<p>Using RSS version:</p>
+<pre class="r"><code>univariate_res = lapply(1:ncol(Y), function(i) susieR:::univariate_regression(X,Y[,i]))
+bhat = do.call(cbind, lapply(1:ncol(Y), function(i) univariate_res[[i]]$betahat))
+shat = do.call(cbind, lapply(1:ncol(Y), function(i) univariate_res[[i]]$sebetahat))
+zhat = bhat/shat
+zhat[is.na(zhat)] = 0
+R = cor(X)
+res_rss = mmbr::msusie_rss(zhat, R, residual_variance = cov2cor(resid_Y), prior_variance=prior)</code></pre>
+<pre><code>Warning in mmbr_core(data, s_init, L, prior_variance, prior_weights,
+estimate_residual_variance, : precompute_covariances option is set to FALSE
+by default to save memory usage with MASH prior. The computation can be a lot
+slower as a result. It is recommended that you try setting it to TRUE, see if
+there is a memory usage issue and only switch back if it is a problem.</code></pre>
+<pre class="r"><code>susie_plot(res_rss, y=&#39;PIP&#39;)</code></pre>
+<p><img src="figure/GTExprofile.Rmd/unnamed-chunk-21-1.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1522,7 +1429,7 @@ attached base packages:
 
 other attached packages:
 [1] mmbr_0.0.1.0305 susieR_0.9.26   mashr_0.2.40    ashr_2.2-51    
-[5] workflowr_1.6.1
+[5] corrplot_0.84   workflowr_1.6.1
 
 loaded via a namespace (and not attached):
  [1] progress_1.2.2     tidyselect_1.0.0   xfun_0.13          purrr_0.3.4       
