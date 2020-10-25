@@ -99,16 +99,20 @@ X = X[,get_center(cis, ncol(X))]
 Y = dat$y_res
 ```
 
-The covariance matrix of Y using pairwise complete observations:
-```{r, fig.width = 15, fig.height = 15}
+The covariance/correlation matrix of Y using pairwise complete observations:
+```{r, fig.width = 30, fig.height = 15}
 library(corrplot)
+par(mfrow=c(1,2))
 corrplot(cov(Y, use='pairwise.complete.obs'), method='color', type='upper', tl.col="black", tl.srt=45, is.corr = FALSE)
+corrplot(cor(Y, use='pairwise.complete.obs'), method='color', type='upper', tl.col="black", tl.srt=45, is.corr = TRUE)
 ```
 
-The covarince matrix of Y using FLASH:
-```{r, fig.width = 15, fig.height = 15}
+The covarince/correlation matrix of Y using FLASH:
+```{r, fig.width = 30, fig.height = 15}
 colnames(resid_Y) = rownames(resid_Y) = colnames(Y)
+par(mfrow=c(1,2))
 corrplot(resid_Y, method='color', type='upper', tl.col="black", tl.srt=45, is.corr = FALSE)
+corrplot(cov2cor(resid_Y), method='color', type='upper', tl.col="black", tl.srt=45, is.corr = TRUE)
 ```
 
 ## Models with L = 10
@@ -299,14 +303,3 @@ dev.off()
 ```
 [Model 1 L3 Effects](assets/GRExProfile/GTExprofile_resL3.pdf)
 
-Using RSS version:
-```{r}
-univariate_res = lapply(1:ncol(Y), function(i) susieR:::univariate_regression(X,Y[,i]))
-bhat = do.call(cbind, lapply(1:ncol(Y), function(i) univariate_res[[i]]$betahat))
-shat = do.call(cbind, lapply(1:ncol(Y), function(i) univariate_res[[i]]$sebetahat))
-zhat = bhat/shat
-zhat[is.na(zhat)] = 0
-R = cor(X)
-res_rss = mmbr::msusie_rss(zhat, R, residual_variance = cov2cor(resid_Y), prior_variance=prior)
-susie_plot(res_rss, y='PIP')
-```
