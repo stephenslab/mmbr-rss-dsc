@@ -100,13 +100,13 @@ Y = dat$y_res
 ```
 
 The correlation matrix of Y using pairwise complete observations:
-```{r}
+```{r, fig.width = 15, fig.height = 15}
 library(corrplot)
 corrplot(cov(Y, use='pairwise.complete.obs'), method='color', type='upper', tl.col="black", tl.srt=45, is.corr = FALSE)
 ```
 
 The covarince matrix of Y using FLASH:
-```{r}
+```{r, fig.width = 15, fig.height = 15}
 colnames(resid_Y) = rownames(resid_Y) = colnames(Y)
 corrplot(resid_Y, method='color', type='upper', tl.col="black", tl.srt=45, is.corr = FALSE)
 ```
@@ -244,7 +244,8 @@ dev.off()
 ```
 [Model 4 result](assets/GRExProfile/GTExprofile_resapproxdiag.pdf)
 
-## Models with L = 3:
+## Models with L = 3
+
 ```{r, eval=FALSE}
 stime <- proc.time()
 res <- mmbr::msusie(X, Y, prior_variance=prior, residual_variance=resid_Y, approximate=FALSE, L=3)
