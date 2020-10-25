@@ -508,16 +508,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctreee1d8a6c13cb2565dd9d520f63b041522884d1ccftargetblanke1d8a6ca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/e1d8a6c13cb2565dd9d520f63b041522884d1ccf" target="_blank">e1d8a6c</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree409a2bdc85b3f20f7b6cdd2de835d2d4b38c7286targetblank409a2bda"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/409a2bdc85b3f20f7b6cdd2de835d2d4b38c7286" target="_blank">409a2bd</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctreee1d8a6c13cb2565dd9d520f63b041522884d1ccftargetblanke1d8a6ca" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree409a2bdc85b3f20f7b6cdd2de835d2d4b38c7286targetblank409a2bda" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/e1d8a6c13cb2565dd9d520f63b041522884d1ccf" target="_blank">e1d8a6c</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/409a2bdc85b3f20f7b6cdd2de835d2d4b38c7286" target="_blank">409a2bd</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -592,6 +592,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/409a2bdc85b3f20f7b6cdd2de835d2d4b38c7286/analysis/GTExprofile.Rmd" target="_blank">409a2bd</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-10-25
+</td>
+<td>
+wflow_publish(“analysis/GTExprofile.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/6c7b7d278a29a71e1288a2c5a4ae6c593a6bb580/docs/GTExprofile.html" target="_blank">6c7b7d2</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-10-25
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1177,11 +1211,13 @@ resid_Y = compute_cov_flash(dat$y_res)
 X = filter_X(dat$X, 0.1, 0.05)
 X = X[,get_center(cis, ncol(X))]
 Y = dat$y_res</code></pre>
-<p>The covariance matrix of Y using pairwise complete observations:</p>
+<p>The covariance/correlation matrix of Y using pairwise complete observations:</p>
 <pre class="r"><code>library(corrplot)</code></pre>
 <pre><code>corrplot 0.84 loaded</code></pre>
-<pre class="r"><code>corrplot(cov(Y, use=&#39;pairwise.complete.obs&#39;), method=&#39;color&#39;, type=&#39;upper&#39;, tl.col=&quot;black&quot;, tl.srt=45, is.corr = FALSE)</code></pre>
-<p><img src="figure/GTExprofile.Rmd/unnamed-chunk-3-1.png" width="1440" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>par(mfrow=c(1,2))
+corrplot(cov(Y, use=&#39;pairwise.complete.obs&#39;), method=&#39;color&#39;, type=&#39;upper&#39;, tl.col=&quot;black&quot;, tl.srt=45, is.corr = FALSE)
+corrplot(cor(Y, use=&#39;pairwise.complete.obs&#39;), method=&#39;color&#39;, type=&#39;upper&#39;, tl.col=&quot;black&quot;, tl.srt=45, is.corr = TRUE)</code></pre>
+<p><img src="figure/GTExprofile.Rmd/unnamed-chunk-3-1.png" width="2880" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
 Past versions of unnamed-chunk-3-1.png
@@ -1230,10 +1266,12 @@ zouyuxin
 </table>
 </div>
 </div>
-<p>The covarince matrix of Y using FLASH:</p>
+<p>The covarince/correlation matrix of Y using FLASH:</p>
 <pre class="r"><code>colnames(resid_Y) = rownames(resid_Y) = colnames(Y)
-corrplot(resid_Y, method=&#39;color&#39;, type=&#39;upper&#39;, tl.col=&quot;black&quot;, tl.srt=45, is.corr = FALSE)</code></pre>
-<p><img src="figure/GTExprofile.Rmd/unnamed-chunk-4-1.png" width="1440" style="display: block; margin: auto;" /></p>
+par(mfrow=c(1,2))
+corrplot(resid_Y, method=&#39;color&#39;, type=&#39;upper&#39;, tl.col=&quot;black&quot;, tl.srt=45, is.corr = FALSE)
+corrplot(cov2cor(resid_Y), method=&#39;color&#39;, type=&#39;upper&#39;, tl.col=&quot;black&quot;, tl.srt=45, is.corr = TRUE)</code></pre>
+<p><img src="figure/GTExprofile.Rmd/unnamed-chunk-4-1.png" width="2880" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
 Past versions of unnamed-chunk-4-1.png
@@ -1726,58 +1764,6 @@ pdf(&#39;docs/assets/GRExProfile/GTExprofile_resL3.pdf&#39;, width = 17, height 
 print(p$plot)
 dev.off()</code></pre>
 <p><a href="assets/GRExProfile/GTExprofile_resL3.pdf">Model 1 L3 Effects</a></p>
-<p>Using RSS version:</p>
-<pre class="r"><code>univariate_res = lapply(1:ncol(Y), function(i) susieR:::univariate_regression(X,Y[,i]))
-bhat = do.call(cbind, lapply(1:ncol(Y), function(i) univariate_res[[i]]$betahat))
-shat = do.call(cbind, lapply(1:ncol(Y), function(i) univariate_res[[i]]$sebetahat))
-zhat = bhat/shat
-zhat[is.na(zhat)] = 0
-R = cor(X)
-res_rss = mmbr::msusie_rss(zhat, R, residual_variance = cov2cor(resid_Y), prior_variance=prior)</code></pre>
-<pre><code>Warning in mmbr_core(data, s_init, L, prior_variance, prior_weights,
-estimate_residual_variance, : precompute_covariances option is set to FALSE
-by default to save memory usage with MASH prior. The computation can be a lot
-slower as a result. It is recommended that you try setting it to TRUE, see if
-there is a memory usage issue and only switch back if it is a problem.</code></pre>
-<pre class="r"><code>susie_plot(res_rss, y=&#39;PIP&#39;)</code></pre>
-<p><img src="figure/GTExprofile.Rmd/unnamed-chunk-21-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-21-1">
-Past versions of unnamed-chunk-21-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-21-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/048c109b028a1d5090401aff18adabbc415b0e03/docs/figure/GTExprofile.Rmd/unnamed-chunk-21-1.png" target="_blank">048c109</a>
-</td>
-<td>
-zouyuxin
-</td>
-<td>
-2020-10-25
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
