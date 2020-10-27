@@ -303,3 +303,43 @@ dev.off()
 ```
 [Model 1 L3 Effects](assets/GRExProfile/GTExprofile_resL3.pdf)
 
+## Models with L = 1
+
+```{r, eval=FALSE}
+stime <- proc.time()
+res <- mmbr::msusie(X, Y, prior_variance=prior, residual_variance=resid_Y, approximate=FALSE, L=1)
+etime <- proc.time()
+time_res <- etime - stime
+saveRDS(list(result = res, result_time = time_res), 'output/GTExprofile_resL1.rds')
+
+stime <- proc.time()
+res_approx <- mmbr::msusie(X, Y, prior_variance=prior, residual_variance=resid_Y, approximate=TRUE, L=1)
+etime <- proc.time()
+time_res_approx <- etime - stime
+saveRDS(list(result = res_approx, result_time = time_res_approx), 'output/GTExprofile_resapproxL1.rds')
+
+stime <- proc.time()
+res_approx_diag <- mmbr::msusie(X, Y, prior_variance=prior, residual_variance=diag(diag(resid_Y)), approximate=TRUE, L=1)
+etime <- proc.time()
+time_res_approx_diag <- etime - stime
+saveRDS(list(result = res_approx_diag, result_time = time_res_approx_diag), 'output/GTExprofile_resapproxdiagL1.rds')
+```
+
+```{r}
+res1_L1 = readRDS('output/GTExprofile_resL1.rds')
+res3_L1 = readRDS('output/GTExprofile_resapproxL1.rds')
+res4_L1 = readRDS('output/GTExprofile_resapproxdiagL1.rds')
+```
+
+Model 1 credible sets:
+```{r}
+susie_plot(res1_L1$result, y='PIP')
+```
+Model 3 credible sets:
+```{r}
+susie_plot(res3_L1$result, y='PIP')
+```
+Model 4 credible sets:
+```{r}
+susie_plot(res4_L1$result, y='PIP')
+```
