@@ -28,7 +28,7 @@ m = mvsusie_missing(dat$X, dat$Y, prior_variance = dat$prior$FLASH_1, residual_v
 susie_plot(m, y='PIP')
 ```
 
-The CS is
+Check CS details:
 ```{r}
 m$sets
 ```
@@ -38,7 +38,8 @@ Model with diagonal residual variance
 m_diag = mvsusie_missing(dat$X, dat$Y, prior_variance = dat$prior$FLASH_1, residual_variance = diag(diag(dat$residual_var)), L = 1, approximate=TRUE)
 susie_plot(m_diag, y='PIP')
 ```
-The CS is
+
+Check CS details:
 ```{r}
 m_diag$sets
 ```
