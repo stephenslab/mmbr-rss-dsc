@@ -1,0 +1,1064 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Yuxin Zou" />
+
+<meta name="date" content="2020-10-29" />
+
+<title>GTEx real data problem</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="site_libs/anchor-sections-1.0/anchor-sections.js"></script>
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">mmbr-rss-dsc</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">GTEx real data problem</h1>
+<h4 class="author">Yuxin Zou</h4>
+<h4 class="date">10/29/2020</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2020-10-29
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>mmbr-rss-dsc/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it's best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20200227code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20200227)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20200227code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20200227)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree6cd6fac89a3254e7f28a96d6d9ff7ca870362b6btargetblank6cd6faca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/6cd6fac89a3254e7f28a96d6d9ff7ca870362b6b" target="_blank">6cd6fac</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree6cd6fac89a3254e7f28a96d6d9ff7ca870362b6btargetblank6cd6faca" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/6cd6fac89a3254e7f28a96d6d9ff7ca870362b6b" target="_blank">6cd6fac</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .DS_Store
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+    Ignored:    output/.DS_Store
+
+Untracked files:
+    Untracked:  code/mvsusie_missing.R
+    Untracked:  data/ENSG00000140265.12.Multi_Tissues.problem.rds
+    Untracked:  data/ENSG00000140265.12.Multi_Tissues.rds
+    Untracked:  data/FastQTLSumStats.mash.FL_PC3.rds
+    Untracked:  output/.mmbr_gtex_res.Rprof.swp
+    Untracked:  output/GTExprofile_res.rds
+    Untracked:  output/GTExprofile_resL1.rds
+    Untracked:  output/GTExprofile_resL3.rds
+    Untracked:  output/GTExprofile_resapprox.rds
+    Untracked:  output/GTExprofile_resapproxL1.rds
+    Untracked:  output/GTExprofile_resapproxL3.rds
+    Untracked:  output/GTExprofile_resapproxdiag.rds
+    Untracked:  output/GTExprofile_resapproxdiagL1.rds
+    Untracked:  output/GTExprofile_resapproxdiagL3.rds
+    Untracked:  output/GTExprofile_resdiag.rds
+    Untracked:  output/mmbr_gtex_res.Rprof
+    Untracked:  output/mmbr_gtex_res_approx.Rprof
+    Untracked:  output/mmbr_gtex_res_approx_diag.Rprof
+    Untracked:  output/mmbr_gtex_res_diag.Rprof
+    Untracked:  output/mnm_missing_output.20200527.rds
+    Untracked:  output/test
+    Untracked:  output/tiny_data_211_cond2L2.gif
+    Untracked:  output/tiny_data_211_cond2L2.pdf
+    Untracked:  output/tiny_data_211_cond2L3.gif
+    Untracked:  output/tiny_data_211_cond2L3.pdf
+    Untracked:  output/tiny_data_211_cond2initL3.gif
+    Untracked:  output/tiny_data_211_cond2initL3.pdf
+
+Unstaged changes:
+    Modified:   analysis/mmbr_missing_rss_problem1.Rmd
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/GTExprofileProblem.Rmd</code>) and HTML (<code>docs/GTExprofileProblem.html</code>) files. If you've configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/6cd6fac89a3254e7f28a96d6d9ff7ca870362b6b/analysis/GTExprofileProblem.Rmd" target="_blank">6cd6fac</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-10-29
+</td>
+<td>
+wflow_publish(&quot;analysis/GTExprofileProblem.Rmd&quot;)
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<p>We investigate the BF problem observed <a href="GTExprofile.html">here</a> in more details. We fit model with L = 1 and a simpler prior. We don't estimate prior scalar.</p>
+<pre class="r"><code>knitr::read_chunk(&quot;code/mvsusie_missing.R&quot;)</code></pre>
+<p>R code for mvSuSiE with missing data in Y:</p>
+<pre class="r"><code>## this is a simplified implementation for mvSuSiE with missing data in Y
+## prior_variance is a matrix
+## prior_variance and residual_variance are fixed in the algorithm.
+library(abind)
+library(susieR)
+mvsusie_missing = function(X, Y, L=10, prior_variance, residual_variance, approximate=FALSE, intercept = TRUE,
+                           max_iter = 100, prior_weights=NULL, tol=1e-3, min_abs_corr=0.5, prior_tol=1E-9){
+  if (is.null(dim(Y))) Y &lt;- matrix(Y,length(Y),1)
+  R &lt;- ncol(Y)
+  N &lt;- nrow(Y)
+  J &lt;- ncol(X)
+  Y_missing &lt;- is.na(Y)
+  Y_non_missing &lt;- !Y_missing
+  # store missing pattern, TRUE for observe, FALSE for missing
+  missing_pattern &lt;- unique(Y_non_missing)
+  Y_missing_pattern_assign &lt;- numeric(N)
+  for(k in 1:nrow(missing_pattern)){
+    idx = which(apply(Y_non_missing, 1, function(x) identical(x, missing_pattern[k,])))
+    Y_missing_pattern_assign[idx] &lt;- k
+  }
+  Y[Y_missing] &lt;- 0
+  if(approximate){
+    X_for_Y_missing &lt;- array(X, dim = c(N, J, R))
+    for(r in 1:R) {
+      X_for_Y_missing[Y_missing[,r],,r] &lt;- NA
+    }
+  }else{
+    X_for_Y_missing &lt;- outer(X,  diag(R)) # N by J by R by R
+  }
+
+  ## compute inverse of residual variance for each missing pattern
+  residual_variance_inv &lt;- list()
+  for(k in 1:nrow(missing_pattern)){
+    if(R == 1){
+      residual_variance_inv[[k]] &lt;- missing_pattern[k,] / residual_variance
+    }else{
+      Vk = residual_variance[which(missing_pattern[k,]), which(missing_pattern[k,])]
+      eigenVk = eigen(Vk, symmetric = TRUE)
+      dinv = 1/(eigenVk$values)
+      residual_variance_inv[[k]] &lt;- matrix(0, R, R)
+      residual_variance_inv[[k]][which(missing_pattern[k,]), which(missing_pattern[k,])] = eigenVk$vectors %*% (dinv * t(eigenVk$vectors))
+    }
+  }
+
+  ## centering
+  if(intercept){
+    if(approximate){
+      cm_x &lt;- colMeans(X_for_Y_missing, na.rm=T) # J by R
+      Xbar = cm_x
+      for(r in 1:R){
+        X_for_Y_missing[,,r] &lt;- t(t(X_for_Y_missing[,,r]) - cm_x[,r])
+        X_for_Y_missing[,,r][is.na(X_for_Y_missing[,,r])] &lt;- 0
+      }
+      if (R == 1) Y_mean &lt;- mean(Y[Y_non_missing])
+      else Y_mean &lt;- sapply(1:R, function(r) mean(Y[Y_non_missing[,r],r]))
+      Y &lt;- t(t(Y) - Y_mean)
+      Y[!Y_non_missing] &lt;- 0
+    }else{
+      # sum_i V_i^{-1} R by R matrix
+      Vinvsum = Reduce(&#39;+&#39;, lapply(1:nrow(missing_pattern), function(i)
+        residual_variance_inv[[i]] * sum(Y_missing_pattern_assign == i)))
+      Vinvsuminv &lt;- invert_via_chol(Vinvsum)
+
+      # sum_i V_i^{-1} y_i R by 1 matrix
+      Ysum = Reduce(&#39;+&#39;, lapply(1:N, function(i)
+        residual_variance_inv[[Y_missing_pattern_assign[i]]] %*% Y[i,] ))
+
+      # center Y
+      Y_mean &lt;- as.numeric(Vinvsuminv %*% Ysum)
+      Y &lt;- t(t(Y) - Y_mean)
+      Y[!Y_non_missing] &lt;- 0
+
+      # center X
+      Xbar &lt;- array(0, dim=c(J, R, R))
+      for(j in 1:J){
+        # For variant j, Vinvsuminv sum_i V_i^{-1} X_{i,j} R by R matrix
+        Xbar[j,,] &lt;- Vinvsuminv %*% Reduce(&#39;+&#39;, lapply(1:N, function(i) residual_variance_inv[[Y_missing_pattern_assign[i]]] * X[i,j]) )
+        X_for_Y_missing[,j,,] &lt;- sweep(X_for_Y_missing[,j,,,drop=F], 3:4, Xbar[j,,])
+      }
+    }
+  }
+
+  svs_inv &lt;- list()
+  for(j in 1:J){
+    # For variant j, sum_i X_for_Y_missing[i,j,,]^T V_i^{-1} X_for_Y_missing[i,j,,], R by R matrix
+    # when there is no missing, it is sum(x_j^2) * V^{-1}
+    if(approximate){
+      svs_inv[[j]] &lt;- Reduce(&#39;+&#39;, lapply(1:N, function(i) t(residual_variance_inv[[Y_missing_pattern_assign[i]]] *
+                                                                 X_for_Y_missing[i,j,]) * X_for_Y_missing[i,j,]))
+    }else{
+      svs_inv[[j]] &lt;- Reduce(&#39;+&#39;, lapply(1:N, function(i) crossprod(X_for_Y_missing[i,j,,],
+                                             residual_variance_inv[[Y_missing_pattern_assign[i]]] %*%
+                                             X_for_Y_missing[i,j,,])))
+    }
+  }
+  s = init(N, J, R, L, prior_variance, prior_weights)
+  pip_history = list()
+  for(i in 1:max_iter){
+    s = update_each_effect(X, Xbar, X_for_Y_missing, Y, s, Y_missing_pattern_assign, residual_variance_inv, svs_inv)
+    pip_history[[i]] = s$alpha
+    if(i &gt; 1){
+      delta = max(abs(apply(1 - pip_history[[i]], 2, prod) - apply(1 - pip_history[[i-1]], 2, prod)))
+      if(delta &lt; tol){
+        s$niter = i
+        s$delta = delta
+        break
+      }
+    }
+  }
+  s$null_index = -9
+  s$V = 1
+  s$sets = susie_get_cs(s, X=X, min_abs_corr=min_abs_corr)
+  s$pip = susie_get_pip(s, prior_tol=prior_tol)
+  return(s)
+}
+
+update_each_effect = function(X, Xbar, X_for_Y_missing, Y, s, Y_missing_pattern_assign, residual_variance_inv, svs_inv) {
+  # Repeat for each effect to update.
+  L = nrow(s$alpha)
+  if (L &gt; 0)
+    for (l in 1:L) {
+
+      # Remove lth effect from fitted values.
+      s$Xr = s$Xr - compute_Xb(Xbar, X, X_for_Y_missing, s$alpha[l,] * s$mu[l,,])
+
+      # Compute residuals.
+      R = Y - s$Xr
+
+      res = SER(X_for_Y_missing,R,Y_missing_pattern_assign,residual_variance_inv,svs_inv, s$prior, s$prior_weights)
+
+      # Update the variational estimate of the posterior mean.
+      s$alpha[l,]  = res$alpha
+      s$mu[l,,]    = res$mu1
+      s$mu2[l,,]   = res$mu2
+      s$lbf[l]     = res$lbf_model
+
+      s$Xr = s$Xr + compute_Xb(Xbar, X, X_for_Y_missing, s$alpha[l,] * s$mu[l,,])
+    }
+  return(s)
+}
+
+SER = function(X_for_Y_missing, Y, Y_missing_pattern_assign, residual_variance_inv, svs_inv, prior, prior_weights = NULL){
+  J = dim(X_for_Y_missing)[2]
+  if (is.null(prior_weights))
+    prior_weights = rep(1/J,J)
+  XtY = compute_XtY(X_for_Y_missing,Y,Y_missing_pattern_assign, residual_variance_inv)
+  post = multivariate_regression(XtY, svs_inv, prior)
+  posterior_b1 = post$b1 # J by R
+  if (length(dim(post$b2)) == 3) posterior_b2 = t(apply(post$b2, 3, diag)) # J by R
+  else posterior_b2 = post$b2
+  lbf = post$lbf
+  maxlbf = max(lbf)
+  # w is proportional to BF, but subtract max for numerical stability.
+  w = exp(lbf - maxlbf)
+  # Posterior prob for each SNP.
+  w_weighted = w * prior_weights
+  weighted_sum_w = sum(w_weighted)
+  alpha = w_weighted / weighted_sum_w
+  lbf_model = maxlbf + log(weighted_sum_w)
+  return(list(alpha = alpha,mu1 = posterior_b1,mu2 = posterior_b2,lbf = lbf,
+              lbf_model = lbf_model))
+}
+
+multivariate_regression = function(XtY, svs_inv, U) {
+  post_cov = lapply(1:length(svs_inv), function(j) U %*% solve(diag(nrow(U)) + svs_inv[[j]] %*% U))
+  lbf = sapply(1:length(svs_inv), function(j) -0.5 * log(det(diag(nrow(U)) + svs_inv[[j]] %*% U)) + 0.5*t(XtY[j,])%*%(post_cov[[j]]%*%XtY[j,]))
+  lbf[which(is.nan(lbf))] = 0
+  post_b1 = t(do.call(cbind, lapply(1:length(svs_inv), function(j) post_cov[[j]] %*% XtY[j,]))) # J by R
+  post_b2 = lapply(1:length(post_cov), function(j) tcrossprod(post_b1[j,]) + post_cov[[j]]) # length J list with R by R matrix
+  # deal with degerated case with 1 condition
+  if (ncol(post_b1) == 1) {
+    post_b2 = matrix(unlist(post_b2), length(post_b2), 1)
+  } else {
+    post_b2 = aperm(abind(post_b2, along = 3), c(2,1,3)) # R by R by J
+  }
+  return(list(b1 = post_b1, b2 = post_b2, lbf = lbf, cov = post_cov))
+}
+
+## utils
+invert_via_chol = function(x) {
+  if (all(x==0)) return(x)
+  return(chol2inv(muffled_chol(x)))
+}
+
+muffled_chol = function(x, ...){
+  withCallingHandlers(chol(x, ...),
+                      warning = function(w) {
+                        if (grepl(&quot;the matrix is either rank-deficient or indefinite&quot;, w$message))
+                          invokeRestart(&quot;muffleWarning&quot;)
+                      })
+}
+
+compute_XtY = function(X_for_Y_missing,Y,Y_missing_pattern_assign,residual_variance_inv){ # J by R
+  N = dim(X_for_Y_missing)[1]
+  J = dim(X_for_Y_missing)[2]
+  if(length(dim(X_for_Y_missing)) == 3){ ## approximate
+    XtY &lt;- t(sapply(1:J, function(j) Reduce(&#39;+&#39;, lapply(1:N, function(i) (residual_variance_inv[[Y_missing_pattern_assign[i]]] %*%Y[i,]) * X_for_Y_missing[i,j,]) )))
+  }else{
+    XtY &lt;- t(sapply(1:J, function(j) Reduce(&#39;+&#39;, lapply(1:N, function(i) crossprod(X_for_Y_missing[i,j,,],
+                                                                                   residual_variance_inv[[Y_missing_pattern_assign[i]]] %*%Y[i,]) ))))
+  }
+  if (nrow(XtY) != J) XtY &lt;- t(XtY)
+  return(XtY)
+}
+
+init = function(N, J, R, L, U, prior_weights){
+  if(is.null(prior_weights))
+    prior_weights = rep(1/J,J)
+  else
+    prior_weights = prior_weights / sum(prior_weights)
+
+  s = list(alpha  = matrix(1/J, L, J),
+           mu     = array(0,dim = c(L, J, R)),
+           mu2    = array(0,dim = c(L, J, R)),
+           Xr     = matrix(0,N, R),
+           prior      = U,
+           prior_weights = prior_weights)
+  class(s) = &#39;susie&#39;
+  return(s)
+}
+
+compute_Xb = function(Xbar, X, X_for_Y_missing, b){
+  if(is.vector(b)){
+    b = matrix(b, length(b),1)
+  }
+  if(length(dim(X_for_Y_missing)) == 3){
+    Xb = sapply(1:ncol(b), function(r) X_for_Y_missing[,,r] %*% b[,r])
+  }else{
+    Xbarb = Reduce(&#39;+&#39;, lapply(1:ncol(X), function(j) Xbar[j,,] %*% b[j,]))
+    Xb = X %*% b - matrix(Xbarb, nrow(X), ncol(b), byrow = TRUE)
+  }
+  return(Xb)
+}</code></pre>
+<p>Load data</p>
+<pre class="r"><code>dat = readRDS(&#39;data/ENSG00000140265.12.Multi_Tissues.problem.rds&#39;)</code></pre>
+<p>Model with dense residual varaince</p>
+<pre class="r"><code>m = mvsusie_missing(dat$X, dat$Y, prior_variance = dat$prior$FLASH_1, residual_variance = dat$residual_var, L = 1, approximate=FALSE)
+susie_plot(m, y=&#39;PIP&#39;)</code></pre>
+<p><img src="figure/GTExprofileProblem.Rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>The CS is</p>
+<pre class="r"><code>m$sets</code></pre>
+<pre><code>$cs
+$cs$L1
+ [1] 243 244 249 253 260 263 264 265 268 270
+
+
+$purity
+   min.abs.corr mean.abs.corr median.abs.corr
+L1    0.9458794     0.9856198       0.9887131
+
+$cs_index
+[1] 1
+
+$coverage
+[1] 0.95</code></pre>
+<p>Model with diagonal residual variance</p>
+<pre class="r"><code>m_diag = mvsusie_missing(dat$X, dat$Y, prior_variance = dat$prior$FLASH_1, residual_variance = diag(diag(dat$residual_var)), L = 1, approximate=TRUE)
+susie_plot(m_diag, y=&#39;PIP&#39;)</code></pre>
+<p><img src="figure/GTExprofileProblem.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /> The CS is</p>
+<pre class="r"><code>m_diag$sets</code></pre>
+<pre><code>$cs
+$cs$L1
+[1] 253
+
+
+$purity
+   min.abs.corr mean.abs.corr median.abs.corr
+L1            1             1               1
+
+$cs_index
+[1] 1
+
+$coverage
+[1] 0.95</code></pre>
+<div id="sanity-check-using-identity-matrix-as-prior-variance" class="section level2">
+<h2>Sanity check using Identity matrix as prior variance</h2>
+<p>Model with dense residual varaince</p>
+<pre class="r"><code>mi = mvsusie_missing(dat$X, dat$Y, prior_variance = diag(49), residual_variance = dat$residual_var, L = 1, approximate=FALSE)
+susie_plot(mi, y=&#39;PIP&#39;)</code></pre>
+<p><img src="figure/GTExprofileProblem.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Model with diagonal residual variance</p>
+<pre class="r"><code>mi_diag = mvsusie_missing(dat$X, dat$Y, prior_variance = diag(49), residual_variance = diag(diag(dat$residual_var)), L = 1, approximate=TRUE)
+susie_plot(mi_diag, y=&#39;PIP&#39;)</code></pre>
+<p><img src="figure/GTExprofileProblem.Rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>As a sanity check for the implemented method, we fit model for each tissue separately. The product of fitted BFs over all tissues should equal to the BFs from model with diagonal residual variance and Identity prior matrix.</p>
+<pre class="r"><code>malpha_r = matrix(NA, 49, 501)
+for(r in 1:49){
+  mr = mvsusie_missing(dat$X, dat$Y[,r], prior_variance = matrix(1,1,1), residual_variance = diag(dat$residual_var)[r], L = 1, approximate=TRUE)
+  malpha_r[r, ] = mr$alpha
+}
+{plot(apply(malpha_r, 2, prod)/sum(apply(malpha_r, 2, prod)), mi_diag$alpha, xlab=&#39;product of BF&#39;, ylab=&#39;BF from mvsusie&#39;)
+abline(0,1)}</code></pre>
+<p><img src="figure/GTExprofileProblem.Rmd/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 3.6.3 (2020-02-29)
+Platform: x86_64-apple-darwin15.6.0 (64-bit)
+Running under: macOS Catalina 10.15.7
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRblas.0.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] susieR_0.9.26   abind_1.4-5     workflowr_1.6.2
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.0.5       plyr_1.8.6       pillar_1.4.6     compiler_3.6.3  
+ [5] later_1.1.0.1    git2r_0.27.1     tools_3.6.3      digest_0.6.27   
+ [9] evaluate_0.14    lifecycle_0.2.0  tibble_3.0.4     gtable_0.3.0    
+[13] lattice_0.20-41  pkgconfig_2.0.3  rlang_0.4.8      Matrix_1.2-18   
+[17] rstudioapi_0.11  yaml_2.2.1       xfun_0.18        dplyr_1.0.2     
+[21] stringr_1.4.0    knitr_1.30       generics_0.0.2   fs_1.5.0        
+[25] vctrs_0.3.4      tidyselect_1.1.0 rprojroot_1.3-2  grid_3.6.3      
+[29] reshape_0.8.8    glue_1.4.2       R6_2.4.1.9001    rmarkdown_2.5   
+[33] purrr_0.3.4      ggplot2_3.3.2    magrittr_1.5     whisker_0.4     
+[37] backports_1.1.10 scales_1.1.1     promises_1.1.1   ellipsis_0.3.1  
+[41] htmltools_0.5.0  colorspace_1.4-1 httpuv_1.5.4     stringi_1.5.3   
+[45] munsell_0.5.0    crayon_1.3.4    </code></pre>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
