@@ -1,0 +1,70 @@
+---
+title: "GTEx real data problem"
+author: "Yuxin Zou"
+date: "10/29/2020"
+output:
+  workflowr::wflow_html:
+    code_folding: hide
+---
+
+We investigate the BF problem observed [here](GTExprofile.html) in more details. We fit model with L = 1 and a simpler prior. We don't estimate prior scalar.
+
+```{r}
+knitr::read_chunk("code/mvsusie_missing.R")
+```
+
+R code for mvSuSiE with missing data in Y:
+```{r mvsusie_missing}
+```
+
+Load data
+```{r}
+dat = readRDS('data/ENSG00000140265.12.Multi_Tissues.problem.rds')
+```
+
+Model with dense residual varaince
+```{r}
+m = mvsusie_missing(dat$X, dat$Y, prior_variance = dat$prior$FLASH_1, residual_variance = dat$residual_var, L = 1, approximate=FALSE)
+susie_plot(m, y='PIP')
+```
+
+The CS is
+```{r}
+m$sets
+```
+
+Model with diagonal residual variance
+```{r}
+m_diag = mvsusie_missing(dat$X, dat$Y, prior_variance = dat$prior$FLASH_1, residual_variance = diag(diag(dat$residual_var)), L = 1, approximate=TRUE)
+susie_plot(m_diag, y='PIP')
+```
+The CS is
+```{r}
+m_diag$sets
+```
+
+## Sanity check using Identity matrix as prior variance
+
+Model with dense residual varaince
+```{r}
+mi = mvsusie_missing(dat$X, dat$Y, prior_variance = diag(49), residual_variance = dat$residual_var, L = 1, approximate=FALSE)
+susie_plot(mi, y='PIP')
+```
+
+Model with diagonal residual variance
+```{r}
+mi_diag = mvsusie_missing(dat$X, dat$Y, prior_variance = diag(49), residual_variance = diag(diag(dat$residual_var)), L = 1, approximate=TRUE)
+susie_plot(mi_diag, y='PIP')
+```
+
+As a sanity check for the implemented method, we fit model for each tissue separately. The product of fitted BFs over all tissues should equal to the BFs from model with diagonal residual variance and Identity prior matrix.
+
+```{r}
+malpha_r = matrix(NA, 49, 501)
+for(r in 1:49){
+  mr = mvsusie_missing(dat$X, dat$Y[,r], prior_variance = matrix(1,1,1), residual_variance = diag(dat$residual_var)[r], L = 1, approximate=TRUE)
+  malpha_r[r, ] = mr$alpha
+}
+{plot(apply(malpha_r, 2, prod)/sum(apply(malpha_r, 2, prod)), mi_diag$alpha, xlab='product of BF', ylab='BF from mvsusie')
+abline(0,1)}
+```
