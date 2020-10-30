@@ -30,3 +30,6 @@ This repository contains simulation results related to M&M RSS.
 mvSuSiE full data application on GTEx
 
 * [Profile using GTEx](GTExprofile.html)
+
+    [Problem](GTExprofileProblem.html)
+    
