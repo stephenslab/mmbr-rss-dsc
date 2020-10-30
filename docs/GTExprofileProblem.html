@@ -519,16 +519,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree6cd6fac89a3254e7f28a96d6d9ff7ca870362b6btargetblank6cd6faca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/6cd6fac89a3254e7f28a96d6d9ff7ca870362b6b" target="_blank">6cd6fac</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree414facbdb2c2d263d26867c30f488de4b73e1b06targetblank414facba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/414facbdb2c2d263d26867c30f488de4b73e1b06" target="_blank">414facb</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree6cd6fac89a3254e7f28a96d6d9ff7ca870362b6btargetblank6cd6faca" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree414facbdb2c2d263d26867c30f488de4b73e1b06targetblank414facba" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/6cd6fac89a3254e7f28a96d6d9ff7ca870362b6b" target="_blank">6cd6fac</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/414facbdb2c2d263d26867c30f488de4b73e1b06" target="_blank">414facb</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -609,6 +609,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/414facbdb2c2d263d26867c30f488de4b73e1b06/analysis/GTExprofileProblem.Rmd" target="_blank">414facb</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-10-29
+</td>
+<td>
+wflow_publish(&quot;analysis/GTExprofileProblem.Rmd&quot;)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/88f7737bf25bfa3c518704d8e814a5fc3a754bd2/docs/GTExprofileProblem.html" target="_blank">88f7737</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-10-29
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -875,7 +909,44 @@ compute_Xb = function(Xbar, X, X_for_Y_missing, b){
 <pre class="r"><code>m = mvsusie_missing(dat$X, dat$Y, prior_variance = dat$prior$FLASH_1, residual_variance = dat$residual_var, L = 1, approximate=FALSE)
 susie_plot(m, y=&#39;PIP&#39;)</code></pre>
 <p><img src="figure/GTExprofileProblem.Rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>The CS is</p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
+Past versions of unnamed-chunk-3-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/88f7737bf25bfa3c518704d8e814a5fc3a754bd2/docs/figure/GTExprofileProblem.Rmd/unnamed-chunk-3-1.png" target="_blank">88f7737</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-10-29
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Check CS details:</p>
 <pre class="r"><code>m$sets</code></pre>
 <pre><code>$cs
 $cs$L1
@@ -894,7 +965,45 @@ $coverage
 <p>Model with diagonal residual variance</p>
 <pre class="r"><code>m_diag = mvsusie_missing(dat$X, dat$Y, prior_variance = dat$prior$FLASH_1, residual_variance = diag(diag(dat$residual_var)), L = 1, approximate=TRUE)
 susie_plot(m_diag, y=&#39;PIP&#39;)</code></pre>
-<p><img src="figure/GTExprofileProblem.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /> The CS is</p>
+<p><img src="figure/GTExprofileProblem.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
+Past versions of unnamed-chunk-5-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/88f7737bf25bfa3c518704d8e814a5fc3a754bd2/docs/figure/GTExprofileProblem.Rmd/unnamed-chunk-5-1.png" target="_blank">88f7737</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-10-29
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Check CS details:</p>
 <pre class="r"><code>m_diag$sets</code></pre>
 <pre><code>$cs
 $cs$L1
@@ -916,10 +1025,84 @@ $coverage
 <pre class="r"><code>mi = mvsusie_missing(dat$X, dat$Y, prior_variance = diag(49), residual_variance = dat$residual_var, L = 1, approximate=FALSE)
 susie_plot(mi, y=&#39;PIP&#39;)</code></pre>
 <p><img src="figure/GTExprofileProblem.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-1">
+Past versions of unnamed-chunk-7-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-7-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/88f7737bf25bfa3c518704d8e814a5fc3a754bd2/docs/figure/GTExprofileProblem.Rmd/unnamed-chunk-7-1.png" target="_blank">88f7737</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-10-29
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>Model with diagonal residual variance</p>
 <pre class="r"><code>mi_diag = mvsusie_missing(dat$X, dat$Y, prior_variance = diag(49), residual_variance = diag(diag(dat$residual_var)), L = 1, approximate=TRUE)
 susie_plot(mi_diag, y=&#39;PIP&#39;)</code></pre>
 <p><img src="figure/GTExprofileProblem.Rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-1">
+Past versions of unnamed-chunk-8-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-8-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/88f7737bf25bfa3c518704d8e814a5fc3a754bd2/docs/figure/GTExprofileProblem.Rmd/unnamed-chunk-8-1.png" target="_blank">88f7737</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-10-29
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>As a sanity check for the implemented method, we fit model for each tissue separately. The product of fitted BFs over all tissues should equal to the BFs from model with diagonal residual variance and Identity prior matrix.</p>
 <pre class="r"><code>malpha_r = matrix(NA, 49, 501)
 for(r in 1:49){
@@ -929,6 +1112,43 @@ for(r in 1:49){
 {plot(apply(malpha_r, 2, prod)/sum(apply(malpha_r, 2, prod)), mi_diag$alpha, xlab=&#39;product of BF&#39;, ylab=&#39;BF from mvsusie&#39;)
 abline(0,1)}</code></pre>
 <p><img src="figure/GTExprofileProblem.Rmd/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-9-1">
+Past versions of unnamed-chunk-9-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-9-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/88f7737bf25bfa3c518704d8e814a5fc3a754bd2/docs/figure/GTExprofileProblem.Rmd/unnamed-chunk-9-1.png" target="_blank">88f7737</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-10-29
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
