@@ -428,7 +428,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-10-29
+<strong>Last updated:</strong> 2020-11-05
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -519,16 +519,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree414facbdb2c2d263d26867c30f488de4b73e1b06targetblank414facba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/414facbdb2c2d263d26867c30f488de4b73e1b06" target="_blank">414facb</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree3f5d1aa132004eee814ae43ad794ff242cad171btargetblank3f5d1aaa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/3f5d1aa132004eee814ae43ad794ff242cad171b" target="_blank">3f5d1aa</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree414facbdb2c2d263d26867c30f488de4b73e1b06targetblank414facba" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree3f5d1aa132004eee814ae43ad794ff242cad171btargetblank3f5d1aaa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/414facbdb2c2d263d26867c30f488de4b73e1b06" target="_blank">414facb</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/3f5d1aa132004eee814ae43ad794ff242cad171b" target="_blank">3f5d1aa</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -541,8 +541,6 @@ Ignored files:
     Ignored:    output/.DS_Store
 
 Untracked files:
-    Untracked:  code/mvsusie_missing.R
-    Untracked:  data/ENSG00000140265.12.Multi_Tissues.problem.rds
     Untracked:  data/ENSG00000140265.12.Multi_Tissues.rds
     Untracked:  data/FastQTLSumStats.mash.FL_PC3.rds
     Untracked:  output/.mmbr_gtex_res.Rprof.swp
@@ -571,6 +569,7 @@ Untracked files:
 
 Unstaged changes:
     Modified:   analysis/mmbr_missing_rss_problem1.Rmd
+    Modified:   code/mvsusie_missing.R
 
 </code></pre>
 <p>
@@ -609,6 +608,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/3f5d1aa132004eee814ae43ad794ff242cad171b/analysis/GTExprofileProblem.Rmd" target="_blank">3f5d1aa</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-11-05
+</td>
+<td>
+wflow_publish(&quot;analysis/GTExprofileProblem.Rmd&quot;)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/a91be0275ae9fb9ae16d4a9e5fae7b5f806743cd/docs/GTExprofileProblem.html" target="_blank">a91be02</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-10-29
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -673,10 +706,14 @@ wflow_publish(&quot;analysis/GTExprofileProblem.Rmd&quot;)
 <pre class="r"><code>## this is a simplified implementation for mvSuSiE with missing data in Y
 ## prior_variance is a matrix
 ## prior_variance and residual_variance are fixed in the algorithm.
+
+## If compute_objective = TRUE, the stopping criteria is based on elbo;
+## otherwise, it is based on changes in pip.
 library(abind)
 library(susieR)
 mvsusie_missing = function(X, Y, L=10, prior_variance, residual_variance, approximate=FALSE, intercept = TRUE,
-                           max_iter = 100, prior_weights=NULL, tol=1e-3, min_abs_corr=0.5, prior_tol=1E-9){
+                           max_iter = 100, prior_weights=NULL, tol=1e-3, min_abs_corr=0.5, prior_tol=1E-9,
+                           compute_objective = FALSE){
   if (is.null(dim(Y))) Y &lt;- matrix(Y,length(Y),1)
   R &lt;- ncol(Y)
   N &lt;- nrow(Y)
@@ -702,15 +739,26 @@ mvsusie_missing = function(X, Y, L=10, prior_variance, residual_variance, approx
 
   ## compute inverse of residual variance for each missing pattern
   residual_variance_inv &lt;- list()
+  residual_variance_eigen &lt;- list()
   for(k in 1:nrow(missing_pattern)){
     if(R == 1){
       residual_variance_inv[[k]] &lt;- missing_pattern[k,] / residual_variance
+      if(sum(missing_pattern[k,])&gt;0){
+        residual_variance_eigen[[k]] &lt;- residual_variance
+      }else{
+        residual_variance_eigen[[k]] &lt;- numeric(0)
+      }
     }else{
-      Vk = residual_variance[which(missing_pattern[k,]), which(missing_pattern[k,])]
-      eigenVk = eigen(Vk, symmetric = TRUE)
-      dinv = 1/(eigenVk$values)
       residual_variance_inv[[k]] &lt;- matrix(0, R, R)
-      residual_variance_inv[[k]][which(missing_pattern[k,]), which(missing_pattern[k,])] = eigenVk$vectors %*% (dinv * t(eigenVk$vectors))
+      if(sum(missing_pattern[k,])&gt;0){
+        Vk = residual_variance[which(missing_pattern[k,]), which(missing_pattern[k,])]
+        eigenVk &lt;- eigen(Vk, symmetric = TRUE)
+        dinv &lt;- 1/(eigenVk$values)
+        residual_variance_eigen[[k]] &lt;- eigenVk$values
+        residual_variance_inv[[k]][which(missing_pattern[k,]), which(missing_pattern[k,])] &lt;- eigenVk$vectors %*% (dinv * t(eigenVk$vectors))
+      }else{
+        residual_variance_eigen[[k]] &lt;- numeric(0)
+      }
     }
   }
 
@@ -766,19 +814,36 @@ mvsusie_missing = function(X, Y, L=10, prior_variance, residual_variance, approx
     }
   }
   s = init(N, J, R, L, prior_variance, prior_weights)
+  s$R = Y
   pip_history = list()
+  if(compute_objective){
+    elbo = c()
+  }else{
+    elbo = NA
+  }
   for(i in 1:max_iter){
-    s = update_each_effect(X, Xbar, X_for_Y_missing, Y, s, Y_missing_pattern_assign, residual_variance_inv, svs_inv)
+    s = update_each_effect(X, Xbar, X_for_Y_missing, Y, s, Y_missing_pattern_assign, residual_variance_inv, svs_inv, compute_objective)
     pip_history[[i]] = s$alpha
+    if(compute_objective){
+      elbo = c(elbo, get_elbo(s, Xbar, X, X_for_Y_missing, Y, Y_missing_pattern_assign, residual_variance_eigen, residual_variance_inv))
+    }
     if(i &gt; 1){
-      delta = max(abs(apply(1 - pip_history[[i]], 2, prod) - apply(1 - pip_history[[i-1]], 2, prod)))
-      if(delta &lt; tol){
-        s$niter = i
-        s$delta = delta
-        break
+      if(compute_objective){
+        if((elbo[i]-elbo[i-1])&lt;tol) {
+          s$niter = i
+          break;
+        }
+      }else{
+        delta = max(abs(apply(1 - pip_history[[i]], 2, prod) - apply(1 - pip_history[[i-1]], 2, prod)))
+        if(delta &lt; tol){
+          s$niter = i
+          s$delta = delta
+          break
+        }
       }
     }
   }
+  s$elbo = elbo
   s$null_index = -9
   s$V = 1
   s$sets = susie_get_cs(s, X=X, min_abs_corr=min_abs_corr)
@@ -786,40 +851,49 @@ mvsusie_missing = function(X, Y, L=10, prior_variance, residual_variance, approx
   return(s)
 }
 
-update_each_effect = function(X, Xbar, X_for_Y_missing, Y, s, Y_missing_pattern_assign, residual_variance_inv, svs_inv) {
+update_each_effect = function(X, Xbar, X_for_Y_missing, Y, s, Y_missing_pattern_assign, residual_variance_inv, svs_inv, compute_objective) {
   # Repeat for each effect to update.
   L = nrow(s$alpha)
   if (L &gt; 0)
     for (l in 1:L) {
 
-      # Remove lth effect from fitted values.
-      s$Xr = s$Xr - compute_Xb(Xbar, X, X_for_Y_missing, s$alpha[l,] * s$mu[l,,])
+      # # Remove lth effect from fitted values.
+      # s$Xr = s$Xr - compute_Xb(Xbar, X, X_for_Y_missing, s$alpha[l,] * s$mu[l,,])
+      #
+      # # Compute residuals.
+      # R = Y - s$Xr
+      s$R = s$R + compute_Xb(Xbar, X, X_for_Y_missing, s$alpha[l,] * s$mu[l,,])
 
-      # Compute residuals.
-      R = Y - s$Xr
-
-      res = SER(X_for_Y_missing,R,Y_missing_pattern_assign,residual_variance_inv,svs_inv, s$prior, s$prior_weights)
+      res = SER(X, X_for_Y_missing,Xbar,s$R,Y_missing_pattern_assign,residual_variance_inv,svs_inv, s$prior, s$prior_weights)
 
       # Update the variational estimate of the posterior mean.
       s$alpha[l,]  = res$alpha
       s$mu[l,,]    = res$mu1
-      s$mu2[l,,]   = res$mu2
+      s$mu2[l,,,]   = res$mu2
       s$lbf[l]     = res$lbf_model
-
-      s$Xr = s$Xr + compute_Xb(Xbar, X, X_for_Y_missing, s$alpha[l,] * s$mu[l,,])
+      if(compute_objective){
+        if (length(dim(res$mu2)) == 3) {
+          pb2 = lapply(1:nrow(res$mu1), function(j) res$alpha[j] * res$mu2[j,,])
+        } else {
+          pb2 = lapply(1:nrow(res$mu1), function(j) res$alpha[j] * matrix(res$mu2[j,]))
+        }
+        Xb = compute_Xb(Xbar, X, X_for_Y_missing, s$alpha[l,] * s$mu[l,,])
+        E1 = sum(sapply(1:nrow(Y), function(i) crossprod(s$R[i,], residual_variance_inv[[Y_missing_pattern_assign[i]]] %*% Xb[i,])))
+        s$vbxxb[l] = sum(sapply(1:length(pb2), function(j) tr(svs_inv[[j]] %*% pb2[[j]])))
+        s$kl[l] = E1 - (s$vbxxb[l] / 2) - res$lbf_model
+      }
+      # s$Xr = s$Xr + compute_Xb(Xbar, X, X_for_Y_missing, s$alpha[l,] * s$mu[l,,])
+      s$R = s$R - compute_Xb(Xbar, X, X_for_Y_missing, s$alpha[l,] * s$mu[l,,])
     }
   return(s)
 }
 
-SER = function(X_for_Y_missing, Y, Y_missing_pattern_assign, residual_variance_inv, svs_inv, prior, prior_weights = NULL){
+SER = function(X, X_for_Y_missing, Xbar, Y, Y_missing_pattern_assign, residual_variance_inv, svs_inv, prior, prior_weights = NULL){
   J = dim(X_for_Y_missing)[2]
   if (is.null(prior_weights))
     prior_weights = rep(1/J,J)
-  XtY = compute_XtY(X_for_Y_missing,Y,Y_missing_pattern_assign, residual_variance_inv)
+  XtY = compute_XtY(X, X_for_Y_missing,Y,Y_missing_pattern_assign, residual_variance_inv, Xbar)
   post = multivariate_regression(XtY, svs_inv, prior)
-  posterior_b1 = post$b1 # J by R
-  if (length(dim(post$b2)) == 3) posterior_b2 = t(apply(post$b2, 3, diag)) # J by R
-  else posterior_b2 = post$b2
   lbf = post$lbf
   maxlbf = max(lbf)
   # w is proportional to BF, but subtract max for numerical stability.
@@ -829,7 +903,7 @@ SER = function(X_for_Y_missing, Y, Y_missing_pattern_assign, residual_variance_i
   weighted_sum_w = sum(w_weighted)
   alpha = w_weighted / weighted_sum_w
   lbf_model = maxlbf + log(weighted_sum_w)
-  return(list(alpha = alpha,mu1 = posterior_b1,mu2 = posterior_b2,lbf = lbf,
+  return(list(alpha = alpha,mu1 = post$b1 , mu2 = post$b2 , lbf = lbf,
               lbf_model = lbf_model))
 }
 
@@ -843,9 +917,23 @@ multivariate_regression = function(XtY, svs_inv, U) {
   if (ncol(post_b1) == 1) {
     post_b2 = matrix(unlist(post_b2), length(post_b2), 1)
   } else {
-    post_b2 = aperm(abind(post_b2, along = 3), c(2,1,3)) # R by R by J
+    post_b2 = aperm(abind(post_b2, along = 3), c(3,1,2)) # J by R by R
   }
   return(list(b1 = post_b1, b2 = post_b2, lbf = lbf, cov = post_cov))
+}
+
+get_elbo = function(s, Xbar, X, X_for_Y_missing, Y, Y_missing_pattern_assign, residual_variance_eigenvalues, residual_variance_inv){
+  N = length(Y_missing_pattern_assign)
+  Y_missing_assign =  table(Y_missing_pattern_assign)
+  expected_loglik = -0.5 * log(2*pi) * sum(sapply(residual_variance_eigenvalues, length) * Y_missing_assign) -
+    0.5 * sum(sapply(residual_variance_eigenvalues, function(x) ifelse(length(x)&gt;0,sum(log(x)),0)) * Y_missing_assign)
+  E1 = sapply(1:nrow(s$alpha), function(l){
+    Xb = compute_Xb(Xbar, X, X_for_Y_missing,s$alpha[l,] * s$mu[l,,])
+    sum(sapply(1:N, function(i) crossprod(Xb[i,], residual_variance_inv[[Y_missing_pattern_assign[i]]] %*% Xb[i, ])  ))
+  })
+  E1 = sum(sapply(1:N, function(i) crossprod(s$R[i,],residual_variance_inv[[Y_missing_pattern_assign[i]]] %*% s$R[i,]) )) - sum(E1)
+  essr = E1 + sum(s$vbxxb)
+  expected_loglik - 0.5 * essr - sum(s$kl)
 }
 
 ## utils
@@ -862,14 +950,14 @@ muffled_chol = function(x, ...){
                       })
 }
 
-compute_XtY = function(X_for_Y_missing,Y,Y_missing_pattern_assign,residual_variance_inv){ # J by R
+compute_XtY = function(X, X_for_Y_missing,Y,Y_missing_pattern_assign,residual_variance_inv, Xbar){ # J by R
   N = dim(X_for_Y_missing)[1]
   J = dim(X_for_Y_missing)[2]
+  VinvY &lt;- t(sapply(1:N, function(i) residual_variance_inv[[Y_missing_pattern_assign[i]]] %*% Y[i,])) # N by R
   if(length(dim(X_for_Y_missing)) == 3){ ## approximate
-    XtY &lt;- t(sapply(1:J, function(j) Reduce(&#39;+&#39;, lapply(1:N, function(i) (residual_variance_inv[[Y_missing_pattern_assign[i]]] %*%Y[i,]) * X_for_Y_missing[i,j,]) )))
+    XtY &lt;- t(sapply(1:J, function(j) colSums(X_for_Y_missing[,j,] * VinvY) ))
   }else{
-    XtY &lt;- t(sapply(1:J, function(j) Reduce(&#39;+&#39;, lapply(1:N, function(i) crossprod(X_for_Y_missing[i,j,,],
-                                                                                   residual_variance_inv[[Y_missing_pattern_assign[i]]] %*%Y[i,]) ))))
+    XtY &lt;- t(sapply(1:J, function(j) colSums(X[,j] * VinvY) - crossprod(Xbar[j,,], colSums(VinvY)) ))
   }
   if (nrow(XtY) != J) XtY &lt;- t(XtY)
   return(XtY)
@@ -883,10 +971,13 @@ init = function(N, J, R, L, U, prior_weights){
 
   s = list(alpha  = matrix(1/J, L, J),
            mu     = array(0,dim = c(L, J, R)),
-           mu2    = array(0,dim = c(L, J, R)),
+           mu2    = array(0,dim = c(L, J, R, R)),
            Xr     = matrix(0,N, R),
            prior      = U,
-           prior_weights = prior_weights)
+           prior_weights = prior_weights,
+           kl = numeric(L),
+           vbxxb = numeric(L),
+           R = matrix(0,N, R))
   class(s) = &#39;susie&#39;
   return(s)
 }
@@ -902,11 +993,17 @@ compute_Xb = function(Xbar, X, X_for_Y_missing, b){
     Xb = X %*% b - matrix(Xbarb, nrow(X), ncol(b), byrow = TRUE)
   }
   return(Xb)
+}
+
+tr = function (m) {
+  if (!is.matrix(m) | (dim(m)[1] != dim(m)[2]))
+    stop(&quot;Input to tr() function must be a square matrix&quot;)
+  return(sum(diag(m), na.rm = TRUE))
 }</code></pre>
 <p>Load data</p>
 <pre class="r"><code>dat = readRDS(&#39;data/ENSG00000140265.12.Multi_Tissues.problem.rds&#39;)</code></pre>
 <p>Model with dense residual varaince</p>
-<pre class="r"><code>m = mvsusie_missing(dat$X, dat$Y, prior_variance = dat$prior$FLASH_1, residual_variance = dat$residual_var, L = 1, approximate=FALSE)
+<pre class="r"><code>m = mvsusie_missing(dat$X, dat$Y, prior_variance = dat$prior$FLASH_1, residual_variance = dat$residual_var, L = 1, approximate=FALSE, compute_objective = T)
 susie_plot(m, y=&#39;PIP&#39;)</code></pre>
 <p><img src="figure/GTExprofileProblem.Rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -946,6 +1043,9 @@ zouyuxin
 </table>
 </div>
 </div>
+<p>The elbo is</p>
+<pre class="r"><code>m$elbo</code></pre>
+<pre><code>[1] -8050.812 -8050.812</code></pre>
 <p>Check CS details:</p>
 <pre class="r"><code>m$sets</code></pre>
 <pre><code>$cs
@@ -963,46 +1063,12 @@ $cs_index
 $coverage
 [1] 0.95</code></pre>
 <p>Model with diagonal residual variance</p>
-<pre class="r"><code>m_diag = mvsusie_missing(dat$X, dat$Y, prior_variance = dat$prior$FLASH_1, residual_variance = diag(diag(dat$residual_var)), L = 1, approximate=TRUE)
+<pre class="r"><code>m_diag = mvsusie_missing(dat$X, dat$Y, prior_variance = dat$prior$FLASH_1, residual_variance = diag(diag(dat$residual_var)), L = 1, approximate=TRUE, compute_objective = T)
 susie_plot(m_diag, y=&#39;PIP&#39;)</code></pre>
-<p><img src="figure/GTExprofileProblem.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
-Past versions of unnamed-chunk-5-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-5-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/88f7737bf25bfa3c518704d8e814a5fc3a754bd2/docs/figure/GTExprofileProblem.Rmd/unnamed-chunk-5-1.png" target="_blank">88f7737</a>
-</td>
-<td>
-zouyuxin
-</td>
-<td>
-2020-10-29
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p><img src="figure/GTExprofileProblem.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>The elbo is</p>
+<pre class="r"><code>m_diag$elbo</code></pre>
+<pre><code>[1] -8435.62 -8435.62</code></pre>
 <p>Check CS details:</p>
 <pre class="r"><code>m_diag$sets</code></pre>
 <pre><code>$cs
@@ -1022,95 +1088,8 @@ $coverage
 <div id="sanity-check-using-identity-matrix-as-prior-variance" class="section level2">
 <h2>Sanity check using Identity matrix as prior variance</h2>
 <p>Model with dense residual varaince</p>
-<pre class="r"><code>mi = mvsusie_missing(dat$X, dat$Y, prior_variance = diag(49), residual_variance = dat$residual_var, L = 1, approximate=FALSE)
+<pre class="r"><code>mi = mvsusie_missing(dat$X, dat$Y, prior_variance = diag(49), residual_variance = dat$residual_var, L = 1, approximate=FALSE, compute_objective = T)
 susie_plot(mi, y=&#39;PIP&#39;)</code></pre>
-<p><img src="figure/GTExprofileProblem.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-1">
-Past versions of unnamed-chunk-7-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-7-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/88f7737bf25bfa3c518704d8e814a5fc3a754bd2/docs/figure/GTExprofileProblem.Rmd/unnamed-chunk-7-1.png" target="_blank">88f7737</a>
-</td>
-<td>
-zouyuxin
-</td>
-<td>
-2020-10-29
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p>Model with diagonal residual variance</p>
-<pre class="r"><code>mi_diag = mvsusie_missing(dat$X, dat$Y, prior_variance = diag(49), residual_variance = diag(diag(dat$residual_var)), L = 1, approximate=TRUE)
-susie_plot(mi_diag, y=&#39;PIP&#39;)</code></pre>
-<p><img src="figure/GTExprofileProblem.Rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-1">
-Past versions of unnamed-chunk-8-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-8-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/88f7737bf25bfa3c518704d8e814a5fc3a754bd2/docs/figure/GTExprofileProblem.Rmd/unnamed-chunk-8-1.png" target="_blank">88f7737</a>
-</td>
-<td>
-zouyuxin
-</td>
-<td>
-2020-10-29
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p>As a sanity check for the implemented method, we fit model for each tissue separately. The product of fitted BFs over all tissues should equal to the BFs from model with diagonal residual variance and Identity prior matrix.</p>
-<pre class="r"><code>malpha_r = matrix(NA, 49, 501)
-for(r in 1:49){
-  mr = mvsusie_missing(dat$X, dat$Y[,r], prior_variance = matrix(1,1,1), residual_variance = diag(dat$residual_var)[r], L = 1, approximate=TRUE)
-  malpha_r[r, ] = mr$alpha
-}
-{plot(apply(malpha_r, 2, prod)/sum(apply(malpha_r, 2, prod)), mi_diag$alpha, xlab=&#39;product of BF&#39;, ylab=&#39;BF from mvsusie&#39;)
-abline(0,1)}</code></pre>
 <p><img src="figure/GTExprofileProblem.Rmd/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-9-1">
@@ -1149,6 +1128,21 @@ zouyuxin
 </table>
 </div>
 </div>
+<p>Model with diagonal residual variance</p>
+<pre class="r"><code>mi_diag = mvsusie_missing(dat$X, dat$Y, prior_variance = diag(49), residual_variance = diag(diag(dat$residual_var)), L = 1, approximate=TRUE, compute_objective = T)
+susie_plot(mi_diag, y=&#39;PIP&#39;)</code></pre>
+<p><img src="figure/GTExprofileProblem.Rmd/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>As a sanity check for the implemented method, we fit model for each tissue separately. The product of fitted BFs over all tissues should equal to the BFs from model with diagonal residual variance and Identity prior matrix.</p>
+<pre class="r"><code>malpha_r = matrix(NA, 49, 501)
+for(r in 1:49){
+  id = which(!is.na(dat$Y[,r]))
+  mr = susie(dat$X[id,], dat$Y[id,r], scaled_prior_variance = 1/var(dat$Y[,r], na.rm=T) , residual_variance = diag(dat$residual_var)[r], L=1,
+        intercept = T, standardize = F, estimate_residual_variance = F, estimate_prior_variance = F)
+  malpha_r[r, ] = mr$alpha
+}
+{plot(apply(malpha_r, 2, prod)/sum(apply(malpha_r, 2, prod)), mi_diag$alpha, xlab=&#39;product of BF&#39;, ylab=&#39;BF from mvsusie&#39;)
+abline(0,1)}</code></pre>
+<p><img src="figure/GTExprofileProblem.Rmd/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1179,12 +1173,12 @@ loaded via a namespace (and not attached):
  [5] later_1.1.0.1    git2r_0.27.1     tools_3.6.3      digest_0.6.27   
  [9] evaluate_0.14    lifecycle_0.2.0  tibble_3.0.4     gtable_0.3.0    
 [13] lattice_0.20-41  pkgconfig_2.0.3  rlang_0.4.8      Matrix_1.2-18   
-[17] rstudioapi_0.11  yaml_2.2.1       xfun_0.18        dplyr_1.0.2     
-[21] stringr_1.4.0    knitr_1.30       generics_0.0.2   fs_1.5.0        
+[17] rstudioapi_0.11  yaml_2.2.1       xfun_0.19        dplyr_1.0.2     
+[21] stringr_1.4.0    knitr_1.30       generics_0.1.0   fs_1.5.0        
 [25] vctrs_0.3.4      tidyselect_1.1.0 rprojroot_1.3-2  grid_3.6.3      
-[29] reshape_0.8.8    glue_1.4.2       R6_2.4.1.9001    rmarkdown_2.5   
+[29] reshape_0.8.8    glue_1.4.2       R6_2.5.0         rmarkdown_2.5   
 [33] purrr_0.3.4      ggplot2_3.3.2    magrittr_1.5     whisker_0.4     
-[37] backports_1.1.10 scales_1.1.1     promises_1.1.1   ellipsis_0.3.1  
+[37] backports_1.2.0  scales_1.1.1     promises_1.1.1   ellipsis_0.3.1  
 [41] htmltools_0.5.0  colorspace_1.4-1 httpuv_1.5.4     stringi_1.5.3   
 [45] munsell_0.5.0    crayon_1.3.4    </code></pre>
 </div>
