@@ -207,9 +207,9 @@ Model 1 and 3 both give 5 same Credible Sets. There are 3 CSs have overlapped SN
 |         | Total Time                      |  Algorithm Time                     | # iterations          |
 |---------|---------------------------------|-------------------------------------|-----------------------|
 | model 1 | `r res1$result_time['elapsed']` | `r res1$result$walltime['elapsed']` | `r res1$result$niter` |
-| model 2 | `r res2$result_time['elapsed']` | `r res2$result$walltime['elapsed']` | `r res1$result$niter` |
-| model 3 | `r res3$result_time['elapsed']` | `r res3$result$walltime['elapsed']` | `r res1$result$niter` |
-| model 4 | `r res4$result_time['elapsed']` | `r res4$result$walltime['elapsed']` | `r res1$result$niter` |
+| model 2 | `r res2$result_time['elapsed']` | `r res2$result$walltime['elapsed']` | `r res2$result$niter` |
+| model 3 | `r res3$result_time['elapsed']` | `r res3$result$walltime['elapsed']` | `r res3$result$niter` |
+| model 4 | `r res4$result_time['elapsed']` | `r res4$result$walltime['elapsed']` | `r res4$result$niter` |
 
 
 ```{r, eval=FALSE}
@@ -292,8 +292,8 @@ susie_plot(res4_L3$result, y='PIP')
 |         | Total Time                      |  Algorithm Time                     | # iterations          |
 |---------|---------------------------------|-------------------------------------|-----------------------|
 | model 1 | `r res1_L3$result_time['elapsed']` | `r res1_L3$result$walltime['elapsed']` | `r res1$result$niter` |
-| model 3 | `r res3_L3$result_time['elapsed']` | `r res3_L3$result$walltime['elapsed']` | `r res1$result$niter` |
-| model 4 | `r res4_L3$result_time['elapsed']` | `r res4_L3$result$walltime['elapsed']` | `r res1$result$niter` |
+| model 3 | `r res3_L3$result_time['elapsed']` | `r res3_L3$result$walltime['elapsed']` | `r res3$result$niter` |
+| model 4 | `r res4_L3$result_time['elapsed']` | `r res4_L3$result$walltime['elapsed']` | `r res4$result$niter` |
 
 ```{r, eval=FALSE}
 p = mmbr::mmbr_plot(res1_L3$result)
