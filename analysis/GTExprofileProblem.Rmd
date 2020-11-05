@@ -24,8 +24,13 @@ dat = readRDS('data/ENSG00000140265.12.Multi_Tissues.problem.rds')
 
 Model with dense residual varaince
 ```{r}
-m = mvsusie_missing(dat$X, dat$Y, prior_variance = dat$prior$FLASH_1, residual_variance = dat$residual_var, L = 1, approximate=FALSE)
+m = mvsusie_missing(dat$X, dat$Y, prior_variance = dat$prior$FLASH_1, residual_variance = dat$residual_var, L = 1, approximate=FALSE, compute_objective = T)
 susie_plot(m, y='PIP')
+```
+
+The elbo is
+```{r}
+m$elbo
 ```
 
 Check CS details:
@@ -35,8 +40,13 @@ m$sets
 
 Model with diagonal residual variance
 ```{r}
-m_diag = mvsusie_missing(dat$X, dat$Y, prior_variance = dat$prior$FLASH_1, residual_variance = diag(diag(dat$residual_var)), L = 1, approximate=TRUE)
+m_diag = mvsusie_missing(dat$X, dat$Y, prior_variance = dat$prior$FLASH_1, residual_variance = diag(diag(dat$residual_var)), L = 1, approximate=TRUE, compute_objective = T)
 susie_plot(m_diag, y='PIP')
+```
+
+The elbo is
+```{r}
+m_diag$elbo
 ```
 
 Check CS details:
@@ -48,13 +58,13 @@ m_diag$sets
 
 Model with dense residual varaince
 ```{r}
-mi = mvsusie_missing(dat$X, dat$Y, prior_variance = diag(49), residual_variance = dat$residual_var, L = 1, approximate=FALSE)
+mi = mvsusie_missing(dat$X, dat$Y, prior_variance = diag(49), residual_variance = dat$residual_var, L = 1, approximate=FALSE, compute_objective = T)
 susie_plot(mi, y='PIP')
 ```
 
 Model with diagonal residual variance
 ```{r}
-mi_diag = mvsusie_missing(dat$X, dat$Y, prior_variance = diag(49), residual_variance = diag(diag(dat$residual_var)), L = 1, approximate=TRUE)
+mi_diag = mvsusie_missing(dat$X, dat$Y, prior_variance = diag(49), residual_variance = diag(diag(dat$residual_var)), L = 1, approximate=TRUE, compute_objective = T)
 susie_plot(mi_diag, y='PIP')
 ```
 
@@ -63,7 +73,9 @@ As a sanity check for the implemented method, we fit model for each tissue separ
 ```{r}
 malpha_r = matrix(NA, 49, 501)
 for(r in 1:49){
-  mr = mvsusie_missing(dat$X, dat$Y[,r], prior_variance = matrix(1,1,1), residual_variance = diag(dat$residual_var)[r], L = 1, approximate=TRUE)
+  id = which(!is.na(dat$Y[,r]))
+  mr = susie(dat$X[id,], dat$Y[id,r], scaled_prior_variance = 1/var(dat$Y[,r], na.rm=T) , residual_variance = diag(dat$residual_var)[r], L=1,
+        intercept = T, standardize = F, estimate_residual_variance = F, estimate_prior_variance = F)
   malpha_r[r, ] = mr$alpha
 }
 {plot(apply(malpha_r, 2, prod)/sum(apply(malpha_r, 2, prod)), mi_diag$alpha, xlab='product of BF', ylab='BF from mvsusie')
