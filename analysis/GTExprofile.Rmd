@@ -194,7 +194,7 @@ susie_plot(res1$result, y='PIP')
 ```
 Model 3 credible sets:
 ```{r}
-susie_plot(res1$result, y='PIP')
+susie_plot(res3$result, y='PIP')
 ```
 Model 4 credible sets:
 ```{r}
