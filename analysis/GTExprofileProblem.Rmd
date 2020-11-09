@@ -90,4 +90,4 @@ m2 = mmbr::msusie(dat$X, Y, prior_variance = dat$prior$XX, residual_variance = d
 susie_plot(m2, y='PIP', main=paste0('diag(cov(Y)), ELBO=', round(m2$elbo[m2$niter],2)))
 ```
 
-
+There is no overlep between CSs from these 2 models.
