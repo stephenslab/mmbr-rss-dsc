@@ -76,7 +76,7 @@ abline(0,1)}
 
 ## Impute missing Y
 
-To check if the diagonal residual variance has different result in full data case, we use column-mean imputed Y to fit models. We estimate the residual variance using empirical covariance of imputed Y.
+To check if the diagonal residual variance has different result in full data case, we column center Y based on observed entries, then fill in the missing data with 0s.
 
 ```{r}
 Ymean = colMeans(dat$Y, na.rm=T)
