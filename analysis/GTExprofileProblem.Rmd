@@ -83,11 +83,9 @@ Ymean = colMeans(dat$Y, na.rm=T)
 Y = t(t(dat$Y) - Ymean)
 Y[is.na(Y)] = 0
 
-m1 = mmbr::msusie(dat$X, Y, prior_variance = dat$prior$XX, residual_variance = cov(Y), L = 1, compute_objective = T, estimate_prior_variance = FALSE)
-susie_plot(m1, y='PIP', main=paste0('cov(Y), ELBO=', round(m1$elbo[m1$niter],2)))
+m1 = mmbr::msusie(dat$X, Y, prior_variance = dat$prior$XX, residual_variance = dat$residual_var, L = 1, compute_objective = T, estimate_prior_variance = FALSE)
+susie_plot(m1, y='PIP', main=paste0('V, ELBO=', round(m1$elbo[m1$niter],2)))
 
-m2 = mmbr::msusie(dat$X, Y, prior_variance = dat$prior$XX, residual_variance = diag(diag(cov(Y))), L = 1, approximate=FALSE, compute_objective = T, estimate_prior_variance = FALSE)
-susie_plot(m2, y='PIP', main=paste0('diag(cov(Y)), ELBO=', round(m2$elbo[m2$niter],2)))
+m2 = mmbr::msusie(dat$X, Y, prior_variance = dat$prior$XX, residual_variance = diag(diag(dat$residual_var)), L = 1, approximate=FALSE, compute_objective = T, estimate_prior_variance = FALSE)
+susie_plot(m2, y='PIP', main=paste0('diag(V), ELBO=', round(m2$elbo[m2$niter],2)))
 ```
-
-There is no overlep between CSs from these 2 models.
