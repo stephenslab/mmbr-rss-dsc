@@ -31,5 +31,5 @@ mvSuSiE full data application on GTEx
 
 * [New Profile using GTEx](GTExprofile2.html), [Profile using GTEx](GTExprofile.html)
 
-    [Problem](GTExprofileProblem.html)
+    [Problem](GTExprofileProblem.html); [Problem continue](GTExprofileProblem2.html); 
     
