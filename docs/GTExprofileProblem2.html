@@ -519,16 +519,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree33226177b291bb2814dbbb77a7e76efe0511957btargetblank3322617a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/33226177b291bb2814dbbb77a7e76efe0511957b" target="_blank">3322617</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree0a6715ccb5af88eef7350104a58c63f89f8a7866targetblank0a6715ca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/0a6715ccb5af88eef7350104a58c63f89f8a7866" target="_blank">0a6715c</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree33226177b291bb2814dbbb77a7e76efe0511957btargetblank3322617a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree0a6715ccb5af88eef7350104a58c63f89f8a7866targetblank0a6715ca" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/33226177b291bb2814dbbb77a7e76efe0511957b" target="_blank">3322617</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/0a6715ccb5af88eef7350104a58c63f89f8a7866" target="_blank">0a6715c</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -622,6 +622,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/0a6715ccb5af88eef7350104a58c63f89f8a7866/analysis/GTExprofileProblem2.Rmd" target="_blank">0a6715c</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-11-10
+</td>
+<td>
+wflow_publish(&quot;analysis/GTExprofileProblem2.Rmd&quot;)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/28d20bb6a02fe6cff8262bb02baf262bebc03416/docs/GTExprofileProblem2.html" target="_blank">28d20bb</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-11-10
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/33226177b291bb2814dbbb77a7e76efe0511957b/analysis/GTExprofileProblem2.Rmd" target="_blank">3322617</a>
 </td>
 <td>
@@ -657,10 +691,84 @@ U = tcrossprod(u)
 m = mmbr::msusie(dat$X, Y, prior_variance = U, residual_variance = dat$residual_var, L = 1, compute_objective = T, estimate_prior_variance = FALSE)
 susie_plot(m, y=&#39;PIP&#39;, main=paste0(&#39;ELBO=&#39;, round(m$elbo[m$niter],2)))</code></pre>
 <p><img src="figure/GTExprofileProblem2.Rmd/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-2-1">
+Past versions of unnamed-chunk-2-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-2-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/28d20bb6a02fe6cff8262bb02baf262bebc03416/docs/figure/GTExprofileProblem2.Rmd/unnamed-chunk-2-1.png" target="_blank">28d20bb</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-11-10
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>Model with diagonal residual variance</p>
 <pre class="r"><code>m_diag = mmbr::msusie(dat$X, Y, prior_variance = U, residual_variance = diag(diag(dat$residual_var)), L = 1, compute_objective = T, estimate_prior_variance = FALSE)
 susie_plot(m_diag, y=&#39;PIP&#39;, main=paste0(&#39;ELBO=&#39;, round(m_diag$elbo[m_diag$niter],2)))</code></pre>
 <p><img src="figure/GTExprofileProblem2.Rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
+Past versions of unnamed-chunk-3-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/28d20bb6a02fe6cff8262bb02baf262bebc03416/docs/figure/GTExprofileProblem2.Rmd/unnamed-chunk-3-1.png" target="_blank">28d20bb</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-11-10
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>Check CS details:</p>
 <pre class="r"><code>m_diag$sets</code></pre>
 <pre><code>$cs
@@ -682,7 +790,7 @@ $coverage
 \]</span> Let <span class="math inline">\(z \sim N(0, 1)\)</span>, then <span class="math inline">\(\mathbf{b} = z \mathbf{u}\)</span>. The model becomes <span class="math display">\[
 \mathbf{y}_i \sim N_R( x_i z \mathbf{u}, V) \quad z \sim N(0,1)
 \]</span> The BF for comparing this model with the null model (z = 0) is <span class="math display">\[
-BF = (1 + \mathbf{u}^\intercal V^{-1} \mathbf{u} \sum_{i=1}^{N} x_i^2 )^{1/2} \exp\{\frac{1}{2} \frac{(\mathbf{u}^\intercal V^{-1} \sum_{i=1}^N x_i \mathbf{y}_i)^2}{1 + \mathbf{u}^\intercal V^{-1} \mathbf{u} \sum_{i=1}^{N} x_i^2 } \}
+BF = (1 + \mathbf{u}^\intercal V^{-1} \mathbf{u} \sum_{i=1}^{N} x_i^2 )^{-1/2} \exp\{\frac{1}{2} \frac{(\mathbf{u}^\intercal V^{-1} \sum_{i=1}^N x_i \mathbf{y}_i)^2}{1 + \mathbf{u}^\intercal V^{-1} \mathbf{u} \sum_{i=1}^{N} x_i^2 } \}
 \]</span></p>
 <p>The difference in <span class="math inline">\(V^{-1}\)</span> is</p>
 <pre class="r"><code>summary(as.vector(solve(dat$residual_var) - diag(1/diag(dat$residual_var))))</code></pre>
@@ -693,6 +801,43 @@ BF = (1 + \mathbf{u}^\intercal V^{-1} \mathbf{u} \sum_{i=1}^{N} x_i^2 )^{1/2} \e
 {barplot(colSums(solve(dat$residual_var))/sqrt(sum(colSums(solve(dat$residual_var))^2)), main = &#39;normalized u^T Vinv, V dense&#39;)
 barplot((1/diag(dat$residual_var))/sqrt(sum((1/diag(dat$residual_var))^2)), main = &#39;normalized u^T Vinv, V diagonal&#39;)}</code></pre>
 <p><img src="figure/GTExprofileProblem2.Rmd/unnamed-chunk-6-1.png" width="2880" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
+Past versions of unnamed-chunk-6-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-6-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/28d20bb6a02fe6cff8262bb02baf262bebc03416/docs/figure/GTExprofileProblem2.Rmd/unnamed-chunk-6-1.png" target="_blank">28d20bb</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-11-10
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>The difference in results may caused by the difference in the inverse of residual variance matrix.</p>
 <pre class="r"><code># # BF
 # compute_bf = function(X, Y, u, residual_var){
@@ -706,7 +851,7 @@ barplot((1/diag(dat$residual_var))/sqrt(sum((1/diag(dat$residual_var))^2)), main
 #   numerator = numeric(J)
 #   for(j in 1:J){
 #     numerator[j] = (crossprod(u, resid_inv %*% XtY[j,]))^2
-#     lbf[j] = 0.5 * log(1 + crossprod(u, resid_inv %*% u) * d[j]) + 0.5 * ((crossprod(u, resid_inv %*% XtY[j,]))^2) / (1 + crossprod(u, resid_inv %*% u) * d[j] )
+#     lbf[j] = - 0.5 * log(1 + crossprod(u, resid_inv %*% u) * d[j]) + 0.5 * ((crossprod(u, resid_inv %*% XtY[j,]))^2) / (1 + crossprod(u, resid_inv %*% u) * d[j] )
 #   }
 #   return(list(lbf = lbf, numerator = numerator))
 # }
@@ -717,8 +862,11 @@ barplot((1/diag(dat$residual_var))/sqrt(sum((1/diag(dat$residual_var))^2)), main
 #     return(as.vector(w / sum(w)))
 # }
 # 
-# lbf_covy = compute_bf(dat$X, Y, u, residY)
-# lbf_diag = compute_bf(dat$X, Y, u, diag(diag(residY)))</code></pre>
+# lbf_covy = compute_bf(dat$X, Y, u, dat$residual_var)
+# lbf_diag = compute_bf(dat$X, Y, u, diag(diag(dat$residual_var)))
+# 
+# all.equal(compute_softmax(lbf_covy$lbf), m$alpha[1,])
+# all.equal(compute_softmax(lbf_diag$lbf), m_diag$alpha[1,])</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
