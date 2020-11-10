@@ -47,7 +47,7 @@ $$
 $$
 The BF for comparing this model with the null model (z = 0) is
 $$
-BF = (1 + \mathbf{u}^\intercal V^{-1} \mathbf{u} \sum_{i=1}^{N} x_i^2 )^{1/2} \exp\{\frac{1}{2} \frac{(\mathbf{u}^\intercal V^{-1} \sum_{i=1}^N x_i \mathbf{y}_i)^2}{1 + \mathbf{u}^\intercal V^{-1} \mathbf{u} \sum_{i=1}^{N} x_i^2 } \}
+BF = (1 + \mathbf{u}^\intercal V^{-1} \mathbf{u} \sum_{i=1}^{N} x_i^2 )^{-1/2} \exp\{\frac{1}{2} \frac{(\mathbf{u}^\intercal V^{-1} \sum_{i=1}^N x_i \mathbf{y}_i)^2}{1 + \mathbf{u}^\intercal V^{-1} \mathbf{u} \sum_{i=1}^{N} x_i^2 } \}
 $$
 
 The difference in $V^{-1}$ is
@@ -57,7 +57,7 @@ summary(as.vector(solve(dat$residual_var) - diag(1/diag(dat$residual_var))))
 
 In our example, $u^T V^{-1} u =$ `r round(sum(solve(dat$residual_var)),2)` when V is dense;  $u^T V^{-1} u =$ `r round(sum(1/diag(dat$residual_var)),2)` when V is diagonal. 
 
-```{r, fig.width = 30, fig.height = 10}
+```{r fig.width = 30, fig.height = 10}
 par(mfrow=c(1,2))
 {barplot(colSums(solve(dat$residual_var))/sqrt(sum(colSums(solve(dat$residual_var))^2)), main = 'normalized u^T Vinv, V dense')
 barplot((1/diag(dat$residual_var))/sqrt(sum((1/diag(dat$residual_var))^2)), main = 'normalized u^T Vinv, V diagonal')}
@@ -78,7 +78,7 @@ The difference in results may caused by the difference in the inverse of residua
 #   numerator = numeric(J)
 #   for(j in 1:J){
 #     numerator[j] = (crossprod(u, resid_inv %*% XtY[j,]))^2
-#     lbf[j] = 0.5 * log(1 + crossprod(u, resid_inv %*% u) * d[j]) + 0.5 * ((crossprod(u, resid_inv %*% XtY[j,]))^2) / (1 + crossprod(u, resid_inv %*% u) * d[j] )
+#     lbf[j] = - 0.5 * log(1 + crossprod(u, resid_inv %*% u) * d[j]) + 0.5 * ((crossprod(u, resid_inv %*% XtY[j,]))^2) / (1 + crossprod(u, resid_inv %*% u) * d[j] )
 #   }
 #   return(list(lbf = lbf, numerator = numerator))
 # }
@@ -89,7 +89,10 @@ The difference in results may caused by the difference in the inverse of residua
 #     return(as.vector(w / sum(w)))
 # }
 # 
-# lbf_covy = compute_bf(dat$X, Y, u, residY)
-# lbf_diag = compute_bf(dat$X, Y, u, diag(diag(residY)))
+# lbf_covy = compute_bf(dat$X, Y, u, dat$residual_var)
+# lbf_diag = compute_bf(dat$X, Y, u, diag(diag(dat$residual_var)))
+# 
+# all.equal(compute_softmax(lbf_covy$lbf), m$alpha[1,])
+# all.equal(compute_softmax(lbf_diag$lbf), m_diag$alpha[1,])
 ```
 
