@@ -1,0 +1,98 @@
+---
+title: "GTEx real data problem continue"
+author: "Yuxin Zou"
+date: "11/10/2020"
+output:
+  workflowr::wflow_html:
+    code_folding: hide
+---
+
+We further investigate the BF for imputed data [here](GTExprofileProblem.html). We fit model with L = 1 and a simple rank 1 prior. We don't estimate prior scalar.
+
+Load data and impute missing data.
+```{r}
+library(mmbr)
+dat = readRDS('data/ENSG00000140265.12.Multi_Tissues.problem.rds')
+Ymean = colMeans(dat$Y, na.rm=T)
+Y = t(t(dat$Y) - Ymean)
+Y[is.na(Y)] = 0
+```
+
+Model with dense residual varaince
+```{r}
+u = rep(1,49)
+U = tcrossprod(u)
+m = mmbr::msusie(dat$X, Y, prior_variance = U, residual_variance = dat$residual_var, L = 1, compute_objective = T, estimate_prior_variance = FALSE)
+susie_plot(m, y='PIP', main=paste0('ELBO=', round(m$elbo[m$niter],2)))
+```
+
+Model with diagonal residual variance
+```{r}
+m_diag = mmbr::msusie(dat$X, Y, prior_variance = U, residual_variance = diag(diag(dat$residual_var)), L = 1, compute_objective = T, estimate_prior_variance = FALSE)
+susie_plot(m_diag, y='PIP', main=paste0('ELBO=', round(m_diag$elbo[m_diag$niter],2)))
+```
+
+Check CS details:
+```{r}
+m_diag$sets
+```
+
+Suppose there is only one SNP with non-zero effect,
+$$
+\mathbf{y}_i \sim N_R( x_i \mathbf{b}, V) \quad \mathbf{b} \sim N_R(0, \mathbf{u}\mathbf{u}^\intercal)
+$$
+Let $z \sim N(0, 1)$, then $\mathbf{b} = z \mathbf{u}$. The model becomes
+$$
+\mathbf{y}_i \sim N_R( x_i z \mathbf{u}, V) \quad z \sim N(0,1)
+$$
+The BF for comparing this model with the null model (z = 0) is
+$$
+BF = (1 + \mathbf{u}^\intercal V^{-1} \mathbf{u} \sum_{i=1}^{N} x_i^2 )^{-1/2} \exp\{\frac{1}{2} \frac{(\mathbf{u}^\intercal V^{-1} \sum_{i=1}^N x_i \mathbf{y}_i)^2}{1 + \mathbf{u}^\intercal V^{-1} \mathbf{u} \sum_{i=1}^{N} x_i^2 } \}
+$$
+
+The difference in $V^{-1}$ is
+```{r}
+summary(as.vector(solve(dat$residual_var) - diag(1/diag(dat$residual_var))))
+```
+
+In our example, $u^T V^{-1} u =$ `r round(sum(solve(dat$residual_var)),2)` when V is dense;  $u^T V^{-1} u =$ `r round(sum(1/diag(dat$residual_var)),2)` when V is diagonal. 
+
+```{r fig.width = 30, fig.height = 10}
+par(mfrow=c(1,2))
+{barplot(colSums(solve(dat$residual_var))/sqrt(sum(colSums(solve(dat$residual_var))^2)), main = 'normalized u^T Vinv, V dense')
+barplot((1/diag(dat$residual_var))/sqrt(sum((1/diag(dat$residual_var))^2)), main = 'normalized u^T Vinv, V diagonal')}
+```
+
+The difference in results may caused by the difference in the inverse of residual variance matrix.
+
+```{r}
+# # BF
+# compute_bf = function(X, Y, u, residual_var){
+#   J = ncol(X)
+#   Y = t(t(Y) - colMeans(Y))
+#   X = scale(X)
+#   d = colSums(X^2)
+#   resid_inv = solve(residual_var)
+#   XtY = crossprod(X, Y)
+#   lbf = numeric(J)
+#   numerator = numeric(J)
+#   for(j in 1:J){
+#     numerator[j] = (crossprod(u, resid_inv %*% XtY[j,]))^2
+#     lbf[j] = - 0.5 * log(1 + crossprod(u, resid_inv %*% u) * d[j]) + 0.5 * ((crossprod(u, resid_inv %*% XtY[j,]))^2) / (1 + crossprod(u, resid_inv %*% u) * d[j] )
+#   }
+#   return(list(lbf = lbf, numerator = numerator))
+# }
+# 
+# compute_softmax = function(value) {
+#     mvalue = max(value)
+#     w = exp(value-mvalue)
+#     return(as.vector(w / sum(w)))
+# }
+# 
+# lbf_covy = compute_bf(dat$X, Y, u, dat$residual_var)
+# lbf_diag = compute_bf(dat$X, Y, u, diag(diag(dat$residual_var)))
+# 
+# all.equal(compute_softmax(lbf_covy$lbf), m$alpha[1,])
+# all.equal(compute_softmax(lbf_diag$lbf), m_diag$alpha[1,])
+```
+

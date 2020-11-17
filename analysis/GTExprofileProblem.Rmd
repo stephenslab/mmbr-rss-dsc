@@ -7,7 +7,7 @@ output:
     code_folding: hide
 ---
 
-We investigate the BF problem observed [here](GTExprofile.html) in more details. We fit model with L = 1 and a simpler prior. We don't estimate prior scalar.
+We investigate the BF problem observed [here](GTExprofile2.html) in more details. We fit model with L = 1 and a simpler prior. We don't estimate prior scalar.
 
 ```{r}
 knitr::read_chunk("code/mvsusie_missing.R")
@@ -24,8 +24,8 @@ dat = readRDS('data/ENSG00000140265.12.Multi_Tissues.problem.rds')
 
 Model with dense residual varaince
 ```{r}
-m = mvsusie_missing(dat$X, dat$Y, prior_variance = dat$prior$FLASH_1, residual_variance = dat$residual_var, L = 1, approximate=FALSE)
-susie_plot(m, y='PIP')
+m = mvsusie_missing(dat$X, dat$Y, prior_variance = dat$prior$XX, residual_variance = dat$residual_var, L = 1, approximate=FALSE, compute_objective = T)
+susie_plot(m, y='PIP', main=paste0('ELBO=', round(m$elbo[m$niter],2)))
 ```
 
 Check CS details:
@@ -35,8 +35,8 @@ m$sets
 
 Model with diagonal residual variance
 ```{r}
-m_diag = mvsusie_missing(dat$X, dat$Y, prior_variance = dat$prior$FLASH_1, residual_variance = diag(diag(dat$residual_var)), L = 1, approximate=TRUE)
-susie_plot(m_diag, y='PIP')
+m_diag = mvsusie_missing(dat$X, dat$Y, prior_variance = dat$prior$XX, residual_variance = diag(diag(dat$residual_var)), L = 1, approximate=TRUE, compute_objective = T)
+susie_plot(m_diag, y='PIP', main=paste0('ELBO=', round(m_diag$elbo[m_diag$niter],2)))
 ```
 
 Check CS details:
@@ -44,18 +44,20 @@ Check CS details:
 m_diag$sets
 ```
 
+There is no overlep between CSs from these 2 models.
+
 ## Sanity check using Identity matrix as prior variance
 
 Model with dense residual varaince
 ```{r}
-mi = mvsusie_missing(dat$X, dat$Y, prior_variance = diag(49), residual_variance = dat$residual_var, L = 1, approximate=FALSE)
-susie_plot(mi, y='PIP')
+mi = mvsusie_missing(dat$X, dat$Y, prior_variance = diag(49), residual_variance = dat$residual_var, L = 1, approximate=FALSE, compute_objective = T)
+susie_plot(mi, y='PIP', main=paste0('ELBO=', round(mi$elbo[mi$niter],2)))
 ```
 
 Model with diagonal residual variance
 ```{r}
-mi_diag = mvsusie_missing(dat$X, dat$Y, prior_variance = diag(49), residual_variance = diag(diag(dat$residual_var)), L = 1, approximate=TRUE)
-susie_plot(mi_diag, y='PIP')
+mi_diag = mvsusie_missing(dat$X, dat$Y, prior_variance = diag(49), residual_variance = diag(diag(dat$residual_var)), L = 1, approximate=TRUE, compute_objective = T)
+susie_plot(mi_diag, y='PIP', main=paste0('ELBO=', round(mi_diag$elbo[mi_diag$niter],2)))
 ```
 
 As a sanity check for the implemented method, we fit model for each tissue separately. The product of fitted BFs over all tissues should equal to the BFs from model with diagonal residual variance and Identity prior matrix.
@@ -63,9 +65,27 @@ As a sanity check for the implemented method, we fit model for each tissue separ
 ```{r}
 malpha_r = matrix(NA, 49, 501)
 for(r in 1:49){
-  mr = mvsusie_missing(dat$X, dat$Y[,r], prior_variance = matrix(1,1,1), residual_variance = diag(dat$residual_var)[r], L = 1, approximate=TRUE)
+  id = which(!is.na(dat$Y[,r]))
+  mr = susie(dat$X[id,], dat$Y[id,r], scaled_prior_variance = 1/var(dat$Y[,r], na.rm=T) , residual_variance = diag(dat$residual_var)[r], L=1,
+        intercept = T, standardize = F, estimate_residual_variance = F, estimate_prior_variance = F)
   malpha_r[r, ] = mr$alpha
 }
 {plot(apply(malpha_r, 2, prod)/sum(apply(malpha_r, 2, prod)), mi_diag$alpha, xlab='product of BF', ylab='BF from mvsusie')
 abline(0,1)}
+```
+
+## Impute missing Y
+
+To check if the diagonal residual variance has different result in full data case, we column center Y based on observed entries, then fill in the missing data with 0s.
+
+```{r}
+Ymean = colMeans(dat$Y, na.rm=T)
+Y = t(t(dat$Y) - Ymean)
+Y[is.na(Y)] = 0
+
+m1 = mmbr::msusie(dat$X, Y, prior_variance = dat$prior$XX, residual_variance = dat$residual_var, L = 1, compute_objective = T, estimate_prior_variance = FALSE)
+susie_plot(m1, y='PIP', main=paste0('V, ELBO=', round(m1$elbo[m1$niter],2)))
+
+m2 = mmbr::msusie(dat$X, Y, prior_variance = dat$prior$XX, residual_variance = diag(diag(dat$residual_var)), L = 1, approximate=FALSE, compute_objective = T, estimate_prior_variance = FALSE)
+susie_plot(m2, y='PIP', main=paste0('diag(V), ELBO=', round(m2$elbo[m2$niter],2)))
 ```
