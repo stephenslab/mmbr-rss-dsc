@@ -1,0 +1,255 @@
+---
+title: "missing data simple multivariate regression"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Set up some test data
+```{r}
+set.seed(1)
+n= 100
+p = 10
+r = 5
+pmiss = 0.2
+Y = matrix(rnorm(n*r),ncol = r)
+miss = matrix(rbinom(n*r,1,pmiss)==1,ncol=r)
+Y.miss = Y
+Y.miss[miss] = NA
+V = diag(r)
+U = diag(r)
+X = matrix(rnorm(n*p),ncol=p)
+
+```
+
+# No missing data
+
+Here I program a version with no missing data
+```{r}
+simple_regresssion_nomiss = function(x,Y,V,U){
+  Y = scale(Y,scale=FALSE) # center Y
+  x = x- mean(x) # center x
+  
+  VinvU = solve(V,U)
+  A= diag(r) + sum(x^2)*VinvU
+  Sigma = solve(t(A),U)
+  
+  VinvY = solve(V,t(Y))
+  S_inv_mu = VinvY %*% x
+  mu = Sigma %*% S_inv_mu
+  
+  lBF_detterm = -0.5*determinant(A,log=TRUE)$modulus 
+  lBF_expterm = 0.5* t(mu) %*% S_inv_mu
+  return(list(lBF = lBF_detterm + lBF_expterm, mu=mu, Sigma=Sigma, lBF_detterm  = lBF_detterm, lBF_expterm = lBF_expterm))
+}
+```
+
+
+# Computations with missing data
+
+I'm going to store everything in a list for convenience:
+```{r}
+fit.init = function(X,Y,V,U){
+  miss = is.na(Y)
+  Y[miss] = 0 # set missing entries to 0
+  U = unname(0.5*(U+t(U))) # make symmetric
+  V = unname(0.5*(V+t(V)))
+  
+  fit = list(X=X,Y=Y,V=V,U=U,n=nrow(Y),p=ncol(X),r=ncol(Y),miss=miss, lBFs = rep(NA,ncol(X)))
+}
+```
+
+```{r}
+# computes a list of pseudo-inverses
+compute_Vlists = function(fit){
+  #fit$Vlist = list()
+  #fit$Vlist.eigen = list()
+  fit$Vlist.pseudo_inv = list()
+  for(i in 1:fit$n){
+    V = fit$V
+    V[,fit$miss[i,]] = 0
+    V[fit$miss[i,],] = 0
+    
+    fit$Vlist.pseudo_inv[[i]] = corpcor::pseudoinverse(V)
+    fit$Vlist.pseudo_inv[[i]][,fit$miss[i,]] = 0
+    fit$Vlist.pseudo_inv[[i]][fit$miss[i,],] = 0
+  }
+  return(fit)
+}
+```
+
+
+```{r}
+# ith element of VY_list is Vlist.inv[[i]] %*% t(Y[i,])
+compute_VY_list = function(fit){
+  fit$Ylist = list()
+  for(i in 1:fit$n){
+    fit$Ylist[[i]] = cbind(fit$Y[i,])
+  }
+  fit$VY_list = with(fit,mapply(crossprod, Vlist.pseudo_inv, Ylist, SIMPLIFY=FALSE))
+  fit$VY_sum = Reduce(`+`,fit$VY_list)
+  return(fit)
+}
+
+# compute the effective means from the pseudo-inverses
+compute_Vbar_Ybar = function(fit){
+  fit$Vsum = Reduce(`+`, fit$Vlist.pseudo_inv)
+  fit$Vbar = chol2inv(chol((1/n) * fit$Vsum))
+  fit$Ybar = with(fit, (1/n) * Vbar %*% Reduce('+', VY_list))
+  
+  return(fit)
+}
+```
+
+
+
+
+```{r}
+
+# does it for jth column of X in fit
+compute_X_lists = function(fit,j){
+  fit$Vx_list = mapply(`*`,fit$Vlist.pseudo_inv,fit$X[,j], SIMPLIFY = FALSE)
+  fit$Vx2_list = mapply(`*`,fit$Vlist.pseudo_inv,fit$X[,j]^2, SIMPLIFY = FALSE)
+  fit$xVY_list = mapply(`*`,fit$VY_list, fit$X[,j], SIMPLIFY = FALSE)
+  
+  fit$Vx_sum = Reduce(`+`,fit$Vx_list)
+  fit$Vx2_sum = Reduce(`+`,fit$Vx2_list)
+  fit$xVY_sum = Reduce(`+`,fit$xVY_list)
+  
+  fit$Xbar = with(fit, (1/n) * Vbar %*% Vx_sum)
+  return(fit)
+}
+
+# compute the term \sum_i Xtilde_i ' Vpseudo_i Xtilde_i in A.4.73
+compute_XVXsum = function(fit){
+  term1 = fit$Vx2_sum
+  term2 = -2 * fit$Vx_sum %*% fit$Xbar
+  term3 = with(fit, Xbar %*% Reduce(`+`,Vlist.pseudo_inv) %*% Xbar)
+  fit$XVX_sum = term1 + term2 + term3
+  fit$XVX_sum = 0.5*(fit$XVX_sum+t(fit$XVX_sum)) # make symmetric
+  return(fit)
+}
+
+compute_Sigma = function(fit){
+  # temp = with(fit,XVX_sum  %*% U)
+  # temp.svd = svd(temp)
+  # temp.svd$d = 1/(temp.svd$d +1) # compute inverse
+  # temp2 = with(temp.svd,u %*% (d * t(v)))
+  # fit$Sigma = with(fit, U %*% temp2)
+  fit$Sigma = with(fit, solve(t(diag(r) + XVX_sum  %*% U), t(U)))
+  #fit$Sigma = with(fit, U %*% chol2inv(chol(diag(r) + XVX_sum  %*% U,pivot=TRUE)))
+  return(fit)
+}
+
+# Compute Sigma^{-1}mu
+compute_Sinv_mu = function(fit){
+  fit$Sinv_mu = with(fit, xVY_sum - Xbar %*% VY_sum - Vx_sum %*% Ybar + Xbar %*% Vsum %*% Ybar)
+  return(fit)
+}
+
+compute_lBF = function(fit){
+  fit$lBF = with(fit,-0.5*determinant(diag(r)+XVX_sum %*% U, logarithm = TRUE)$modulus + 0.5* t(Sinv_mu) %*% Sigma %*% Sinv_mu)
+  return(fit)
+}
+
+# compute and save lBFs
+compute_lBFs = function(fit, range=1:fit$p){
+  for(i in range){
+    fit = compute_X_lists(fit,i)
+    fit = compute_XVXsum(fit)
+    fit = compute_Sigma(fit)
+    fit = compute_Sinv_mu(fit)
+    fit = compute_lBF(fit)
+    fit$lBFs[i] = fit$lBF
+  }
+  return(fit)
+}
+```
+
+# Test Data
+
+Here apply to test data with no missing.
+The results match the simple regression with no missing
+results up to numerical precision.
+```{r}
+u = rnorm(r)
+U = u %*% t(u) # a rank 1 prior
+temp = matrix(rnorm(r*100),nrow=r)
+V = temp %*% t(temp)/100 # get a residual covariance matrix close to diagonal
+
+fit = fit.init(X,Y,V,U)
+fit = compute_Vlists(fit)
+fit = compute_VY_list(fit)
+fit = compute_Vbar_Ybar(fit)
+fit = compute_lBFs(fit)
+
+lBF = rep(0,p)
+for(i in 1:p){
+  lBF[i] = simple_regresssion_nomiss(X[,i],Y,V,U)$lBF
+}
+plot(lBF-fit$lBFs)
+```
+
+
+# GTEx data
+
+Now try running on example GTEx data.
+```{r}
+source("code/mvsusie_missing.R")
+dat = readRDS('data/ENSG00000140265.12.Multi_Tissues.problem.rds')
+```
+
+Run mvsusie:
+```{r}
+m = mvsusie_missing(dat$X, dat$Y, prior_variance = dat$prior$FLASH_1, residual_variance = dat$residual_var, L = 1, approximate=FALSE)
+```
+
+
+```{r}
+fit = fit.init(X=dat$X,Y=dat$Y,dat$residual_var,dat$prior$FLASH_1)
+fit = compute_Vlists(fit)
+fit = compute_VY_list(fit)
+fit = compute_Vbar_Ybar(fit)
+fit = compute_lBFs(fit)
+```
+
+Compare PIPs with mvsusie:
+```{r}
+softmax = function(x){exp(x)/sum(exp(x))}
+plot(softmax(fit$lBFs),m$pip)
+abline(a=0,b=1)
+```
+
+Do the diagonal residual variance
+```{r}
+m2 = mvsusie_missing(dat$X, dat$Y, prior_variance = dat$prior$FLASH_1, residual_variance = diag(diag(dat$residual_var)), L = 1, approximate=FALSE)
+fit2 = fit.init(X=dat$X,Y=dat$Y,diag(diag(dat$residual_var)),dat$prior$FLASH_1)
+fit2 = compute_Vlists(fit2)
+fit2 = compute_VY_list(fit2)
+fit2 = compute_Vbar_Ybar(fit2)
+
+fit2 = compute_lBFs(fit2)
+plot(softmax(fit2$lBFs),m2$pip,main="compare PIPs from two implementations")
+```
+
+
+Compare BFs from the different residual variance runs.
+```{r}
+plot(fit$lBFs,fit2$lBFs)
+```
+
+Compare PIPs:
+```{r}
+  plot(softmax(fit$lBFs))
+  plot(softmax(fit2$lBFs))  
+```
+
+Try comparing mu and Sigma
+```{r}
+plot(fit$Sigma %*% fit$Sinv_mu)
+points(fit2$Sigma %*% fit2$Sinv_mu,col=2)
+```
+
+
