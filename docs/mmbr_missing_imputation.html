@@ -518,16 +518,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree937145f3490de3912d3a7bddb4d170bb04c6d6ebtargetblank937145fa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/937145f3490de3912d3a7bddb4d170bb04c6d6eb" target="_blank">937145f</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctreedd954f40336f35ee8ebbb5a6b4702148771fd334targetblankdd954f4a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/dd954f40336f35ee8ebbb5a6b4702148771fd334" target="_blank">dd954f4</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree937145f3490de3912d3a7bddb4d170bb04c6d6ebtargetblank937145fa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctreedd954f40336f35ee8ebbb5a6b4702148771fd334targetblankdd954f4a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/937145f3490de3912d3a7bddb4d170bb04c6d6eb" target="_blank">937145f</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/dd954f40336f35ee8ebbb5a6b4702148771fd334" target="_blank">dd954f4</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -616,6 +616,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/dd954f40336f35ee8ebbb5a6b4702148771fd334/analysis/mmbr_missing_imputation.Rmd" target="_blank">dd954f4</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-12-02
+</td>
+<td>
+wflow_publish(“analysis/mmbr_missing_imputation.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/19949c0021ec9c86b33cd161bf968ad176f656a1/docs/mmbr_missing_imputation.html" target="_blank">19949c0</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-12-02
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -752,7 +786,7 @@ mvsusie_missing_imp = function(X, Y, L=10, prior_variance, residual_variance, in
   }
   s$elbo = elbo
   s$null_index = -9
-  s$V = 1
+  s$V = rep(1, L)
   s$sets = susie_get_cs(s, X=X, min_abs_corr=min_abs_corr)
   s$pip = susie_get_pip(s, prior_tol=prior_tol)
   return(s)
@@ -867,19 +901,6 @@ muffled_chol = function(x, ...){
                       })
 }
 
-compute_XtY = function(X, X_for_Y_missing,Y,Y_missing_pattern_assign,residual_variance_inv, Xbar){ # J by R
-  N = dim(X_for_Y_missing)[1]
-  J = dim(X_for_Y_missing)[2]
-  VinvY &lt;- t(sapply(1:N, function(i) residual_variance_inv[[Y_missing_pattern_assign[i]]] %*% Y[i,])) # N by R
-  if(length(dim(X_for_Y_missing)) == 3){ ## approximate
-    XtY &lt;- t(sapply(1:J, function(j) colSums(X_for_Y_missing[,j,] * VinvY) ))
-  }else{
-    XtY &lt;- t(sapply(1:J, function(j) colSums(X[,j] * VinvY) - crossprod(Xbar[j,,], colSums(VinvY)) ))
-  }
-  if (nrow(XtY) != J) XtY &lt;- t(XtY)
-  return(XtY)
-}
-
 init = function(N, J, R, L, U, prior_weights){
   if(is.null(prior_weights))
     prior_weights = rep(1/J,J)
@@ -935,32 +956,48 @@ Y_missing = dat$y_missing[-rm.id,]
 
 prior_var = diag(5)
 residual_var = cov(Y)</code></pre>
-<p>mvSuSiE with exact computation</p>
-<pre class="r"><code>m = mmbr::msusie(X, Y_missing, L=10, prior_variance = prior_var, residual_variance = residual_var,
-                 intercept = T, standardize = F,
-                 max_iter = 100, compute_objective = TRUE, 
-                 estimate_prior_variance = FALSE, estimate_residual_variance = FALSE)
-susie_plot(m, y=&#39;PIP&#39;, main=paste0(&#39;ELBO=&#39;, round(m$elbo[m$niter],2)))</code></pre>
-<p><img src="figure/mmbr_missing_imputation.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /> Check CS details:</p>
-<pre class="r"><code>m$sets$cs</code></pre>
-<pre><code>$L1
-[1] 92
-
-$L2
-[1] 95
-
-$L3
-[1] 39
-
-$L4
-[1] 29
-
-$L6
-[1] 86</code></pre>
 <p>mvSuSiE with missing data imputation</p>
 <pre class="r"><code>m_imp = mvsusie_missing_imp(X, Y_missing, L=10, prior_variance = prior_var, residual_variance = residual_var, max_iter = 100, compute_objective = TRUE, intercept = TRUE)
 susie_plot(m_imp, y=&#39;PIP&#39;, main=paste0(&#39;ELBO=&#39;, round(m_imp$elbo[m_imp$niter],2)))</code></pre>
-<p><img src="figure/mmbr_missing_imputation.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /> Check CS details:</p>
+<p><img src="figure/mmbr_missing_imputation.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
+Past versions of unnamed-chunk-5-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/19949c0021ec9c86b33cd161bf968ad176f656a1/docs/figure/mmbr_missing_imputation.Rmd/unnamed-chunk-5-1.png" target="_blank">19949c0</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-12-02
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Check CS details:</p>
 <pre class="r"><code>m_imp$sets$cs</code></pre>
 <pre><code>$L1
 [1] 92
@@ -976,6 +1013,66 @@ $L4
 
 $L5
 [1] 29</code></pre>
+<p>mvSuSiE with exact computation</p>
+<pre class="r"><code>m = mmbr::msusie(X, Y_missing, L=10, prior_variance = prior_var, residual_variance = residual_var,
+                 intercept = T, standardize = F,
+                 max_iter = 100, compute_objective = TRUE, 
+                 estimate_prior_variance = FALSE, estimate_residual_variance = FALSE)
+susie_plot(m, y=&#39;PIP&#39;, main=paste0(&#39;ELBO=&#39;, round(m$elbo[m$niter],2)))</code></pre>
+<p><img src="figure/mmbr_missing_imputation.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-1">
+Past versions of unnamed-chunk-7-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-7-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/19949c0021ec9c86b33cd161bf968ad176f656a1/docs/figure/mmbr_missing_imputation.Rmd/unnamed-chunk-7-1.png" target="_blank">19949c0</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-12-02
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Check CS details:</p>
+<pre class="r"><code>m$sets$cs</code></pre>
+<pre><code>$L1
+[1] 92
+
+$L2
+[1] 95
+
+$L3
+[1] 39
+
+$L4
+[1] 29
+
+$L6
+[1] 86</code></pre>
 </div>
 <div id="gtex-data-with-l-1" class="section level2">
 <h2>GTEx data with L = 1</h2>
@@ -983,7 +1080,45 @@ $L5
 <p>Model with exact computation</p>
 <pre class="r"><code>m = mmbr::msusie(dat$X, dat$Y, prior_variance = dat$prior$XX, residual_variance = dat$residual_var, L = 1, approximate=FALSE, compute_objective = T, intercept = T, standardize = F, estimate_prior_variance = F, estimate_residual_variance = F)
 susie_plot(m, y=&#39;PIP&#39;, main=paste0(&#39;ELBO=&#39;, round(m$elbo[m$niter],2)))</code></pre>
-<p><img src="figure/mmbr_missing_imputation.Rmd/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /> Check CS details:</p>
+<p><img src="figure/mmbr_missing_imputation.Rmd/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-10-1">
+Past versions of unnamed-chunk-10-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-10-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/19949c0021ec9c86b33cd161bf968ad176f656a1/docs/figure/mmbr_missing_imputation.Rmd/unnamed-chunk-10-1.png" target="_blank">19949c0</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-12-02
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Check CS details:</p>
 <pre class="r"><code>m$sets</code></pre>
 <pre><code>$cs
 $cs$L1
@@ -1008,7 +1143,45 @@ $requested_coverage
 <p>Model with imputation</p>
 <pre class="r"><code>m_imp = mvsusie_missing_imp(dat$X, dat$Y, prior_variance = dat$prior$XX, residual_variance = dat$residual_var, L = 1, compute_objective = T)
 susie_plot(m_imp, y=&#39;PIP&#39;, main=paste0(&#39;ELBO=&#39;, round(m_imp$elbo[m_imp$niter],2)))</code></pre>
-<p><img src="figure/mmbr_missing_imputation.Rmd/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /> Check CS details:</p>
+<p><img src="figure/mmbr_missing_imputation.Rmd/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-12-1">
+Past versions of unnamed-chunk-12-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-12-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/19949c0021ec9c86b33cd161bf968ad176f656a1/docs/figure/mmbr_missing_imputation.Rmd/unnamed-chunk-12-1.png" target="_blank">19949c0</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-12-02
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Check CS details:</p>
 <pre class="r"><code>m_imp$sets</code></pre>
 <pre><code>$cs
 $cs$L1
