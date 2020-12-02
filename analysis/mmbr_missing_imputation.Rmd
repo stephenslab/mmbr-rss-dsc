@@ -38,6 +38,16 @@ prior_var = diag(5)
 residual_var = cov(Y)
 ```
 
+mvSuSiE with missing data imputation
+```{r}
+m_imp = mvsusie_missing_imp(X, Y_missing, L=10, prior_variance = prior_var, residual_variance = residual_var, max_iter = 100, compute_objective = TRUE, intercept = TRUE)
+susie_plot(m_imp, y='PIP', main=paste0('ELBO=', round(m_imp$elbo[m_imp$niter],2)))
+```
+Check CS details:
+```{r}
+m_imp$sets$cs
+```
+
 mvSuSiE with exact computation
 ```{r}
 m = mmbr::msusie(X, Y_missing, L=10, prior_variance = prior_var, residual_variance = residual_var,
@@ -49,16 +59,6 @@ susie_plot(m, y='PIP', main=paste0('ELBO=', round(m$elbo[m$niter],2)))
 Check CS details:
 ```{r}
 m$sets$cs
-```
-
-mvSuSiE with missing data imputation
-```{r}
-m_imp = mvsusie_missing_imp(X, Y_missing, L=10, prior_variance = prior_var, residual_variance = residual_var, max_iter = 100, compute_objective = TRUE, intercept = TRUE)
-susie_plot(m_imp, y='PIP', main=paste0('ELBO=', round(m_imp$elbo[m_imp$niter],2)))
-```
-Check CS details:
-```{r}
-m_imp$sets$cs
 ```
 
 ## GTEx data with L = 1
