@@ -1,0 +1,89 @@
+---
+title: "mvSuSiE with missing data with imputation"
+author: "Yuxin Zou"
+date: "12/2/2020"
+output:
+  workflowr::wflow_html:
+    code_folding: hide
+---
+
+```{r}
+knitr::read_chunk("code/mvsusie_missing_impute.R")
+```
+
+R code for mvSuSiE with missing data in Y (imputation):
+```{r mvsusie_missing_impute}
+```
+
+## Simulated data
+
+We simulate data with 20% missing data.
+```{r}
+set.seed(2020)
+dat = simulate_multivariate(n=500, p=100, r=5, y_missing = 0.2)
+```
+The true effects are at p=`r which(rowSums(dat$b!=0)>0)`.
+```{r}
+dat$b[which(rowSums(dat$b!=0)>0),]
+```
+
+```{r}
+# remove individuals without any observation
+rm.id = which(rowSums(is.na(dat$y_missing)) == 5)
+X = dat$X[-rm.id,]
+Y = dat$y[-rm.id,]
+Y_missing = dat$y_missing[-rm.id,]
+
+prior_var = diag(5)
+residual_var = cov(Y)
+```
+
+mvSuSiE with exact computation
+```{r}
+m = mmbr::msusie(X, Y_missing, L=10, prior_variance = prior_var, residual_variance = residual_var,
+                 intercept = T, standardize = F,
+                 max_iter = 100, compute_objective = TRUE, 
+                 estimate_prior_variance = FALSE, estimate_residual_variance = FALSE)
+susie_plot(m, y='PIP', main=paste0('ELBO=', round(m$elbo[m$niter],2)))
+```
+Check CS details:
+```{r}
+m$sets$cs
+```
+
+mvSuSiE with missing data imputation
+```{r}
+m_imp = mvsusie_missing_imp(X, Y_missing, L=10, prior_variance = prior_var, residual_variance = residual_var, max_iter = 100, compute_objective = TRUE, intercept = TRUE)
+susie_plot(m_imp, y='PIP', main=paste0('ELBO=', round(m_imp$elbo[m_imp$niter],2)))
+```
+Check CS details:
+```{r}
+m_imp$sets$cs
+```
+
+## GTEx data with L = 1
+
+```{r}
+dat = readRDS('data/ENSG00000140265.12.Multi_Tissues.problem.rds')
+```
+
+Model with exact computation
+```{r}
+m = mmbr::msusie(dat$X, dat$Y, prior_variance = dat$prior$XX, residual_variance = dat$residual_var, L = 1, approximate=FALSE, compute_objective = T, intercept = T, standardize = F, estimate_prior_variance = F, estimate_residual_variance = F)
+susie_plot(m, y='PIP', main=paste0('ELBO=', round(m$elbo[m$niter],2)))
+```
+Check CS details:
+```{r}
+m$sets
+```
+
+Model with imputation
+```{r}
+m_imp = mvsusie_missing_imp(dat$X, dat$Y, prior_variance = dat$prior$XX, residual_variance = dat$residual_var, L = 1, compute_objective = T)
+susie_plot(m_imp, y='PIP', main=paste0('ELBO=', round(m_imp$elbo[m_imp$niter],2)))
+```
+Check CS details:
+```{r}
+m_imp$sets
+```
+
