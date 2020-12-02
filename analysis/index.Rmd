@@ -33,3 +33,5 @@ mvSuSiE full data application on GTEx
 
     [Problem](GTExprofileProblem.html); [Problem continue](GTExprofileProblem2.html); 
     
+
+* [mvSuSiE missing data imputation](mmbr_missing_imputation.html)
