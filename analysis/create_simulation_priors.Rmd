@@ -59,6 +59,8 @@ artificial_mixture_20 = list(U=prior,w=w)
 
 # Mixture from UKB
 
+The priors are from [this workflow](https://stephenslab.github.io/finemap-uk-biobank/bloodcells_priors.html).
+
 ```{r}
 prior = readRDS('~/Documents/GitHub/finemap-uk-biobank/output/BloodCells.Ulist.Scor.ed.rds')
 names(prior$U)
