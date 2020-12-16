@@ -1,0 +1,84 @@
+---
+title: "Create mixture prior"
+author: "Yuxin Zou"
+date: "12/16/2020"
+output: 
+  workflowr::wflow_html:
+    code_folding: hide
+---
+
+# Artificial structure
+
+Canonical patterns of sharing:
+```{r}
+R = 20
+prior = mmbr:::create_cov_canonical(R)
+```
+
+Paired sharing:
+```{r}
+paired = matrix(0,R,R)
+paired[1:2,1:2] = 1
+prior[['paired_1']] = paired
+paired = matrix(0,R,R)
+paired[10:11,10:11] = 1
+prior[['paired_2']] = paired
+```
+
+Block sharing:
+```{r}
+block = matrix(0,R,R)
+block[1:R/2, 1:R/2] = 1
+block[(R/2+1):R, (R/2+1):R] = 1
+prior[['blocked_1']] = block
+```
+
+We assign weights to priors:
+
+1. singleton total 25%
+
+    * singleton_1 has 15%
+    
+    * singleton_2 to singleton_11 has 10% (1% each)
+    
+2. shared total 25%
+
+3. paired 30% (15% each)
+
+4. blocked 20%
+
+```{r}
+w = c(0.15, rep(0.01, 10), rep(0, 9), rep(0.05, 5), rep(0.15,2), 0.2)
+```
+
+```{r}
+prior = prior[which(w>0)]
+w = w[which(w>0)]
+artificial_mixture_20 = list(U=prior,w=w)
+```
+
+# Mixture from UKB
+
+```{r}
+prior = readRDS('~/Documents/GitHub/finemap-uk-biobank/output/BloodCells.Ulist.Scor.ed.rds')
+names(prior$U)
+```
+Most weighths are in tFLASH and XX,
+```{r}
+names(prior$U)[prior$w>0.1]
+```
+But many other weights are also non-trivial
+```{r}
+names(prior$U)[prior$w > 0.001]
+```
+```{r}
+tol=1E-12
+U = prior$U[which(prior$w>tol)]
+w = prior$w[which(prior$w>tol)]
+names(U)
+bloodcells_mixture = list(U=U,w=w)
+```
+
+```{r}
+saveRDS(list(bloodcells_mixture=bloodcells_mixture, artificial_mixture_20=artificial_mixture_20), 'output/ukb_prior_simulation.rds')
+```
