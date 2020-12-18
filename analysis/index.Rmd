@@ -33,5 +33,11 @@ mvSuSiE full data application on GTEx
 
     [Problem](GTExprofileProblem.html); [Problem continue](GTExprofileProblem2.html); 
     
+    
+UKB simulations:
+
+* [Create simulation priors](create_simulation_priors.html)
+
+
 
 * [mvSuSiE missing data imputation](mmbr_missing_imputation.html)
