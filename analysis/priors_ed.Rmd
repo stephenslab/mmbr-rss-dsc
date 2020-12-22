@@ -1,0 +1,59 @@
+---
+title: "Data driven prior from ED"
+author: "Yuxin Zou"
+date: "12/21/2020"
+output: 
+  workflowr::wflow_html:
+    code_folding: hide
+---
+
+The result is from [this notebook](https://github.com/gaow/mvarbvs/blob/master/analysis/20201221_ukb_Prepare_ED_prior.ipynb).
+
+## Artificial mixture
+
+```{r}
+dat_a = readRDS('data/mmbr_ukb_simulation/artificial_mixture_ukb.FL_PC3.ED.rds')
+names(dat_a)
+```
+```{r}
+barplot(dat_a$w, las=2, cex.names = 0.7)
+```
+
+The component with strongest weight is tXX.
+
+```{r}
+plot_sharing = function(X) {
+clrs <- colorRampPalette(rev(c("#D73027","#FC8D59","#FEE090","#FFFFBF",
+                               "#E0F3F8","#91BFDB","#4575B4")))(128)
+lat <- cov2cor(X)
+lat[lower.tri(lat)] <- NA
+n <- nrow(lat)
+print(lattice::levelplot(lat[n:1,],col.regions = clrs,xlab = "",ylab = "",
+                colorkey = TRUE,at = seq(-1,1,length.out = 128),
+                scales = list(cex = 0.6,x = list(rot = 45))))
+}
+```
+
+```{r}
+plot_sharing(dat_a$U$XX)
+```
+```{r}
+plot_sharing(dat_a$U$tPCA)
+```
+
+```{r}
+plot_sharing(dat_a$U$tFLASH)
+```
+
+## UKB bloodcells mixture
+
+```{r}
+dat_ukb = readRDS('data/mmbr_ukb_simulation/ukb_bloodcells_mixture.FL_PC3.ED.rds')
+```
+
+```{r}
+barplot(dat_ukb$w, las=2, cex.names = 0.7)
+```
+```{r}
+plot_sharing(dat_ukb$U$XX)
+```
