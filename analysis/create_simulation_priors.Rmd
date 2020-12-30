@@ -82,5 +82,15 @@ bloodcells_mixture = list(U=U,w=w)
 ```
 
 ```{r}
+for(i in 1:length(U)){
+  eigenU = eigen(U[[i]], symmetric = T)
+  if(any(eigenU$values<0)){
+    eigenU$values[eigenU$values < 0] = 0
+    bloodcells_mixture$U[[i]] = eigenU$vectors %*% (t(eigenU$vectors) * eigenU$values)
+  }
+}
+```
+
+```{r}
 saveRDS(list(bloodcells_mixture=bloodcells_mixture, artificial_mixture_20=artificial_mixture_20), 'output/ukb_prior_simulation.rds')
 ```
