@@ -519,16 +519,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree6a8fc0242356a6bf53c67547fc76c10316b5eb4etargetblank6a8fc02a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/6a8fc0242356a6bf53c67547fc76c10316b5eb4e" target="_blank">6a8fc02</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctreea6db4bf9fe09c4f1aada9b3885dd2ef6d5758d0ctargetblanka6db4bfa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/a6db4bf9fe09c4f1aada9b3885dd2ef6d5758d0c" target="_blank">a6db4bf</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree6a8fc0242356a6bf53c67547fc76c10316b5eb4etargetblank6a8fc02a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctreea6db4bf9fe09c4f1aada9b3885dd2ef6d5758d0ctargetblanka6db4bfa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/6a8fc0242356a6bf53c67547fc76c10316b5eb4e" target="_blank">6a8fc02</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/a6db4bf9fe09c4f1aada9b3885dd2ef6d5758d0c" target="_blank">a6db4bf</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -619,6 +619,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/a6db4bf9fe09c4f1aada9b3885dd2ef6d5758d0c/analysis/create_simulation_priors.Rmd" target="_blank">a6db4bf</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-12-30
+</td>
+<td>
+wflow_publish(“analysis/create_simulation_priors.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/a93a74bbd021d87033642d95a32188fb48f65f33/docs/create_simulation_priors.html" target="_blank">a93a74b</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-12-30
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -822,8 +856,8 @@ names(U)</code></pre>
 [19] &quot;XX&quot;      </code></pre>
 <pre class="r"><code>bloodcells_mixture = list(U=U,w=w)</code></pre>
 <pre class="r"><code>for(i in 1:length(U)){
-  U[[i]] = (U[[i]] + t(U[[i]]))/2
-  eigenU = eigen(U[[i]], symmetric = T)
+  bloodcells_mixture$U[[i]] = (bloodcells_mixture$U[[i]] + t(bloodcells_mixture$U[[i]]))/2
+  eigenU = eigen(bloodcells_mixture$U[[i]], symmetric = T)
   if(any(eigenU$values&lt;0)){
     eigenU$values[eigenU$values &lt; 0] = 0
     bloodcells_mixture$U[[i]] = eigenU$vectors %*% (t(eigenU$vectors) * eigenU$values)
