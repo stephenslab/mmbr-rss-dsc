@@ -83,6 +83,7 @@ bloodcells_mixture = list(U=U,w=w)
 
 ```{r}
 for(i in 1:length(U)){
+  U[[i]] = (U[[i]] + t(U[[i]]))/2
   eigenU = eigen(U[[i]], symmetric = T)
   if(any(eigenU$values<0)){
     eigenU$values[eigenU$values < 0] = 0
