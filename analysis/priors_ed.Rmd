@@ -12,11 +12,17 @@ The result is from [this notebook](https://github.com/gaow/mvarbvs/blob/master/a
 ## Artificial mixture
 
 ```{r}
-dat_a = readRDS('data/mmbr_ukb_simulation/artificial_mixture_ukb.FL_PC3.ED.rds')
+dat_a = readRDS('data/mmbr_ukb_simulation/artificial_mixture_ukb.FL_PC3.EDmash.rds')
 names(dat_a)
 ```
 ```{r}
+names(dat_a$w) = names(dat_a$U)
 barplot(dat_a$w, las=2, cex.names = 0.7)
+```
+
+```{r}
+tol = 1E-15
+names(dat_a$U)[which(dat_a$w>tol)]
 ```
 
 The component with strongest weight is tXX.
@@ -38,22 +44,37 @@ print(lattice::levelplot(lat[n:1,],col.regions = clrs,xlab = "",ylab = "",
 plot_sharing(dat_a$U$XX)
 ```
 ```{r}
-plot_sharing(dat_a$U$tPCA)
+plot_sharing(dat_a$U$tFLASH)
 ```
 
 ```{r}
-plot_sharing(dat_a$U$tFLASH)
+plot_sharing(dat_a$U$FLASH_3)
+```
+```{r}
+plot_sharing(dat_a$U$FLASH_4)
 ```
 
 ## UKB bloodcells mixture
 
 ```{r}
-dat_ukb = readRDS('data/mmbr_ukb_simulation/ukb_bloodcells_mixture.FL_PC3.ED.rds')
+dat_ukb = readRDS('data/mmbr_ukb_simulation/ukb_bloodcells_mixture.FL_PC3.EDmash.rds')
 ```
 
 ```{r}
+names(dat_ukb$w) = names(dat_ukb$U)
 barplot(dat_ukb$w, las=2, cex.names = 0.7)
 ```
 ```{r}
+names(dat_ukb$U)[which(dat_ukb$w>tol)]
+```
+
+```{r}
 plot_sharing(dat_ukb$U$XX)
+```
+```{r}
+plot_sharing(dat_ukb$U$FLASH_8)
+```
+
+```{r}
+plot_sharing(dat_ukb$U$tFLASH)
 ```
