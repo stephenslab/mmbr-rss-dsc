@@ -23,11 +23,11 @@ Overall: Ignoring correlation between conditions in residual matrix results in p
 
 Artificial Mixture
 
-![](assets/mnm_rss_20210107/ukb_rss_20210107_pip_calibration/ukb_rss_pip_cali_simuartificial_mixture_ukb.png){height=200%}
+![](assets/ukb_rss_20210107/ukb_rss_20210107_pip_calibration/ukb_rss_pip_cali_simuartificial_mixture_ukb.png)
 
 UKB Bloodcells Mixture
 
-![](assets/mnm_rss_20210107/ukb_rss_20210107_pip_calibration/ukb_rss_pip_cali_simuukb_bloodcells_mixture.png)
+![](assets/ukb_rss_20210107/ukb_rss_20210107_pip_calibration/ukb_rss_pip_cali_simuukb_bloodcells_mixture.png)
 
 ## Power
 
@@ -35,21 +35,21 @@ Artificial Mixture
 
 1. Comparing different residuals
 
-![](assets/mnm_rss_20210107/ukb_rss_20210107_roc/ukb_rss_roc_simuartificial_mixture_ukb.prresidual.pdf)
+![](assets/ukb_rss_20210107/ukb_rss_20210107_roc/ukb_rss_roc_simuartificial_mixture_ukb.prresidual.png)
 
 2. Comparing different priors
 
-![](assets/mnm_rss_20210107/ukb_rss_20210107_roc/ukb_rss_roc_simuartificial_mixture_ukb.prprior.pdf)
+![](assets/ukb_rss_20210107/ukb_rss_20210107_roc/ukb_rss_roc_simuartificial_mixture_ukb.prprior.png)
 
 UKB Bloodcells Mixture
 
 1. Comparing different residuals
 
-![](assets/ukb_rss_20210107/ukb_rss_20210107_roc/ukb_rss_roc_simuukb_bloodcells_mixture.prresidual.pdf)
+![](assets/ukb_rss_20210107/ukb_rss_20210107_roc/ukb_rss_roc_simuukb_bloodcells_mixture.prresidual.png)
 
 2. Comparing different priors
 
-![](assets/ukb_rss_20210107/ukb_rss_20210107_roc/ukb_rss_roc_simuukb_bloodcells_mixture.prprior.pdf)
+![](assets/ukb_rss_20210107/ukb_rss_20210107_roc/ukb_rss_roc_simuukb_bloodcells_mixture.prprior.png)
 
 ## CS
 
@@ -57,20 +57,20 @@ Artificial Mixture
 
 1. Comparing different residuals
 
-![](assets/ukb_rss_20210107/ukb_rss_20210107_cs/ukb_rss_cs_simuartificial_mixture_ukb_resid_plots.pdf)
+![](assets/ukb_rss_20210107/ukb_rss_20210107_cs/ukb_rss_cs_simuartificial_mixture_ukb_resid_plots.png)
 
 2. Comparing different priors
 
-![](assets/ukb_rss_20210107/ukb_rss_20210107_cs/ukb_rss_cs_simuartificial_mixture_ukb_priors_plots.pdf)
+![](assets/ukb_rss_20210107/ukb_rss_20210107_cs/ukb_rss_cs_simuartificial_mixture_ukb_priors_plots.png)
 
 UKB Bloodcells Mixture
 
 1. Comparing different residuals
 
-![](assets/ukb_rss_20210107/ukb_rss_20210107_cs/ukb_rss_cs_simuukb_bloodcells_mixture_resid_plots.pdf)
+![](assets/ukb_rss_20210107/ukb_rss_20210107_cs/ukb_rss_cs_simuukb_bloodcells_mixture_resid_plots.png)
 
 2. Comparing different priors
 
-![](assets/ukb_rss_20210107/ukb_rss_20210107_cs/ukb_rss_cs_simuukb_bloodcells_mixture_priors_plots.pdf)
+![](assets/ukb_rss_20210107/ukb_rss_20210107_cs/ukb_rss_cs_simuukb_bloodcells_mixture_priors_plots.png)
 
 
