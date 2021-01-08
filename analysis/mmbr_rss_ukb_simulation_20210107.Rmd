@@ -1,0 +1,76 @@
+---
+title: "M&M RSS ukb"
+author: "Yuxin Zou"
+date: "01/06/2021"
+output:
+  workflowr::wflow_html:
+    code_folding: hide
+---
+
+This is result from our M&M RSS simulation using UKB data. There are 600 datasets. The max PVE across traits is 0.0005.
+
+For each dataset, we simulate signals using 2 type of priors, the details are [here](https://zouyuxin.github.io/mmbr-rss-dsc/create_simulation_priors.html)
+
+1. Artificial mixture: 20 conditions. The oracle residual variance is a diagonal matrix.
+   
+2. UKB Bloodcells mixture: 16 conditions. The oracle residual variance is a dense matrix.
+   
+We estimate prior weights using ‘EM’ method.
+
+Overall: Ignoring correlation between conditions in residual matrix results in poor fit.
+
+## PIP calibration
+
+Artificial Mixture
+
+![](assets/mnm_rss_20210107/ukb_rss_20210107_pip_calibration/ukb_rss_pip_cali_simuartificial_mixture_ukb.png){height=200%}
+
+UKB Bloodcells Mixture
+
+![](assets/mnm_rss_20210107/ukb_rss_20210107_pip_calibration/ukb_rss_pip_cali_simuukb_bloodcells_mixture.png)
+
+## Power
+
+Artificial Mixture
+
+1. Comparing different residuals
+
+![](assets/mnm_rss_20210107/ukb_rss_20210107_roc/ukb_rss_roc_simuartificial_mixture_ukb.prresidual.pdf)
+
+2. Comparing different priors
+
+![](assets/mnm_rss_20210107/ukb_rss_20210107_roc/ukb_rss_roc_simuartificial_mixture_ukb.prprior.pdf)
+
+UKB Bloodcells Mixture
+
+1. Comparing different residuals
+
+![](assets/ukb_rss_20210107/ukb_rss_20210107_roc/ukb_rss_roc_simuukb_bloodcells_mixture.prresidual.pdf)
+
+2. Comparing different priors
+
+![](assets/ukb_rss_20210107/ukb_rss_20210107_roc/ukb_rss_roc_simuukb_bloodcells_mixture.prprior.pdf)
+
+## CS
+
+Artificial Mixture
+
+1. Comparing different residuals
+
+![](assets/ukb_rss_20210107/ukb_rss_20210107_cs/ukb_rss_cs_simuartificial_mixture_ukb_resid_plots.pdf)
+
+2. Comparing different priors
+
+![](assets/ukb_rss_20210107/ukb_rss_20210107_cs/ukb_rss_cs_simuartificial_mixture_ukb_priors_plots.pdf)
+
+UKB Bloodcells Mixture
+
+1. Comparing different residuals
+
+![](assets/ukb_rss_20210107/ukb_rss_20210107_cs/ukb_rss_cs_simuukb_bloodcells_mixture_resid_plots.pdf)
+
+2. Comparing different priors
+
+![](assets/ukb_rss_20210107/ukb_rss_20210107_cs/ukb_rss_cs_simuukb_bloodcells_mixture_priors_plots.pdf)
+
+
