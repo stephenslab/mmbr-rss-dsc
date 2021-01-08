@@ -12,7 +12,7 @@ The result is from [this notebook](https://github.com/gaow/mvarbvs/blob/master/a
 ## Artificial mixture
 
 ```{r}
-dat_a = readRDS('data/mmbr_ukb_simulation/artificial_mixture_ukb.FL_PC3.EDmash.rds')
+dat_a = readRDS('data/mmbr_ukb_simulation/artificial_mixture_ukb.FL_PC3.EDudr.rds')
 names(dat_a)
 ```
 ```{r}
@@ -57,7 +57,7 @@ plot_sharing(dat_a$U$FLASH_4)
 ## UKB bloodcells mixture
 
 ```{r}
-dat_ukb = readRDS('data/mmbr_ukb_simulation/ukb_bloodcells_mixture.FL_PC3.EDmash.rds')
+dat_ukb = readRDS('data/mmbr_ukb_simulation/ukb_bloodcells_mixture.FL_PC3.EDudr.rds')
 ```
 
 ```{r}
