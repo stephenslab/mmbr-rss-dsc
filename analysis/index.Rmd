@@ -42,3 +42,6 @@ UKB simulations:
 
 * [Simulation Data Driven Prior](priors_ed.html)
 
+* [Result](mmbr_rss_ukb_simulation_20210107.html)
+
+
