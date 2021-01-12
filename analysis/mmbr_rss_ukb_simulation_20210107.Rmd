@@ -1,5 +1,5 @@
 ---
-title: "M&M RSS ukb"
+title: "mvSuSiE RSS ukb"
 author: "Yuxin Zou"
 date: "01/06/2021"
 output:
@@ -7,7 +7,7 @@ output:
     code_folding: hide
 ---
 
-This is result from our M&M RSS simulation using UKB data. There are 600 datasets. The max PVE across traits is 0.0005.
+This is result from our mvSuSiE RSS simulation using UKB data. There are 600 datasets. The max PVE across traits is 0.0005.
 
 For each dataset, we simulate signals using 2 type of priors, the details are [here](https://zouyuxin.github.io/mmbr-rss-dsc/create_simulation_priors.html)
 
