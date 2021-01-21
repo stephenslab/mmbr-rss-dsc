@@ -428,7 +428,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2021-01-12
+<strong>Last updated:</strong> 2021-01-21
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 2 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -459,16 +459,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree1749f85ad7868c4b301be10fd3605eb6688a9255targetblank1749f85a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/1749f85ad7868c4b301be10fd3605eb6688a9255" target="_blank">1749f85</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree1994caf839842c39bcb9d1b9ce7218f1ff093a61targetblank1994cafa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/1994caf839842c39bcb9d1b9ce7218f1ff093a61" target="_blank">1994caf</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree1749f85ad7868c4b301be10fd3605eb6688a9255targetblank1749f85a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree1994caf839842c39bcb9d1b9ce7218f1ff093a61targetblank1994cafa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/1749f85ad7868c4b301be10fd3605eb6688a9255" target="_blank">1749f85</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/1994caf839842c39bcb9d1b9ce7218f1ff093a61" target="_blank">1994caf</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -558,6 +558,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/1994caf839842c39bcb9d1b9ce7218f1ff093a61/analysis/mmbr_rss_ukb_simulation_20210107.Rmd" target="_blank">1994caf</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2021-01-21
+</td>
+<td>
+update result
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/364141d4c420a0587e1dfea6048665c74a768ce9/docs/mmbr_rss_ukb_simulation_20210107.html" target="_blank">364141d</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2021-01-12
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -691,55 +725,113 @@ add new simulation result
 <li><p>UKB Bloodcells mixture: 16 conditions. The oracle residual variance is a dense matrix.</p></li>
 </ol>
 <p>We estimate prior weights using ‘EM’ method.</p>
-<p>Overall: Ignoring correlation between conditions in residual matrix results in poor fit.</p>
-<div id="pip-calibration" class="section level2">
-<h2>PIP calibration</h2>
+<p>Overall: Ignoring correlation between conditions in residual matrix results in poor fit. Joint modeling improves power.</p>
+<div id="global-comparison" class="section level2">
+<h2>Global comparison</h2>
+<p>We compare the CS and PIP for each SNP.</p>
+<div id="pip-calibration" class="section level3">
+<h3>PIP calibration</h3>
 <p>Artificial Mixture</p>
-<p><img src="assets/ukb_rss_20210107/ukb_rss_20210107_pip_calibration/ukb_rss_pip_cali_simuartificial_mixture_ukb.png" /></p>
+<p><img src="assets/ukb_rss_20210107/ukb_rss_20210107_pip_calibration/ukb_rss_pip_cali_simuartificial_mixture_ukb_glob.png" /></p>
 <p>UKB Bloodcells Mixture</p>
-<p><img src="assets/ukb_rss_20210107/ukb_rss_20210107_pip_calibration/ukb_rss_pip_cali_simuukb_bloodcells_mixture.png" /></p>
+<p><img src="assets/ukb_rss_20210107/ukb_rss_20210107_pip_calibration/ukb_rss_pip_cali_simuukb_bloodcells_mixture_glob.png" /></p>
 </div>
-<div id="power" class="section level2">
-<h2>Power</h2>
+<div id="power" class="section level3">
+<h3>Power</h3>
 <p>Artificial Mixture</p>
 <ol style="list-style-type: decimal">
 <li>Comparing different residuals</li>
 </ol>
-<p><img src="assets/ukb_rss_20210107/ukb_rss_20210107_roc/ukb_rss_roc_simuartificial_mixture_ukb.prresidual.png" /></p>
+<p><img src="assets/ukb_rss_20210107/ukb_rss_20210107_roc/ukb_rss_roc_simuartificial_mixture_ukb_glob.prresidual.png" /></p>
 <ol start="2" style="list-style-type: decimal">
 <li>Comparing different priors</li>
 </ol>
-<p><img src="assets/ukb_rss_20210107/ukb_rss_20210107_roc/ukb_rss_roc_simuartificial_mixture_ukb.prprior.png" /></p>
+<p><img src="assets/ukb_rss_20210107/ukb_rss_20210107_roc/ukb_rss_roc_simuartificial_mixture_ukb_glob.prprior.png" /></p>
 <p>UKB Bloodcells Mixture</p>
 <ol style="list-style-type: decimal">
 <li>Comparing different residuals</li>
 </ol>
-<p><img src="assets/ukb_rss_20210107/ukb_rss_20210107_roc/ukb_rss_roc_simuukb_bloodcells_mixture.prresidual.png" /></p>
+<p><img src="assets/ukb_rss_20210107/ukb_rss_20210107_roc/ukb_rss_roc_simuukb_bloodcells_mixture_glob.prresidual.png" /></p>
 <ol start="2" style="list-style-type: decimal">
 <li>Comparing different priors</li>
 </ol>
-<p><img src="assets/ukb_rss_20210107/ukb_rss_20210107_roc/ukb_rss_roc_simuukb_bloodcells_mixture.prprior.png" /></p>
+<p><img src="assets/ukb_rss_20210107/ukb_rss_20210107_roc/ukb_rss_roc_simuukb_bloodcells_mixture_glob.prprior.png" /></p>
 </div>
-<div id="cs" class="section level2">
+<div id="cs" class="section level3">
+<h3>CS</h3>
+<p>Artificial Mixture</p>
+<p>mnm_rss_naive and mnm_rss_ed+oracle have overlapping CSs.</p>
+<ol style="list-style-type: decimal">
+<li>Comparing different residuals</li>
+</ol>
+<p><img src="assets/ukb_rss_20210107/ukb_rss_20210107_cs/ukb_rss_cs_simuartificial_mixture_ukb_resid_glob_plots.png" /></p>
+<ol start="2" style="list-style-type: decimal">
+<li>Comparing different priors</li>
+</ol>
+<p><img src="assets/ukb_rss_20210107/ukb_rss_20210107_cs/ukb_rss_cs_simuartificial_mixture_ukb_priors_glob_plots.png" /></p>
+<p>UKB Bloodcells Mixture</p>
+<ol style="list-style-type: decimal">
+<li>Comparing different residuals</li>
+</ol>
+<p><img src="assets/ukb_rss_20210107/ukb_rss_20210107_cs/ukb_rss_cs_simuukb_bloodcells_mixture_glob_resid_plots.png" /></p>
+<ol start="2" style="list-style-type: decimal">
+<li>Comparing different priors</li>
+</ol>
+<p><img src="assets/ukb_rss_20210107/ukb_rss_20210107_cs/ukb_rss_cs_simuukb_bloodcells_mixture_glob_priors_plots.png" /></p>
+</div>
+</div>
+<div id="trait-specific-comparison" class="section level2">
+<h2>Trait specific comparison</h2>
+<p>We compare the CS and PIP for each SNP in each trait.</p>
+<div id="pip-calibration-1" class="section level3">
+<h3>PIP calibration</h3>
+<p>Artificial Mixture</p>
+<p><img src="assets/ukb_rss_20210107/ukb_rss_20210107_pip_calibration/ukb_rss_pip_cali_simuartificial_mixture_ukb_cond.png" /></p>
+<p>UKB Bloodcells Mixture</p>
+<p><img src="assets/ukb_rss_20210107/ukb_rss_20210107_pip_calibration/ukb_rss_pip_cali_simuukb_bloodcells_mixture_cond.png" /></p>
+</div>
+<div id="power-1" class="section level3">
+<h3>Power</h3>
+<p>Artificial Mixture</p>
+<ol style="list-style-type: decimal">
+<li>Comparing different residuals</li>
+</ol>
+<p><img src="assets/ukb_rss_20210107/ukb_rss_20210107_roc/ukb_rss_roc_simuartificial_mixture_ukb_cond.prresidual.png" /></p>
+<ol start="2" style="list-style-type: decimal">
+<li>Comparing different priors</li>
+</ol>
+<p><img src="assets/ukb_rss_20210107/ukb_rss_20210107_roc/ukb_rss_roc_simuartificial_mixture_ukb_cond.prprior.png" /></p>
+<p>UKB Bloodcells Mixture</p>
+<ol style="list-style-type: decimal">
+<li>Comparing different residuals</li>
+</ol>
+<p><img src="assets/ukb_rss_20210107/ukb_rss_20210107_roc/ukb_rss_roc_simuukb_bloodcells_mixture_cond.prresidual.png" /></p>
+<ol start="2" style="list-style-type: decimal">
+<li>Comparing different priors</li>
+</ol>
+<p><img src="assets/ukb_rss_20210107/ukb_rss_20210107_roc/ukb_rss_roc_simuukb_bloodcells_mixture_cond.prprior.png" /></p>
+</div>
+</div>
+<div id="cs-1" class="section level2">
 <h2>CS</h2>
 <p>Artificial Mixture</p>
 <ol style="list-style-type: decimal">
 <li>Comparing different residuals</li>
 </ol>
-<p><img src="assets/ukb_rss_20210107/ukb_rss_20210107_cs/ukb_rss_cs_simuartificial_mixture_ukb_resid_plots.png" /></p>
+<p><img src="assets/ukb_rss_20210107/ukb_rss_20210107_cs/ukb_rss_cs_simuartificial_mixture_ukb_cond_resid_plots.png" /></p>
 <ol start="2" style="list-style-type: decimal">
 <li>Comparing different priors</li>
 </ol>
-<p><img src="assets/ukb_rss_20210107/ukb_rss_20210107_cs/ukb_rss_cs_simuartificial_mixture_ukb_priors_plots.png" /></p>
+<p><img src="assets/ukb_rss_20210107/ukb_rss_20210107_cs/ukb_rss_cs_simuartificial_mixture_ukb_cond_priors_plots.png" /></p>
 <p>UKB Bloodcells Mixture</p>
 <ol style="list-style-type: decimal">
 <li>Comparing different residuals</li>
 </ol>
-<p><img src="assets/ukb_rss_20210107/ukb_rss_20210107_cs/ukb_rss_cs_simuukb_bloodcells_mixture_resid_plots.png" /></p>
+<p><img src="assets/ukb_rss_20210107/ukb_rss_20210107_cs/ukb_rss_cs_simuukb_bloodcells_mixture_cond_resid_plots.png" /></p>
 <ol start="2" style="list-style-type: decimal">
 <li>Comparing different priors</li>
 </ol>
-<p><img src="assets/ukb_rss_20210107/ukb_rss_20210107_cs/ukb_rss_cs_simuukb_bloodcells_mixture_priors_plots.png" /></p>
+<p><img src="assets/ukb_rss_20210107/ukb_rss_20210107_cs/ukb_rss_cs_simuukb_bloodcells_mixture_cond_priors_plots.png" /></p>
 </div>
 
 
