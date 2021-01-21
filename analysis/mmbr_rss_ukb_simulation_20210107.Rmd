@@ -17,39 +17,103 @@ For each dataset, we simulate signals using 2 type of priors, the details are [h
    
 We estimate prior weights using ‘EM’ method.
 
-Overall: Ignoring correlation between conditions in residual matrix results in poor fit.
+Overall: Ignoring correlation between conditions in residual matrix results in poor fit. Joint modeling improves power.
 
-## PIP calibration
+## Global comparison
+
+We compare the CS and PIP for each SNP.
+
+### PIP calibration
 
 Artificial Mixture
 
-![](assets/ukb_rss_20210107/ukb_rss_20210107_pip_calibration/ukb_rss_pip_cali_simuartificial_mixture_ukb.png)
+![](assets/ukb_rss_20210107/ukb_rss_20210107_pip_calibration/ukb_rss_pip_cali_simuartificial_mixture_ukb_glob.png)
 
 UKB Bloodcells Mixture
 
-![](assets/ukb_rss_20210107/ukb_rss_20210107_pip_calibration/ukb_rss_pip_cali_simuukb_bloodcells_mixture.png)
+![](assets/ukb_rss_20210107/ukb_rss_20210107_pip_calibration/ukb_rss_pip_cali_simuukb_bloodcells_mixture_glob.png)
 
-## Power
+### Power
 
 Artificial Mixture
 
 1. Comparing different residuals
 
-![](assets/ukb_rss_20210107/ukb_rss_20210107_roc/ukb_rss_roc_simuartificial_mixture_ukb.prresidual.png)
+![](assets/ukb_rss_20210107/ukb_rss_20210107_roc/ukb_rss_roc_simuartificial_mixture_ukb_glob.prresidual.png)
 
 2. Comparing different priors
 
-![](assets/ukb_rss_20210107/ukb_rss_20210107_roc/ukb_rss_roc_simuartificial_mixture_ukb.prprior.png)
+![](assets/ukb_rss_20210107/ukb_rss_20210107_roc/ukb_rss_roc_simuartificial_mixture_ukb_glob.prprior.png)
 
 UKB Bloodcells Mixture
 
 1. Comparing different residuals
 
-![](assets/ukb_rss_20210107/ukb_rss_20210107_roc/ukb_rss_roc_simuukb_bloodcells_mixture.prresidual.png)
+![](assets/ukb_rss_20210107/ukb_rss_20210107_roc/ukb_rss_roc_simuukb_bloodcells_mixture_glob.prresidual.png)
 
 2. Comparing different priors
 
-![](assets/ukb_rss_20210107/ukb_rss_20210107_roc/ukb_rss_roc_simuukb_bloodcells_mixture.prprior.png)
+![](assets/ukb_rss_20210107/ukb_rss_20210107_roc/ukb_rss_roc_simuukb_bloodcells_mixture_glob.prprior.png)
+
+### CS
+
+Artificial Mixture
+
+mnm_rss_naive and mnm_rss_ed+oracle have overlapping CSs.
+
+1. Comparing different residuals
+
+![](assets/ukb_rss_20210107/ukb_rss_20210107_cs/ukb_rss_cs_simuartificial_mixture_ukb_resid_glob_plots.png)
+
+2. Comparing different priors
+
+![](assets/ukb_rss_20210107/ukb_rss_20210107_cs/ukb_rss_cs_simuartificial_mixture_ukb_priors_glob_plots.png)
+
+UKB Bloodcells Mixture
+
+1. Comparing different residuals
+
+![](assets/ukb_rss_20210107/ukb_rss_20210107_cs/ukb_rss_cs_simuukb_bloodcells_mixture_glob_resid_plots.png)
+
+2. Comparing different priors
+
+![](assets/ukb_rss_20210107/ukb_rss_20210107_cs/ukb_rss_cs_simuukb_bloodcells_mixture_glob_priors_plots.png)
+
+## Trait specific comparison
+
+We compare the CS and PIP for each SNP in each trait.
+
+### PIP calibration
+
+Artificial Mixture
+
+![](assets/ukb_rss_20210107/ukb_rss_20210107_pip_calibration/ukb_rss_pip_cali_simuartificial_mixture_ukb_cond.png)
+
+UKB Bloodcells Mixture
+
+![](assets/ukb_rss_20210107/ukb_rss_20210107_pip_calibration/ukb_rss_pip_cali_simuukb_bloodcells_mixture_cond.png)
+
+### Power
+
+Artificial Mixture
+
+1. Comparing different residuals
+
+![](assets/ukb_rss_20210107/ukb_rss_20210107_roc/ukb_rss_roc_simuartificial_mixture_ukb_cond.prresidual.png)
+
+2. Comparing different priors
+
+![](assets/ukb_rss_20210107/ukb_rss_20210107_roc/ukb_rss_roc_simuartificial_mixture_ukb_cond.prprior.png)
+
+UKB Bloodcells Mixture
+
+1. Comparing different residuals
+
+![](assets/ukb_rss_20210107/ukb_rss_20210107_roc/ukb_rss_roc_simuukb_bloodcells_mixture_cond.prresidual.png)
+
+2. Comparing different priors
+
+![](assets/ukb_rss_20210107/ukb_rss_20210107_roc/ukb_rss_roc_simuukb_bloodcells_mixture_cond.prprior.png)
 
 ## CS
 
@@ -57,20 +121,20 @@ Artificial Mixture
 
 1. Comparing different residuals
 
-![](assets/ukb_rss_20210107/ukb_rss_20210107_cs/ukb_rss_cs_simuartificial_mixture_ukb_resid_plots.png)
+![](assets/ukb_rss_20210107/ukb_rss_20210107_cs/ukb_rss_cs_simuartificial_mixture_ukb_cond_resid_plots.png)
 
 2. Comparing different priors
 
-![](assets/ukb_rss_20210107/ukb_rss_20210107_cs/ukb_rss_cs_simuartificial_mixture_ukb_priors_plots.png)
+![](assets/ukb_rss_20210107/ukb_rss_20210107_cs/ukb_rss_cs_simuartificial_mixture_ukb_cond_priors_plots.png)
 
 UKB Bloodcells Mixture
 
 1. Comparing different residuals
 
-![](assets/ukb_rss_20210107/ukb_rss_20210107_cs/ukb_rss_cs_simuukb_bloodcells_mixture_resid_plots.png)
+![](assets/ukb_rss_20210107/ukb_rss_20210107_cs/ukb_rss_cs_simuukb_bloodcells_mixture_cond_resid_plots.png)
 
 2. Comparing different priors
 
-![](assets/ukb_rss_20210107/ukb_rss_20210107_cs/ukb_rss_cs_simuukb_bloodcells_mixture_priors_plots.png)
+![](assets/ukb_rss_20210107/ukb_rss_20210107_cs/ukb_rss_cs_simuukb_bloodcells_mixture_cond_priors_plots.png)
 
 
