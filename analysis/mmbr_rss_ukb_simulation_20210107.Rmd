@@ -115,7 +115,7 @@ UKB Bloodcells Mixture
 
 ![](assets/ukb_rss_20210107/ukb_rss_20210107_roc/ukb_rss_roc_simuukb_bloodcells_mixture_cond.prprior.png)
 
-## CS
+### CS
 
 Artificial Mixture
 
