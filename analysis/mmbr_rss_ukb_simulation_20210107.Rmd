@@ -63,11 +63,11 @@ mnm_rss_naive and mnm_rss_ed+oracle have overlapping CSs.
 
 1. Comparing different residuals
 
-![](assets/ukb_rss_20210107/ukb_rss_20210107_cs/ukb_rss_cs_simuartificial_mixture_ukb_resid_glob_plots.png)
+![](assets/ukb_rss_20210107/ukb_rss_20210107_cs/ukb_rss_cs_simuartificial_mixture_ukb_glob_resid_plots.png)
 
 2. Comparing different priors
 
-![](assets/ukb_rss_20210107/ukb_rss_20210107_cs/ukb_rss_cs_simuartificial_mixture_ukb_priors_glob_plots.png)
+![](assets/ukb_rss_20210107/ukb_rss_20210107_cs/ukb_rss_cs_simuartificial_mixture_ukb_glob_priors_plots.png)
 
 UKB Bloodcells Mixture
 
