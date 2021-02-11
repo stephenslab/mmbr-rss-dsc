@@ -1,0 +1,21 @@
+---
+title: "mvSuSiE RSS compare with PAINTOR"
+author: "Yuxin Zou"
+date: "02/11/2021"
+output:
+  workflowr::wflow_html:
+    code_folding: hide
+---
+
+This is result from our mvSuSiE RSS simulation using UKB data. There are 600 datasets. The max PVE across traits is 0.0005.
+
+For each dataset, we simulate 2 signals using artificial mixture prior in 6 conditions. The detail for prior is [here](https://github.com/gaow/mvarbvs/blob/master/analysis/multivariate/20200402_create_prior_mixture.ipynb).
+   
+We run mvSuSiE-suff and mvSuSiE-rss with L = 10. We estimate prior weights using 'EM' method.
+
+We use PAINTORv3.0 from [github](https://github.com/gkichaev/PAINTOR_V3.0). Since we run PAINTOR without any annotations, we create a 'dummy' annotation file for each region with all 1's. Using the `mcmc` option, the posterior inclusion probability is always 0 in several test dataset. The same issue is reported [here](https://github.com/gkichaev/PAINTOR_V3.0/issues/5). Therefore, we use `-enumerate 2` option, which enumerate all possible configurations up to 2 causals in each region.
+
+We compare PIP for each SNP. PAINTOR has very high FDR.
+
+![](assets/ukb_rss_small/ukb_rss_small_roc/ukb_rss_roc.pr.png)
+
