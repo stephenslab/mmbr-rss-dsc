@@ -44,4 +44,5 @@ UKB simulations:
 
 * [Result](mmbr_rss_ukb_simulation_20210107.html)
 
+* [Compare with PAINTOR](mmbr_rss_ukb_simulation_paintor.html)
 
