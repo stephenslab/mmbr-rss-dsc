@@ -1,15 +1,15 @@
 library(ggplot2)
 library(cowplot)
-rename = list('mnm_rss_oracle+oracle' = 'RSS Oracle prior & residual', 
-              'mnm_rss_oracle+identity' = 'RSS Oracle prior Identity residual', 
-              'mnm_rss_oracle+nullz' = 'RSS Oracle prior, z cor residual', 
-              'mnm_rss_oracle+corY' = 'RSS Oracle prior, Y cor residual', 
-              'mnm_rss_naive+oracle' = 'RSS Default prior oracle residual', 
-              'mnm_rss_ed+oracle' = 'RSS ED prior oracle residual', 
-              'mnm_rss_identity+oracle' = 'RSS Random effects prior oracle residual',
-              'mnm_rss_shared+oracle' = 'RSS Fixed effect prior oracle residual',
-              'mnm_suff_oracle+oracle' = 'Oracle prior and residual',
-              'mnm_suff_oracle+covY' = 'Oracle prior, Y cov residual',
+rename = list('mnm_rss_oracle+oracle' = 'mvSuSiE-RSS Oracle prior & residual', 
+              'mnm_rss_oracle+identity' = 'mvSuSiE-RSS Oracle prior Identity residual', 
+              'mnm_rss_oracle+nullz' = 'mvSuSiE-RSS Oracle prior, z cor residual', 
+              'mnm_rss_oracle+corY' = 'mvSuSiE-RSS Oracle prior, Y cor residual', 
+              'mnm_rss_naive+oracle' = 'mvSuSiE-RSS Default prior oracle residual', 
+              'mnm_rss_ed+oracle' = 'mvSuSiE-RSS ED prior oracle residual', 
+              'mnm_rss_identity+oracle' = 'mvSuSiE-RSS Random effects prior oracle residual',
+              'mnm_rss_shared+oracle' = 'mvSuSiE-RSS Fixed effect prior oracle residual',
+              'mnm_suff_oracle+oracle' = 'mvSuSiE Oracle prior and residual',
+              'mnm_suff_oracle+covY' = 'mvSuSiE Oracle prior, Y cov residual',
               'susie_suff+TRUE' = 'SuSiE',
               'susie_rss+TRUE' = 'SuSiE-RSS',
               'susie_rss+FALSE' = 'SuSiE-RSS fixed residual variance')
@@ -30,7 +30,8 @@ dot_plot = function(dataframe) {
 bin_size = 10
 # parameters
 simulate_method = c('artificial_mixture_ukb', 'ukb_bloodcells_mixture')
-level = c('glob', 'cond')
+# level = c('glob', 'cond')
+level = 'cond'
 all.comb = expand.grid(simulate_method, level)
 colnames(all.comb) = c('simulate_method', 'level')
 
@@ -62,6 +63,7 @@ for(case in 1:nrow(all.comb)){
   }
   saveRDS(pip_cali, paste0(output, '.rds'))
   
+  pip_cali = readRDS(paste0(output, '.rds'))
   idx = 0
   ex_idx = c()
   for (name in names(pip_cali)) {
@@ -81,6 +83,8 @@ for(case in 1:nrow(all.comb)){
   }
   
   files = paste0(output, '_', setdiff(1:idx, ex_idx), '.png')
+  # files = paste0(output, '_', c(1,2,4,6), '.png')
+  # output2 = paste0('ukb_rss_20210107_pip_calibration_paper/ukb_rss_pip_cali_simu', simu, '_', level)
   cmd = paste('convert +append', paste(files, collapse=" "), paste0(output, '.png'))
   system(cmd)
   system(paste('rm -f', paste(files, collapse=" ")))

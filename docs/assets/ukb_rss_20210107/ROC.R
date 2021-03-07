@@ -23,16 +23,16 @@ roc_data = function(d1, cutoff = c(pip_cutoff, 0.999), connect_org = F) {
 colors = c('#A60628', '#7A68A6', '#348ABD', '#467821', '#FF00FF', '#E2A233', 
            '#00FFFF', '#A9A9A9', '#ADFF2F', '#188487',  '#FF0000', '#000000', 
            '#FFD700', '#00FF00', '#9400D3', '#7FFFD4', '#A52A2A', '#000080')
-rename = list('mnm_rss_oracle+oracle' = 'RSS Oracle prior & residual',
-              'mnm_rss_oracle+identity' = 'RSS Oracle prior Identity residual',
-              'mnm_rss_oracle+nullz' = 'RSS Oracle prior, z cor residual', 
-              'mnm_rss_oracle+corY' = 'RSS Oracle prior, Y cor residual', 
-              'mnm_rss_naive+oracle' = 'RSS Default prior oracle residual',
-              'mnm_rss_ed+oracle' = 'RSS ED prior oracle residual',
-              'mnm_rss_identity+oracle' = 'RSS Random effects prior oracle residual',
-              'mnm_rss_shared+oracle' = 'RSS Fixed effect prior oracle residual',
-              'mnm_suff_oracle+oracle' = 'Oracle prior and residual',
-              'mnm_suff_oracle+covY' = 'Oracle prior, Y cov residual',
+rename = list('mnm_rss_oracle+oracle' = 'mvSuSiE-RSS Oracle prior & residual',
+              'mnm_rss_oracle+identity' = 'mvSuSiE-RSS Oracle prior Identity residual',
+              'mnm_rss_oracle+nullz' = 'mvSuSiE-RSS Oracle prior, z cor residual', 
+              'mnm_rss_oracle+corY' = 'mvSuSiE-RSS Oracle prior, Y cor residual', 
+              'mnm_rss_naive+oracle' = 'mvSuSiE-RSS Default prior oracle residual',
+              'mnm_rss_ed+oracle' = 'mvSuSiE-RSS ED prior oracle residual',
+              'mnm_rss_identity+oracle' = 'mvSuSiE-RSS Random effects prior oracle residual',
+              'mnm_rss_shared+oracle' = 'mvSuSiE-RSS Fixed effect prior oracle residual',
+              'mnm_suff_oracle+oracle' = 'mvSuSiE Oracle prior and residual',
+              'mnm_suff_oracle+covY' = 'mvSuSiE Oracle prior, Y cov residual',
               'susie_suff+TRUE' = 'SuSiE',
               'susie_rss+TRUE' = 'SuSiE-RSS',
               'susie_rss+FALSE' = 'SuSiE-RSS fixed residual variance')
@@ -63,7 +63,8 @@ add_text = function(thresholds, x, y, threshold, color, delta = -0.06) {
 }
 
 simulate_method = c('artificial_mixture_ukb', 'ukb_bloodcells_mixture')
-level = c('glob', 'cond')
+# level = c('glob', 'cond')
+level = 'cond'
 all.comb = expand.grid(simulate_method, level)
 colnames(all.comb) = c('simulate_method', 'level')
 
@@ -96,7 +97,7 @@ for(case in 1:nrow(all.comb)){
     pdf(paste0(output,'.', type,'residual.pdf'), width=10, height=10, pointsize=15)
     i = 1
     labels = vector()
-    for (method in c('mnm_suff_oracle+oracle', 'mnm_suff_oracle+covY', 
+    for (method in c('mnm_suff_oracle+oracle', 'mnm_suff_oracle+covY',
                      'mnm_rss_oracle+oracle', 'mnm_rss_oracle+identity',
                      'mnm_rss_oracle+nullz', 'mnm_rss_oracle+corY',
                      'susie_suff+TRUE', 'susie_rss+TRUE')) {

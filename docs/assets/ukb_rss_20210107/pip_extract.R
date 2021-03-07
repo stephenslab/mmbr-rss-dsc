@@ -26,7 +26,8 @@ for(case in 1:nrow(all.comb)){
       pip_glob = apply(dat_out[i,]$susie_scores.pip[[1]], 1, max)
     }else{
       tmp = readRDS(paste0(pref, dat_out[i,]$mnm_rss.output.file, '.rds'))$result
-      pip_cond = c(1-tmp$lfsr)
+      lfsr = mmbr:::mmbr_get_lfsr(tmp$conditional_lfsr, tmp$alpha)
+      pip_cond = c(1-lfsr)
       pip_glob = tmp$pip
     }
     
