@@ -519,16 +519,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree0bf01d6c2f634bf09dca3f4be4766b0c62f7073btargetblank0bf01d6a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/0bf01d6c2f634bf09dca3f4be4766b0c62f7073b" target="_blank">0bf01d6</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree0fb6f666afca6cfb75ea28f70d96ab9172702cf4targetblank0fb6f66a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/0fb6f666afca6cfb75ea28f70d96ab9172702cf4" target="_blank">0fb6f66</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree0bf01d6c2f634bf09dca3f4be4766b0c62f7073btargetblank0bf01d6a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree0fb6f666afca6cfb75ea28f70d96ab9172702cf4targetblank0fb6f66a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/0bf01d6c2f634bf09dca3f4be4766b0c62f7073b" target="_blank">0bf01d6</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/0fb6f666afca6cfb75ea28f70d96ab9172702cf4" target="_blank">0fb6f66</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -619,6 +619,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/0fb6f666afca6cfb75ea28f70d96ab9172702cf4/analysis/priors_ed.Rmd" target="_blank">0fb6f66</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2021-03-07
+</td>
+<td>
+wflow_publish(“analysis/priors_ed.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/6207fc4ba3e6d5b93bab24f312d405fe6f1d69d9/docs/priors_ed.html" target="_blank">6207fc4</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2021-03-07
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -821,7 +855,7 @@ names(dat_a$U)[which(dat_a$w&gt;tol)]</code></pre>
 clrs &lt;- colorRampPalette(rev(c(&quot;#D73027&quot;,&quot;#FC8D59&quot;,&quot;#FEE090&quot;,&quot;#FFFFBF&quot;,
                                &quot;#E0F3F8&quot;,&quot;#91BFDB&quot;,&quot;#4575B4&quot;)))(128)
 # lat &lt;- cov2cor(X)
-lat &lt;- X
+lat &lt;- X/max(diag(X))
 lat[lower.tri(lat)] &lt;- NA
 n &lt;- nrow(lat)
 print(lattice::levelplot(lat[n:1,],col.regions = clrs,xlab = &quot;&quot;,ylab = &quot;&quot;,
@@ -852,6 +886,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/6207fc4ba3e6d5b93bab24f312d405fe6f1d69d9/docs/figure/priors_ed.Rmd/unnamed-chunk-5-1.png" target="_blank">6207fc4</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2021-03-07
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/f66878ad3d6ff07a2259c3d6002d3257daa64d3a/docs/figure/priors_ed.Rmd/unnamed-chunk-5-1.png" target="_blank">f66878a</a>
@@ -915,6 +960,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/6207fc4ba3e6d5b93bab24f312d405fe6f1d69d9/docs/figure/priors_ed.Rmd/unnamed-chunk-6-1.png" target="_blank">6207fc4</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2021-03-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/f66878ad3d6ff07a2259c3d6002d3257daa64d3a/docs/figure/priors_ed.Rmd/unnamed-chunk-6-1.png" target="_blank">f66878a</a>
 </td>
 <td>
@@ -976,6 +1032,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/6207fc4ba3e6d5b93bab24f312d405fe6f1d69d9/docs/figure/priors_ed.Rmd/unnamed-chunk-7-1.png" target="_blank">6207fc4</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2021-03-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/f66878ad3d6ff07a2259c3d6002d3257daa64d3a/docs/figure/priors_ed.Rmd/unnamed-chunk-7-1.png" target="_blank">f66878a</a>
 </td>
 <td>
@@ -1024,6 +1091,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/6207fc4ba3e6d5b93bab24f312d405fe6f1d69d9/docs/figure/priors_ed.Rmd/unnamed-chunk-8-1.png" target="_blank">6207fc4</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2021-03-07
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/f66878ad3d6ff07a2259c3d6002d3257daa64d3a/docs/figure/priors_ed.Rmd/unnamed-chunk-8-1.png" target="_blank">f66878a</a>
@@ -1145,6 +1223,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/6207fc4ba3e6d5b93bab24f312d405fe6f1d69d9/docs/figure/priors_ed.Rmd/unnamed-chunk-12-1.png" target="_blank">6207fc4</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2021-03-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/f66878ad3d6ff07a2259c3d6002d3257daa64d3a/docs/figure/priors_ed.Rmd/unnamed-chunk-12-1.png" target="_blank">f66878a</a>
 </td>
 <td>
@@ -1195,6 +1284,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/6207fc4ba3e6d5b93bab24f312d405fe6f1d69d9/docs/figure/priors_ed.Rmd/unnamed-chunk-13-1.png" target="_blank">6207fc4</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2021-03-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/f66878ad3d6ff07a2259c3d6002d3257daa64d3a/docs/figure/priors_ed.Rmd/unnamed-chunk-13-1.png" target="_blank">f66878a</a>
 </td>
 <td>
@@ -1243,6 +1343,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/6207fc4ba3e6d5b93bab24f312d405fe6f1d69d9/docs/figure/priors_ed.Rmd/unnamed-chunk-14-1.png" target="_blank">6207fc4</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2021-03-07
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/f66878ad3d6ff07a2259c3d6002d3257daa64d3a/docs/figure/priors_ed.Rmd/unnamed-chunk-14-1.png" target="_blank">f66878a</a>
