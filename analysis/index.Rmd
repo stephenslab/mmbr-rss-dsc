@@ -44,5 +44,7 @@ UKB simulations:
 
 * [Result](mmbr_rss_ukb_simulation_20210107.html)
 
+    [lfsr using cannonical priors](mmbr_rss_ukb_simulation_20210107_naiveprior_lfsr_problem.html)
+    
 * [Compare with PAINTOR](mmbr_rss_ukb_simulation_paintor.html)
 
