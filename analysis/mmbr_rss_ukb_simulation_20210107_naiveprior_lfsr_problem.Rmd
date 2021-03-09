@@ -1,0 +1,209 @@
+---
+title: "mvSuSiE RSS with naive prior lfsr"
+author: "Yuxin Zou"
+date: "03/8/2021"
+output:
+  workflowr::wflow_html:
+    code_folding: hide
+---
+
+We found some inflation in condition specific pip using canonical prior. 
+
+```{r}
+library(mmbr)
+```
+
+```{r}
+dat = readRDS('data/ukb_rss_naive_lfsr_problem.rds')
+idx = which(rowSums(dat$true_coef != 0)>0)
+priorU = dat$priors$naive
+```
+There is one causal SNP with PVE 0.0005. The causal SNP has effect in condition 10, 11. This pattern is not included in canonical priors.
+
+```{r}
+round(dat$true_coef[idx,], 4)
+```
+
+All models captures the true signal. The global PIP makes sense. The problem is the lfsr in null conditions at the signal.
+
+## mvSuSiE model using Suff stat
+
+With L = 1,
+```{r}
+m_init = mmbr::create_mash_prior(mixture_prior = list(matrices=priorU$xUlist, weights=priorU$pi),
+                                 null_weight=priorU$null_weight, max_mixture_len=-1)
+
+resultsuff1 = mmbr::msusie_suff_stat(XtX = dat$XtX, XtY = dat$XtY, YtY = dat$YtY, N = dat$N, L=1,
+                                     prior_variance=m_init, residual_variance=dat$resid,
+                                     compute_objective=TRUE, estimate_residual_variance=F,
+                                     estimate_prior_variance=T, estimate_prior_method='EM',
+                                     precompute_covariances=T, n_thread=1, max_iter=100, 
+                                     track_fit = T, verbosity = 0) ## prior unchange, estimate prior
+```
+
+The lfsr at the causal SNP is
+```{r}
+round(resultsuff1$lfsr[1507,],3)
+```
+The lfsr at the causal SNP in condition 10, 11 are very small. In other conditions, the lfsr are around 0.3, which turns to condition specific pip ~0.6-0.7. 
+
+At the causal SNP, the posterior mixture weights are mainly in identity matrix and shared matrix (off diagonal 0.25).
+```{r}
+names(priorU$xUlist)[which(resultsuff1$mixture_weights[1,1507,]>0.2)-1]
+```
+
+The estimated prior scalar is
+```{r}
+resultsuff1$V
+```
+
+With L = 2,
+```{r}
+resultsuff2 = mmbr::msusie_suff_stat(XtX = dat$XtX, XtY = dat$XtY, 
+                                     YtY = dat$YtY, N = dat$N, L=2,
+                                     prior_variance=m_init, residual_variance=dat$resid,
+                                     compute_objective=TRUE, estimate_residual_variance=F,
+                                     estimate_prior_variance=T, estimate_prior_method='EM',
+                                     precompute_covariances=T, n_thread=1, max_iter=10, 
+                                     track_fit = T, verbosity = 0) ## prior unchange, estimate prior --> work
+```
+
+The lfsr at the causal SNP is
+```{r}
+round(resultsuff2$lfsr[1507,],3)
+```
+The condition specific pip for those null conditions are 0. 
+
+The first single effect is the causal SNP with posterior mixture weight 1 at singleton 11. The second single effect is the causal SNP with posterior mixture weight 1 at singleton 10.
+
+The estimated prior is 
+```{r}
+resultsuff2$V
+```
+
+If we scale the prior variances by 1/sample size (1/248980),
+
+```{r}
+Usmall = lapply(priorU$xUlist, function(x) x/dat$N)
+m_initsmall = mmbr::create_mash_prior(mixture_prior = list(matrices=Usmall, weights=priorU$pi),
+                                 null_weight=priorU$null_weight, max_mixture_len=-1)
+resultsuff2small = mmbr::msusie_suff_stat(XtX = dat$XtX, XtY = dat$XtY, 
+                                     YtY = dat$YtY, N = dat$N, L=2,
+                                     prior_variance=m_initsmall, residual_variance=dat$resid,
+                                     compute_objective=TRUE, estimate_residual_variance=F,
+                                     estimate_prior_variance=T, estimate_prior_method='EM',
+                                     precompute_covariances=T, n_thread=1, max_iter=100, 
+                                     track_fit = T, verbosity = 0) ## prior/N, estimate prior
+```
+
+The lfsr becomes
+```{r}
+round(resultsuff2small$lfsr[1507,],3)
+```
+The posterior mixture weights are mainly in identity matrix and shared matrix (off diagonal 0.25).
+
+Some conclusion: if the prior doesn't include the signal pattern and the prior scale is smaller than the signal, the posteior weights will focus on shared patterns. This cause the inflation in condition specific pip.
+
+We try cannonical + a small diagonal (how to choose the small diagonal scalar?). I use 0.01 here.
+```{r}
+# U+sI
+Us = lapply(priorU$xUlist, function(x) x + 0.01*diag(nrow(x)))
+m_inits = mmbr::create_mash_prior(mixture_prior = list(matrices=Us, weights=priorU$pi),
+                                 null_weight=priorU$null_weight, max_mixture_len=-1)
+resultsuff2s = mmbr::msusie_suff_stat(XtX = dat$XtX, XtY = dat$XtY, 
+                                     YtY = dat$YtY, N = dat$N, L=2,
+                                     prior_variance=m_inits, residual_variance=dat$resid,
+                                     compute_objective=TRUE, estimate_residual_variance=F,
+                                     estimate_prior_variance=T, estimate_prior_method='EM',
+                                     precompute_covariances=T, n_thread=1, max_iter=20, 
+                                     track_fit = T, verbosity = 0)
+```
+The lfsr is 
+```{r}
+round(resultsuff2s$lfsr[1507,],3)
+```
+The posteior weights for the first single effect is a mixture of singleton 10 and 11.
+
+## mvSuSiE RSS model
+
+We fit RSS model with L = 2,
+```{r}
+ldeigen = eigen(cov2cor(dat$XtX), symmetric = T)
+m_init = mmbr::create_mash_prior(mixture_prior = list(matrices=priorU$xUlist, weights=priorU$pi),
+                                 null_weight=priorU$null_weight, max_mixture_len=-1)
+resultrss2 = mmbr::msusie_rss(Z = dat$Z, eigenR = ldeigen, L=2,
+                              prior_variance=m_init, residual_variance=dat$resid,
+                              compute_objective=TRUE, estimate_residual_variance=F,
+                              estimate_prior_variance=T, estimate_prior_method='EM',
+                              precompute_covariances=T, n_thread=1, max_iter=100, 
+                              track_fit = T, verbosity = 0) ## estimate prior
+```
+
+The lfsr is
+```{r}
+round(resultrss2$lfsr[1507,],3)
+```
+The mixture posterior weights for the causal SNP is on identity matrix and shared matrix (off diagonal 0.25).
+
+If we add the true pattern in the prior,
+```{r}
+Ut = priorU$xUlist
+Ut$true = matrix(0,20,20)
+Ut$true[10:11,10:11] = 1
+m_initt = mmbr::create_mash_prior(mixture_prior = list(matrices=Ut, weights=priorU$pi),
+                                 null_weight=priorU$null_weight, max_mixture_len=-1)
+
+resultrss2t = mmbr::msusie_rss(Z = dat$Z, eigenR = ldeigen, L=2,
+                              prior_variance=m_initt, residual_variance=dat$resid,
+                              compute_objective=TRUE, estimate_residual_variance=F,
+                              estimate_prior_variance=T, estimate_prior_method='EM',
+                              precompute_covariances=T, n_thread=1, max_iter=100, 
+                              track_fit = T, verbosity = 0) 
+```
+
+The lfsr is
+```{r}
+round(resultrss2t$lfsr[1507,],3)
+```
+The mixture posterior weights for the causal SNP is all on the true pattern.
+
+We scale the prior using magnitud of Z scores (max(abs(z))^2).
+```{r}
+# scale z
+sz = max(abs(dat$Z))^2
+Uz = lapply(priorU$xUlist, function(x) x*sz)
+m_initz = mmbr::create_mash_prior(mixture_prior = list(matrices=Uz, weights=priorU$pi),
+                                 null_weight=priorU$null_weight, max_mixture_len=-1)
+resultrss2z = mmbr::msusie_rss(Z = dat$Z, eigenR = ldeigen, L=2,
+                              prior_variance=m_initz, residual_variance=dat$resid,
+                              compute_objective=TRUE, estimate_residual_variance=F,
+                              estimate_prior_variance=T, estimate_prior_method='EM',
+                              precompute_covariances=T, n_thread=1, max_iter=100, 
+                              track_fit = T, verbosity = 0)
+```
+
+The lfsr is
+```{r}
+round(resultrss2z$lfsr[1507,],3)
+```
+
+We scale the prior using 5000.
+
+```{r}
+# scale 5000
+U5000 = lapply(priorU$xUlist, function(x) x*5000)
+m_initz5000 = mmbr::create_mash_prior(mixture_prior = list(matrices=U5000, weights=priorU$pi),
+                                 null_weight=priorU$null_weight, max_mixture_len=-1)
+resultrss25000 = mmbr::msusie_rss(Z = dat$Z, eigenR = ldeigen, L=2,
+                              prior_variance=m_initz5000, residual_variance=dat$resid,
+                              compute_objective=TRUE, estimate_residual_variance=F,
+                              estimate_prior_variance=T, estimate_prior_method='EM',
+                              precompute_covariances=T, n_thread=1, max_iter=100, 
+                              track_fit = T)
+```
+The lfsr is
+```{r}
+round(resultrss25000$lfsr[1507,],3)
+```
+The lfsr looks right!
+
