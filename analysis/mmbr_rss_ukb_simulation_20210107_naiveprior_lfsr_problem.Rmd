@@ -199,7 +199,7 @@ resultrss25000 = mmbr::msusie_rss(Z = dat$Z, eigenR = ldeigen, L=2,
                               compute_objective=TRUE, estimate_residual_variance=F,
                               estimate_prior_variance=T, estimate_prior_method='EM',
                               precompute_covariances=T, n_thread=1, max_iter=100, 
-                              track_fit = T)
+                              track_fit = T, verbosity = 0)
 ```
 The lfsr is
 ```{r}
