@@ -519,16 +519,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree5825746369729c531015d7fe2a249bb1d4c55b0ctargetblank5825746a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/5825746369729c531015d7fe2a249bb1d4c55b0c" target="_blank">5825746</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree53ee24549601132317cd632ff461bc1fd6561b6etargetblank53ee245a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/53ee24549601132317cd632ff461bc1fd6561b6e" target="_blank">53ee245</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree5825746369729c531015d7fe2a249bb1d4c55b0ctargetblank5825746a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree53ee24549601132317cd632ff461bc1fd6561b6etargetblank53ee245a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/5825746369729c531015d7fe2a249bb1d4c55b0c" target="_blank">5825746</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/53ee24549601132317cd632ff461bc1fd6561b6e" target="_blank">53ee245</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -583,6 +583,7 @@ Untracked files:
 
 Unstaged changes:
     Modified:   analysis/mmbr_missing_rss_problem1.Rmd
+    Modified:   output/ukb_prior_simulation.rds
 
 </code></pre>
 <p>
@@ -621,6 +622,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/53ee24549601132317cd632ff461bc1fd6561b6e/analysis/create_simulation_priors.Rmd" target="_blank">53ee245</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2021-03-10
+</td>
+<td>
+wflow_publish(“analysis/create_simulation_priors.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/ed6347f67c9f545167d61020bfc2c29110b0381d/docs/create_simulation_priors.html" target="_blank">ed6347f</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2021-03-10
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -916,6 +951,27 @@ names(prior)</code></pre>
 <pre class="r"><code>w = w[which(w&gt;0)]
 artificial_mixture_4 = list(U=prior,w=w)</code></pre>
 </div>
+<div id="traits-2" class="section level2">
+<h2>2 traits</h2>
+<p>Canonical patterns of sharing:</p>
+<pre class="r"><code>R = 2
+prior = mmbr:::create_cov_canonical(R)</code></pre>
+<p>We assign weights to priors:</p>
+<ol style="list-style-type: decimal">
+<li><p>singleton total 40%</p>
+<ul>
+<li>singleton_1, singleton 2 each has 20%</li>
+</ul></li>
+<li><p>shared total 60%</p></li>
+</ol>
+<pre class="r"><code>w = c(0.2, 0.2, rep(0.6/5,5))</code></pre>
+<pre class="r"><code>prior = prior[which(w&gt;0)]
+names(prior)</code></pre>
+<pre><code>[1] &quot;singleton_1&quot; &quot;singleton_2&quot; &quot;shared_1&quot;    &quot;shared_2&quot;    &quot;shared_3&quot;   
+[6] &quot;shared_4&quot;    &quot;shared_5&quot;   </code></pre>
+<pre class="r"><code>w = w[which(w&gt;0)]
+artificial_mixture_2 = list(U=prior,w=w)</code></pre>
+</div>
 </div>
 <div id="mixture-from-ukb" class="section level1">
 <h1>Mixture from UKB</h1>
@@ -950,7 +1006,7 @@ names(U)</code></pre>
     bloodcells_mixture$U[[i]] = eigenU$vectors %*% (t(eigenU$vectors) * eigenU$values)
   }
 }</code></pre>
-<pre class="r"><code>saveRDS(list(bloodcells_mixture=bloodcells_mixture, artificial_mixture_20=artificial_mixture_20, artificial_mixture_4=artificial_mixture_4), &#39;output/ukb_prior_simulation.rds&#39;)</code></pre>
+<pre class="r"><code>saveRDS(list(bloodcells_mixture=bloodcells_mixture, artificial_mixture_20=artificial_mixture_20, artificial_mixture_4=artificial_mixture_4, artificial_mixture_2 = artificial_mixture_2), &#39;output/ukb_prior_simulation.rds&#39;)</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
