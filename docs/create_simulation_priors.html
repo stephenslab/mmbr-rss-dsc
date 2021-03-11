@@ -428,7 +428,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2020-12-30
+<strong>Last updated:</strong> 2021-03-10
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -519,16 +519,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctreeeeeeef1a768f696e324287d51d594deb2cc6216ftargetblankeeeeef1a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/eeeeef1a768f696e324287d51d594deb2cc6216f" target="_blank">eeeeef1</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree5825746369729c531015d7fe2a249bb1d4c55b0ctargetblank5825746a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/5825746369729c531015d7fe2a249bb1d4c55b0c" target="_blank">5825746</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctreeeeeeef1a768f696e324287d51d594deb2cc6216ftargetblankeeeeef1a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree5825746369729c531015d7fe2a249bb1d4c55b0ctargetblank5825746a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/eeeeef1a768f696e324287d51d594deb2cc6216f" target="_blank">eeeeef1</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/5825746369729c531015d7fe2a249bb1d4c55b0c" target="_blank">5825746</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -545,8 +545,9 @@ Untracked files:
     Untracked:  data/ENSG00000140265.12.Multi_Tissues.rds
     Untracked:  data/FastQTLSumStats.mash.FL_PC3.rds
     Untracked:  data/mmbr_ukb_simulation/
-    Untracked:  data/mmbr_ukb_simulation_backup/
     Untracked:  data/mmbr_ukb_simulation_problem/
+    Untracked:  data/ukb_rss_naive_lfsr_problem.rds
+    Untracked:  data/ukb_rss_naive_pip_problem.rds
     Untracked:  output/GTExprofile_res.rds
     Untracked:  output/GTExprofile_resL1.rds
     Untracked:  output/GTExprofile_resL1_elbo.rds
@@ -578,6 +579,7 @@ Untracked files:
     Untracked:  output/tiny_data_211_cond2L3.pdf
     Untracked:  output/tiny_data_211_cond2initL3.gif
     Untracked:  output/tiny_data_211_cond2initL3.pdf
+    Untracked:  output/ukb_rss_20200107/
 
 Unstaged changes:
     Modified:   analysis/mmbr_missing_rss_problem1.Rmd
@@ -619,6 +621,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/5825746369729c531015d7fe2a249bb1d4c55b0c/analysis/create_simulation_priors.Rmd" target="_blank">5825746</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2021-03-10
+</td>
+<td>
+wflow_publish(“analysis/create_simulation_priors.Rmd”)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/756535ead4eb73eb63799b5ac1ec5a9550aeffa3/docs/create_simulation_priors.html" target="_blank">756535e</a>
+</td>
+<td>
+zouyuxin
+</td>
+<td>
+2020-12-30
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -815,6 +851,8 @@ wflow_publish(“analysis/create_simulation_priors.Rmd”)
 </div>
 <div id="artificial-structure" class="section level1">
 <h1>Artificial structure</h1>
+<div id="traits" class="section level2">
+<h2>20 traits</h2>
 <p>Canonical patterns of sharing:</p>
 <pre class="r"><code>R = 20
 prior = mmbr:::create_cov_canonical(R)</code></pre>
@@ -845,6 +883,39 @@ prior[[&#39;blocked_1&#39;]] = block</code></pre>
 <pre class="r"><code>prior = prior[which(w&gt;0)]
 w = w[which(w&gt;0)]
 artificial_mixture_20 = list(U=prior,w=w)</code></pre>
+</div>
+<div id="traits-1" class="section level2">
+<h2>4 traits</h2>
+<p>Canonical patterns of sharing:</p>
+<pre class="r"><code>R = 4
+prior = mmbr:::create_cov_canonical(R)</code></pre>
+<p>Paired sharing:</p>
+<pre class="r"><code>paired = matrix(0,R,R)
+paired[1:2,1:2] = 1
+prior[[&#39;paired_1&#39;]] = paired</code></pre>
+<p>Block sharing:</p>
+<pre class="r"><code>block = matrix(0,R,R)
+block[1:R/2, 1:R/2] = 1
+block[(R/2+1):R, (R/2+1):R] = 1
+prior[[&#39;blocked_1&#39;]] = block</code></pre>
+<p>We assign weights to priors:</p>
+<ol style="list-style-type: decimal">
+<li><p>singleton total 30%</p>
+<ul>
+<li>singleton_1, singleton 2 each has 15%</li>
+</ul></li>
+<li><p>shared total 50%</p></li>
+<li><p>paired 10%</p></li>
+<li><p>blocked 10%</p></li>
+</ol>
+<pre class="r"><code>w = c(0.15, 0.15, 0, 0, rep(0.5/5,5), 0.1, 0.1)</code></pre>
+<pre class="r"><code>prior = prior[which(w&gt;0)]
+names(prior)</code></pre>
+<pre><code>[1] &quot;singleton_1&quot; &quot;singleton_2&quot; &quot;shared_1&quot;    &quot;shared_2&quot;    &quot;shared_3&quot;   
+[6] &quot;shared_4&quot;    &quot;shared_5&quot;    &quot;paired_1&quot;    &quot;blocked_1&quot;  </code></pre>
+<pre class="r"><code>w = w[which(w&gt;0)]
+artificial_mixture_4 = list(U=prior,w=w)</code></pre>
+</div>
 </div>
 <div id="mixture-from-ukb" class="section level1">
 <h1>Mixture from UKB</h1>
@@ -879,7 +950,7 @@ names(U)</code></pre>
     bloodcells_mixture$U[[i]] = eigenU$vectors %*% (t(eigenU$vectors) * eigenU$values)
   }
 }</code></pre>
-<pre class="r"><code>saveRDS(list(bloodcells_mixture=bloodcells_mixture, artificial_mixture_20=artificial_mixture_20), &#39;output/ukb_prior_simulation.rds&#39;)</code></pre>
+<pre class="r"><code>saveRDS(list(bloodcells_mixture=bloodcells_mixture, artificial_mixture_20=artificial_mixture_20, artificial_mixture_4=artificial_mixture_4), &#39;output/ukb_prior_simulation.rds&#39;)</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -908,19 +979,19 @@ other attached packages:
 loaded via a namespace (and not attached):
  [1] progress_1.2.2     tidyselect_1.1.0   xfun_0.19          ashr_2.2-51       
  [5] purrr_0.3.4        lattice_0.20-41    colorspace_2.0-0   vctrs_0.3.6       
- [9] generics_0.1.0     htmltools_0.5.0    yaml_2.2.1         rlang_0.4.9       
+ [9] generics_0.1.0     htmltools_0.5.0    yaml_2.2.1         rlang_0.4.10      
 [13] mixsqp_0.3-46      later_1.1.0.1      pillar_1.4.7       glue_1.4.2        
-[17] plyr_1.8.6         matrixStats_0.57.0 lifecycle_0.2.0    stringr_1.4.0     
+[17] plyr_1.8.6         matrixStats_0.58.0 lifecycle_1.0.0    stringr_1.4.0     
 [21] munsell_0.5.0      gtable_0.3.0       mvtnorm_1.1-1      evaluate_0.14     
 [25] knitr_1.30         httpuv_1.5.4       invgamma_1.1       irlba_2.3.3       
-[29] Rcpp_1.0.5         promises_1.1.1     scales_1.1.1       susieR_0.9.57     
-[33] truncnorm_1.0-8    abind_1.4-5        fs_1.5.0           ggplot2_3.3.2     
-[37] hms_0.5.3          digest_0.6.27      stringi_1.5.3      dplyr_1.0.2       
-[41] mmbr_0.0.1.0305    grid_4.0.3         rprojroot_2.0.2    tools_4.0.3       
-[45] magrittr_2.0.1     tibble_3.0.4       crayon_1.3.4       whisker_0.4       
-[49] pkgconfig_2.0.3    ellipsis_0.3.1     Matrix_1.2-18      SQUAREM_2020.5    
-[53] prettyunits_1.1.1  reshape_0.8.8      rmarkdown_2.5      rstudioapi_0.13   
-[57] R6_2.5.0           git2r_0.27.1       compiler_4.0.3    </code></pre>
+[29] Rcpp_1.0.6         promises_1.1.1     scales_1.1.1       susieR_0.10.0     
+[33] truncnorm_1.0-8    abind_1.4-5        fs_1.5.0           ggplot2_3.3.3     
+[37] hms_1.0.0          digest_0.6.27      stringi_1.5.3      dplyr_1.0.2       
+[41] mmbr_0.0.2.0429    grid_4.0.3         rprojroot_2.0.2    tools_4.0.3       
+[45] magrittr_2.0.1     tibble_3.0.6       crayon_1.4.1       whisker_0.4       
+[49] pkgconfig_2.0.3    ellipsis_0.3.1     Matrix_1.2-18      SQUAREM_2021.1    
+[53] prettyunits_1.1.1  rmarkdown_2.5      reshape_0.8.8      R6_2.5.0          
+[57] git2r_0.27.1       compiler_4.0.3    </code></pre>
 </div>
 </div>
 
