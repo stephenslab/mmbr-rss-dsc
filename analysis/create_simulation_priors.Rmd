@@ -106,6 +106,34 @@ w = w[which(w>0)]
 artificial_mixture_4 = list(U=prior,w=w)
 ```
 
+## 2 traits
+
+Canonical patterns of sharing:
+```{r}
+R = 2
+prior = mmbr:::create_cov_canonical(R)
+```
+
+We assign weights to priors:
+
+1. singleton total 40%
+
+    * singleton_1, singleton 2 each has 20%
+
+2. shared total 60%
+
+```{r}
+w = c(0.2, 0.2, rep(0.6/5,5))
+```
+
+```{r}
+prior = prior[which(w>0)]
+names(prior)
+w = w[which(w>0)]
+artificial_mixture_2 = list(U=prior,w=w)
+```
+
+
 # Mixture from UKB
 
 The priors are from [this workflow](https://stephenslab.github.io/finemap-uk-biobank/bloodcells_priors.html).
@@ -142,5 +170,5 @@ for(i in 1:length(U)){
 ```
 
 ```{r}
-saveRDS(list(bloodcells_mixture=bloodcells_mixture, artificial_mixture_20=artificial_mixture_20, artificial_mixture_4=artificial_mixture_4), 'output/ukb_prior_simulation.rds')
+saveRDS(list(bloodcells_mixture=bloodcells_mixture, artificial_mixture_20=artificial_mixture_20, artificial_mixture_4=artificial_mixture_4, artificial_mixture_2 = artificial_mixture_2), 'output/ukb_prior_simulation.rds')
 ```
