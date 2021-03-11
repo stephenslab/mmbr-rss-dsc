@@ -9,6 +9,8 @@ output:
 
 # Artificial structure
 
+## 20 traits
+
 Canonical patterns of sharing:
 ```{r}
 R = 20
@@ -57,6 +59,53 @@ w = w[which(w>0)]
 artificial_mixture_20 = list(U=prior,w=w)
 ```
 
+## 4 traits
+
+Canonical patterns of sharing:
+```{r}
+R = 4
+prior = mmbr:::create_cov_canonical(R)
+```
+
+Paired sharing:
+```{r}
+paired = matrix(0,R,R)
+paired[1:2,1:2] = 1
+prior[['paired_1']] = paired
+```
+
+Block sharing:
+```{r}
+block = matrix(0,R,R)
+block[1:R/2, 1:R/2] = 1
+block[(R/2+1):R, (R/2+1):R] = 1
+prior[['blocked_1']] = block
+```
+
+We assign weights to priors:
+
+1. singleton total 30%
+
+    * singleton_1, singleton 2 each has 15%
+
+2. shared total 50%
+
+3. paired 10%
+
+4. blocked 10%
+
+
+```{r}
+w = c(0.15, 0.15, 0, 0, rep(0.5/5,5), 0.1, 0.1)
+```
+
+```{r}
+prior = prior[which(w>0)]
+names(prior)
+w = w[which(w>0)]
+artificial_mixture_4 = list(U=prior,w=w)
+```
+
 # Mixture from UKB
 
 The priors are from [this workflow](https://stephenslab.github.io/finemap-uk-biobank/bloodcells_priors.html).
@@ -93,5 +142,5 @@ for(i in 1:length(U)){
 ```
 
 ```{r}
-saveRDS(list(bloodcells_mixture=bloodcells_mixture, artificial_mixture_20=artificial_mixture_20), 'output/ukb_prior_simulation.rds')
+saveRDS(list(bloodcells_mixture=bloodcells_mixture, artificial_mixture_20=artificial_mixture_20, artificial_mixture_4=artificial_mixture_4), 'output/ukb_prior_simulation.rds')
 ```
