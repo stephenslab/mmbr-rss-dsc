@@ -87,7 +87,7 @@ UKB Bloodcells Mixture
 
 Artificial Mixture
 
-mnm_rss_naive and mnm_rss_ed+oracle have overlapping CSs.
+mnm_rss_naive has overlapping CSs.
 
 1. Different residuals with Oracle prior
 
