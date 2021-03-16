@@ -1,0 +1,212 @@
+---
+title: "mvSuSiE RSS ukb"
+author: "Yuxin Zou"
+date: "03/16/2021"
+output:
+  workflowr::wflow_html:
+    code_folding: hide
+---
+
+This is result from our mvSuSiE RSS simulation using UKB data. There are 600 datasets. The max PVE across traits is 0.0005.
+
+For each dataset, we simulate signals using 2 type of priors, the details are [here](https://zouyuxin.github.io/mmbr-rss-dsc/create_simulation_priors.html)
+
+1. Artificial mixture: 20 conditions. The oracle residual variance is a diagonal matrix.
+   
+2. UKB Bloodcells mixture: 16 conditions. The oracle residual variance is a dense matrix.
+   
+We estimate prior weights using ‘EM’ method.
+
+Comparing with previous simulation [20210107](mmbr_rss_ukb_simulation_20210107.html), we add a small diagonal to ED priors. 
+
+## Global comparison
+
+We compare the CS and PIP for each SNP.
+
+### PIP calibration
+
+Artificial Mixture
+
+1. Different residuals with Oracle prior
+
+![](assets/ukb_rss_20210313/ukb_rss_20210313_pip_calibration/ukb_rss_pip_cali_simuartificial_mixture_ukb_glob_resid.png)
+
+2. Different priors with Oracle residual
+
+![](assets/ukb_rss_20210313/ukb_rss_20210313_pip_calibration/ukb_rss_pip_cali_simuartificial_mixture_ukb_glob_priors_oracleresid.png)
+
+3. Different priors with estimated residual from close to null z scores
+
+![](assets/ukb_rss_20210313/ukb_rss_20210313_pip_calibration/ukb_rss_pip_cali_simuartificial_mixture_ukb_glob_priors.png)
+
+UKB Bloodcells Mixture
+
+1. Different residuals with Oracle prior
+
+![](assets/ukb_rss_20210313/ukb_rss_20210313_pip_calibration/ukb_rss_pip_cali_simuukb_bloodcells_mixture_glob_resid.png)
+
+2. Different priors with Oracle residual
+
+![](assets/ukb_rss_20210313/ukb_rss_20210313_pip_calibration/ukb_rss_pip_cali_simuukb_bloodcells_mixture_glob_priors_oracleresid.png)
+
+3. Different priors with estimated residual from close to null z scores
+
+![](assets/ukb_rss_20210313/ukb_rss_20210313_pip_calibration/ukb_rss_pip_cali_simuukb_bloodcells_mixture_glob_priors.png)
+
+### Power
+
+Artificial Mixture
+
+1. Different residuals with Oracle prior
+
+![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuartificial_mixture_ukb_glob.prresidual.png){width=45%} ![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuartificial_mixture_ukb_glob.rocresidual.png){width=45%}
+
+2. Different priors with Oracle residual
+
+![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuartificial_mixture_ukb_glob.prprior_oracleresid.png){width=45%} ![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuartificial_mixture_ukb_glob.rocprior_oracleresid.png){width=45%}
+
+3. Different priors with estimated residual from close to null z scores
+
+![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuartificial_mixture_ukb_glob.prprior.png){width=45%} ![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuartificial_mixture_ukb_glob.rocprior.png){width=45%}
+
+UKB Bloodcells Mixture
+
+1. Different residuals with Oracle prior
+
+![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuukb_bloodcells_mixture_glob.prresidual.png){width=45%} ![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuukb_bloodcells_mixture_glob.rocresidual.png){width=45%}
+
+2. Different priors with Oracle residual
+
+![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuukb_bloodcells_mixture_glob.prprior_oracleresid.png){width=45%} ![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuukb_bloodcells_mixture_glob.rocprior_oracleresid.png){width=45%}
+
+3. Different priors with estimated residual from close to null z scores
+
+![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuukb_bloodcells_mixture_glob.prprior.png){width=45%} ![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuukb_bloodcells_mixture_glob.rocprior.png){width=45%}
+
+### CS
+
+Artificial Mixture
+
+mnm_rss_naive and mnm_rss_ed+oracle have overlapping CSs.
+
+1. Different residuals with Oracle prior
+
+![](assets/ukb_rss_20210313/ukb_rss_20210313_cs/ukb_rss_cs_simuartificial_mixture_ukb_glob_resid_plots.png)
+
+2. Different priors with Oracle residual
+
+![](assets/ukb_rss_20210313/ukb_rss_20210313_cs/ukb_rss_cs_simuartificial_mixture_ukb_glob_priors_oraclereid_plots.png)
+
+3. Different priors with estimated residual from close to null z scores
+
+![](assets/ukb_rss_20210313/ukb_rss_20210313_cs/ukb_rss_cs_simuartificial_mixture_ukb_glob_priors_plots.png)
+
+UKB Bloodcells Mixture
+
+1. Different residuals with Oracle prior
+
+![](assets/ukb_rss_20210313/ukb_rss_20210313_cs/ukb_rss_cs_simuukb_bloodcells_mixture_glob_resid_plots.png)
+
+2. Different priors with Oracle residual
+
+![](assets/ukb_rss_20210313/ukb_rss_20210313_cs/ukb_rss_cs_simuukb_bloodcells_mixture_glob_priors_oraclereid_plots.png)
+
+3. Different priors with estimated residual from close to null z scores
+
+![](assets/ukb_rss_20210313/ukb_rss_20210313_cs/ukb_rss_cs_simuukb_bloodcells_mixture_glob_priors_plots.png)
+
+## Trait specific comparison
+
+We compare the CS and PIP for each SNP in each trait.
+
+### PIP calibration
+
+Artificial Mixture
+
+1. Different residuals with Oracle prior
+
+![](assets/ukb_rss_20210313/ukb_rss_20210313_pip_calibration/ukb_rss_pip_cali_simuartificial_mixture_ukb_cond_resid.png)
+
+2. Different priors with Oracle residual
+
+![](assets/ukb_rss_20210313/ukb_rss_20210313_pip_calibration/ukb_rss_pip_cali_simuartificial_mixture_ukb_cond_priors_oracleresid.png)
+
+3. Different priors with estimated residual from close to null z scores
+
+![](assets/ukb_rss_20210313/ukb_rss_20210313_pip_calibration/ukb_rss_pip_cali_simuartificial_mixture_ukb_cond_priors.png)
+
+UKB Bloodcells Mixture
+
+1. Different residuals with Oracle prior
+
+![](assets/ukb_rss_20210313/ukb_rss_20210313_pip_calibration/ukb_rss_pip_cali_simuukb_bloodcells_mixture_cond_resid.png)
+
+2. Different priors with Oracle residual
+
+![](assets/ukb_rss_20210313/ukb_rss_20210313_pip_calibration/ukb_rss_pip_cali_simuukb_bloodcells_mixture_cond_priors_oracleresid.png)
+
+3. Different priors with estimated residual from close to null z scores
+
+![](assets/ukb_rss_20210313/ukb_rss_20210313_pip_calibration/ukb_rss_pip_cali_simuukb_bloodcells_mixture_cond_priors.png)
+
+### Power
+
+Artificial Mixture
+
+1. Different residuals with Oracle prior
+
+![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuartificial_mixture_ukb_cond.prresidual.png){width=45%} ![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuartificial_mixture_ukb_cond.rocresidual.png){width=45%}
+
+2. Different priors with Oracle residual
+
+![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuartificial_mixture_ukb_cond.prprior_oracleresid.png){width=45%} ![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuartificial_mixture_ukb_cond.rocprior_oracleresid.png){width=45%}
+
+3. Different priors with estimated residual from close to null z scores
+
+![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuartificial_mixture_ukb_cond.prprior.png){width=45%} ![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuartificial_mixture_ukb_cond.rocprior.png){width=45%}
+
+UKB Bloodcells Mixture
+
+1. Different residuals with Oracle prior
+
+![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuukb_bloodcells_mixture_cond.prresidual.png){width=45%} ![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuukb_bloodcells_mixture_cond.rocresidual.png){width=45%}
+
+2. Different priors with Oracle residual
+
+![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuukb_bloodcells_mixture_cond.prprior_oracleresid.png){width=45%} ![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuukb_bloodcells_mixture_cond.rocprior_oracleresid.png){width=45%}
+
+3. Different priors with estimated residual from close to null z scores
+
+![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuukb_bloodcells_mixture_cond.prprior.png){width=45%} ![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuukb_bloodcells_mixture_cond.rocprior.png){width=45%}
+
+### CS
+
+Artificial Mixture
+
+mnm_rss_naive and mnm_rss_ed+oracle have overlapping CSs.
+
+1. Different residuals with Oracle prior
+
+![](assets/ukb_rss_20210313/ukb_rss_20210313_cs/ukb_rss_cs_simuartificial_mixture_ukb_cond_resid_plots.png)
+
+2. Different priors with Oracle residual
+
+![](assets/ukb_rss_20210313/ukb_rss_20210313_cs/ukb_rss_cs_simuartificial_mixture_ukb_cond_priors_oraclereid_plots.png)
+
+3. Different priors with estimated residual from close to null z scores
+
+![](assets/ukb_rss_20210313/ukb_rss_20210313_cs/ukb_rss_cs_simuartificial_mixture_ukb_cond_priors_plots.png)
+
+UKB Bloodcells Mixture
+
+1. Different residuals with Oracle prior
+
+![](assets/ukb_rss_20210313/ukb_rss_20210313_cs/ukb_rss_cs_simuukb_bloodcells_mixture_cond_resid_plots.png)
+
+2. Different priors with Oracle residual
+
+![](assets/ukb_rss_20210313/ukb_rss_20210313_cs/ukb_rss_cs_simuukb_bloodcells_mixture_cond_priors_oraclereid_plots.png)
+
+3. Different priors with estimated residual from close to null z scores
+
+![](assets/ukb_rss_20210313/ukb_rss_20210313_cs/ukb_rss_cs_simuukb_bloodcells_mixture_cond_priors_plots.png)
