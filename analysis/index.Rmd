@@ -42,9 +42,11 @@ UKB simulations:
 
 * [Simulation Data Driven Prior](priors_ed.html)
 
-* [Result](mmbr_rss_ukb_simulation_20210107.html)
+* [Result20210107](mmbr_rss_ukb_simulation_20210107.html)
 
     [lfsr using cannonical priors](mmbr_rss_ukb_simulation_20210107_naiveprior_lfsr_problem.html)
-    
+
+* [Result20210313](mmbr_rss_ukb_simulation_20210313.html)
+
 * [Compare with PAINTOR](mmbr_rss_ukb_simulation_paintor.html)
 
