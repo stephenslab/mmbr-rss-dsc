@@ -15,6 +15,11 @@ plot_panel = function(dat, quantity, legend = TRUE) {
                           width=.2, position=position_dodge(.25)) + 
       geom_hline(yintercept = 0.95, colour = 'gray') 
   }
+  if (quantity[1] == 'fdr') {
+    p = p + geom_errorbar(aes(ymin=fdr-fdr_se, ymax=fdr+fdr_se), 
+                          width=.2, position=position_dodge(.25)) + 
+      geom_hline(yintercept = 0.05, colour = 'gray') 
+  }
   p = p + labs(x = "method", y = "") + theme_cowplot() + 
     background_grid(major = "x", minor = "none") + 
     ggtitle(quantity[2]) + theme(axis.title.x = element_text(size = 8),
@@ -32,28 +37,37 @@ level = c('glob', 'cond')
 all.comb = expand.grid(simulate_method, level)
 colnames(all.comb) = c('simulate_method', 'level')
 
-rename = list('susie_suff+TRUE' = 'SuSiE',
-              'susie_rss+TRUE' = 'SuSiE-RSS',
-              'mnm_suff_oracle+oracle' = 'mvSuSiE Oracle residual',
-              'mnm_suff_oracle+covY' = 'mvSuSiE Y cov residual',
-              'mnm_rss_oracle+oracle' = 'mvSuSiE-RSS Oracle residual',
-              'mnm_rss_oracle+identity' = 'mvSuSiE-RSS Identity residual',
-              'mnm_rss_oracle+nullz' = 'mvSuSiE-RSS z cor residual', 
-              'mnm_rss_oracle+corY' = 'mvSuSiE-RSS Y cor residual',
-              'mnm_suff_oracle+oracle' = 'mvSuSiE Oracle prior & residual',
+rename = list('susie_suff+FALSE' = 'SuSiE',
+              'susie_rss+FALSE' = 'SuSiE-RSS',
+              'mnm_suff_oracle+oracle' = 'mvSuSiE Oracle prior Oracle residual',
+              'mnm_suff_oracle+covY' = 'mvSuSiE Oracle prior Y residual',
+              'mnm_suff_identity+oracle' = 'mvSuSiE Random effects prior Oracle residual',
+              'mnm_suff_identity+covY' = 'mvSuSiE Random effects prior Y residual',
+              'mnm_suff_naive+oracle' = 'mvSuSiE Default prior Oracle residual',
+              'mnm_suff_naive+covY' = 'mvSuSiE Default prior Y residual',
               'mnm_suff_ed+oracle' = 'mvSuSiE ED prior Oracle residual',
-              'mnm_rss_oracle+oracle' = 'mvSuSiE-RSS Oracle prior & residual',
+              'mnm_suff_ed+covY' = 'mvSuSiE ED prior Y residual',
+              'mnm_suff_ed_ddcan+oracle' = 'mvSuSiE ED+default prior Oracle residual',
+              'mnm_suff_ed_ddcan+covY' = 'mvSuSiE ED+default prior Y residual',
+              'mnm_rss_oracle+oracle' = 'mvSuSiE-RSS Oracle prior Oracle residual',
+              'mnm_rss_oracle+identity' = 'mvSuSiE-RSS Oracle prior Identity residual',
+              'mnm_rss_oracle+nullz' = 'mvSuSiE-RSS Oracle prior z residual', 
+              'mnm_rss_oracle+corY' = 'mvSuSiE-RSS Oracle prior Y residual',
               'mnm_rss_identity+oracle' = 'mvSuSiE-RSS Random effects prior Oracle residual',
-              'mnm_rss_shared+oracle' = 'mvSuSiE-RSS Fixed effect prior Oracle residual',
+              'mnm_rss_shared+oracle' = 'mvSuSiE-RSS Fixed effects prior Oracle residual',
               'mnm_rss_naive+oracle' = 'mvSuSiE-RSS Default prior Oracle residual',
               'mnm_rss_ed+oracle' = 'mvSuSiE-RSS ED prior Oracle residual',
-              'mnm_suff_oracle+covY' = 'mvSuSiE Oracle prior',
-              'mnm_suff_ed+covY' = 'mvSuSiE ED prior',
-              'mnm_rss_oracle+nullz' = 'mvSuSiE-RSS Oracle prior',
-              'mnm_rss_identity_corZ+nullz' = 'mvSuSiE-RSS Random effects prior',
-              'mnm_rss_shared_corZ+nullz' = 'mvSuSiE-RSS Fixed effect prior',
-              'mnm_rss_naive_corZ+nullz' = 'mvSuSiE-RSS Default prior',
-              'mnm_rss_ed_corZ+nullz' = 'mvSuSiE-RSS ED prior')
+              'mnm_rss_ed_ddcan+oracle' = 'mvSuSiE-RSS ED+default prior Oracle residual',
+              'mnm_rss_identity_corY+corY' = 'mvSuSiE-RSS Random effects prior Y residual',
+              'mnm_rss_shared_corY+corY' = 'mvSuSiE-RSS Fixed effects prior Y residual',
+              'mnm_rss_naive_corY+corY' = 'mvSuSiE-RSS Default prior Y residual',
+              'mnm_rss_ed_corY+corY' = 'mvSuSiE-RSS ED prior Y residual',
+              'mnm_rss_ed_ddcan_corY+corY' = 'mvSuSiE-RSS ED+default prior Y residual',
+              'mnm_rss_identity_corZ+nullz' = 'mvSuSiE-RSS Random effects prior z residual',
+              'mnm_rss_shared_corZ+nullz' = 'mvSuSiE-RSS Fixed effects prior z residual',
+              'mnm_rss_naive_corZ+nullz' = 'mvSuSiE-RSS Default prior z residual',
+              'mnm_rss_ed_corZ+nullz' = 'mvSuSiE-RSS ED prior z residual',
+              'mnm_rss_ed_ddcan_corZ+nullz' = 'mvSuSiE-RSS ED+default prior z residual')
 
 for(case in 1:nrow(all.comb)){
   simu = all.comb[case, 'simulate_method']
@@ -64,35 +78,52 @@ for(case in 1:nrow(all.comb)){
   
   if(level == 'glob'){
     methods = levels(factor(dat_out$method))[!grepl('susie', levels(factor(dat_out$method)), fixed=T)]
-    methods_resid = c('mvSuSiE Oracle residual', 'mvSuSiE Y cov residual',
-                      'mvSuSiE-RSS Oracle residual', 'mvSuSiE-RSS Identity residual',
-                      'mvSuSiE-RSS Y cor residual', 'mvSuSiE-RSS z cor residual')
-    methods_prior_oracleresid = c('mvSuSiE Oracle prior & residual', 'mvSuSiE ED prior Oracle residual',
-                      'mvSuSiE-RSS Oracle prior & residual', 'mvSuSiE-RSS Random effects prior Oracle residual',
-                      'mvSuSiE-RSS Fixed effect prior Oracle residual', 'mvSuSiE-RSS Default prior Oracle residual',
-                      'mvSuSiE-RSS ED prior Oracle residual')
-    methods_prior = c('mvSuSiE Oracle prior', 'mvSuSiE ED prior', 
-                      'mvSuSiE-RSS Oracle prior', 'mvSuSiE-RSS Random effects prior',
-                      'mvSuSiE-RSS Fixed effect prior', 'mvSuSiE-RSS Default prior', 'mvSuSiE-RSS ED prior')
+    methods_suff_oracle = c("mnm_suff_oracle+oracle","mnm_suff_identity+oracle","mnm_suff_naive+oracle",
+                            "mnm_suff_ed+oracle","mnm_suff_ed_ddcan+oracle")
+    methods_suff_y = c("mnm_suff_oracle+covY","mnm_suff_identity+covY","mnm_suff_naive+covY",
+                       "mnm_suff_ed+covY","mnm_suff_ed_ddcan+covY")
+
+    methods_resid = c('mnm_suff_oracle+oracle','mnm_rss_oracle+oracle', 
+                      'mnm_rss_oracle+identity','mnm_rss_oracle+nullz','mnm_rss_oracle+corY')
+    methods_prior_oracleresid = c('mnm_suff_oracle+oracle','mnm_rss_oracle+oracle', 
+                                  'mnm_rss_identity+oracle', 'mnm_rss_shared+oracle',
+                                  'mnm_rss_naive+oracle', 'mnm_rss_ed+oracle','mnm_rss_ed_ddcan+oracle')
+    methods_prior_y = c('mnm_suff_oracle+covY','mnm_rss_oracle+corY', 'mnm_rss_identity_corY+corY',
+                        'mnm_rss_shared_corY+corY', 'mnm_rss_naive_corY+corY',
+                        "mnm_rss_ed_corY+corY","mnm_rss_ed_ddcan_corY+corY")
+    methods_prior = c('mnm_suff_oracle+covY','mnm_rss_oracle+nullz', 'mnm_rss_identity_corZ+nullz', 
+                      'mnm_rss_shared_corZ+nullz', 'mnm_rss_naive_corZ+nullz',
+                      'mnm_rss_ed_corZ+nullz', 'mnm_rss_ed_ddcan_corZ+nullz')
   }else{
     methods = levels(factor(dat_out$method))
-    methods_resid = c('SuSiE', 'SuSiE-RSS', 'mvSuSiE Oracle residual', 'mvSuSiE Y cov residual',
-                      'mvSuSiE-RSS Oracle residual', 'mvSuSiE-RSS Identity residual',
-                      'mvSuSiE-RSS Y cor residual', 'mvSuSiE-RSS z cor residual')
-    methods_prior_oracleresid = c('SuSiE', 'SuSiE-RSS', 'mvSuSiE Oracle prior & residual', 
-                                  'mvSuSiE ED prior Oracle residual','mvSuSiE-RSS Oracle prior & residual', 
-                                  'mvSuSiE-RSS Default prior Oracle residual', 
-                                  'mvSuSiE-RSS Random effects prior Oracle residual',
-                                  'mvSuSiE-RSS Fixed effect prior Oracle residual', 
-                                  'mvSuSiE-RSS ED prior Oracle residual')
-    methods_prior = c('SuSiE', 'SuSiE-RSS', 'mvSuSiE Oracle prior', 'mvSuSiE ED prior',
-                      'mvSuSiE-RSS Oracle prior', 'mvSuSiE-RSS Default prior', 
-                      'mvSuSiE-RSS Random effects prior','mvSuSiE-RSS Fixed effect prior', 'mvSuSiE-RSS ED prior')
+    methods_suff_oracle = c('susie_suff+FALSE', 'susie_rss+FALSE', 
+                            "mnm_suff_oracle+oracle","mnm_suff_identity+oracle","mnm_suff_naive+oracle",
+                            "mnm_suff_ed+oracle","mnm_suff_ed_ddcan+oracle")
+    methods_suff_y = c('susie_suff+FALSE', 'susie_rss+FALSE', 
+                       "mnm_suff_oracle+covY","mnm_suff_identity+covY","mnm_suff_naive+covY",
+                       "mnm_suff_ed+covY","mnm_suff_ed_ddcan+covY")
+    
+    methods_resid = c('susie_suff+FALSE', 'susie_rss+FALSE', 
+                      'mnm_suff_oracle+oracle','mnm_rss_oracle+oracle', 
+                      'mnm_rss_oracle+identity','mnm_rss_oracle+nullz','mnm_rss_oracle+corY')
+    methods_prior_oracleresid = c('susie_suff+FALSE', 'susie_rss+FALSE', 
+                                  'mnm_suff_oracle+oracle','mnm_rss_oracle+oracle', 
+                                  'mnm_rss_identity+oracle', 'mnm_rss_shared+oracle',
+                                  'mnm_rss_naive+oracle', 'mnm_rss_ed+oracle','mnm_rss_ed_ddcan+oracle')
+    methods_prior_y = c('susie_suff+FALSE', 'susie_rss+FALSE', 
+                        'mnm_suff_oracle+covY','mnm_rss_oracle+corY', 'mnm_rss_identity_corY+corY',
+                        'mnm_rss_shared_corY+corY', 'mnm_rss_naive_corY+corY',
+                        "mnm_rss_ed_corY+corY","mnm_rss_ed_ddcan_corY+corY")
+    methods_prior = c('susie_suff+FALSE', 'susie_rss+FALSE', 
+                      'mnm_suff_oracle+covY','mnm_rss_oracle+nullz', 'mnm_rss_identity_corZ+nullz', 
+                      'mnm_rss_shared_corZ+nullz', 'mnm_rss_naive_corZ+nullz',
+                      'mnm_rss_ed_corZ+nullz', 'mnm_rss_ed_ddcan_corZ+nullz')
   }
   
   # for(met in methods){
   #   print(met)
   #   dat_sub = dat_out %>% filter(method == met)
+  # 
   #   if(level == 'glob'){
   #     total = dat_sub$mvsusie_scores.total
   #     valid = dat_sub$mvsusie_scores.valid
@@ -111,13 +142,14 @@ for(case in 1:nrow(all.comb)){
   #       expected = unlist(dat_sub$susie_scores.n_causal)
   #       cs_cor = dat_sub$susie_scores.cs_correlation
   #     }else{
-  #       total = unlist(dat_sub$mvsusie_scores.total_cond_discoveries)
+  #       total = unlist(dat_sub$mvsusie_scores.true_cond_discoveries) +
+  #         unlist(dat_sub$mvsusie_scores.false_pos_cond_discoveries)
   #       valid = unlist(dat_sub$mvsusie_scores.true_cond_discoveries)
   #       sizes = unlist(dat_sub$mvsusie_scores.size_cond_cs)
   #       purity = unlist(dat_sub$mvsusie_scores.purity_cond_cs)
   #       overlap = NA
   #       cs_cor = dat_sub$mvsusie_scores.cs_correlation
-  #       tmp = dat_out %>% filter(method == 'susie_suff+TRUE')
+  #       tmp = dat_out %>% filter(method == 'susie_suff+FALSE')
   #       expected = unlist(tmp$susie_scores.n_causal)
   #     }
   #   }
@@ -131,84 +163,139 @@ for(case in 1:nrow(all.comb)){
   # colnames(rates) = c('discoveries', 'valid', 'size', 'purity', 'overlap', 'expected', 'cs_cor')
   # rates = as.data.frame(rates)
   # rates$power = rates$valid/rates$expected
+  # rates$fdr = (rates$discoveries - rates$valid)/rates$discoveries
   # rates$coverage = rates$valid/rates$discoveries
   # rates$power_se = sqrt(rates$power * (1-rates$power) / rates$expected)
   # rates$power_se[is.nan(rates$power_se)] = 0
+  # rates$fdr_se = sqrt(rates$fdr * (1-rates$fdr) / rates$discoveries)
   # rates$coverage_se = sqrt(rates$coverage * (1-rates$coverage) / rates$discoveries)
-  # rates$method = sapply(rownames(rates), function(x) rename[[x]])
   # saveRDS(rates, paste0(output, '.rds'))
 
   rates = readRDS(paste0(output, '.rds'))
+  rates$method = rownames(rates)
+  ## suff residuals
+  ### oracle residual
+  rates_suff_oracle = rates %>% filter(method %in% methods_suff_oracle)
+  rates_suff_oracle$method = sapply(rates_suff_oracle$method, function(x) rename[[x]])
+  rates_suff_oracle$method = gsub(' Oracle residual', '', rates_suff_oracle$method)
+  rates_suff_oracle$method = factor(rates_suff_oracle$method, 
+                                    levels=c('SuSiE','SuSiE-RSS','mvSuSiE Oracle prior',
+                                             'mvSuSiE Random effects prior',
+                                             'mvSuSiE Default prior','mvSuSiE ED prior',
+                                             'mvSuSiE ED+default prior'))
+  p1 = plot_panel(rates_suff_oracle, c('coverage', 'coverage'), legend=F)
+  p2 = plot_panel(rates_suff_oracle, c('power', 'power'), legend=F)
+  p3 = plot_panel(rates_suff_oracle, c('size', 'median number of variables'), legend=F)
+  p4 = plot_panel(rates_suff_oracle, c('purity', 'median of purity'), legend=F)
+  pdf(paste0(output, '_suff_oracleresid_plots.pdf'), width=12, height=3)
+  grid.arrange(p1,p2,p3,p4, ncol=4, widths=c(3,3,3,3))
+  dev.off()
+  system(paste0("convert -flatten -density 120 ", paste0(output, '_suff_oracleresid_plots.pdf'), 
+                " ", paste0(output, '_suff_oracleresid_plots.png')))
+  
+  ### oracle residual
+  rates_suff_y = rates %>% filter(method %in% methods_suff_y)
+  rates_suff_y$method = sapply(rates_suff_y$method, function(x) rename[[x]])
+  rates_suff_y$method = gsub(' Y residual', '', rates_suff_y$method)
+  rates_suff_y$method = factor(rates_suff_y$method, 
+                                    levels=c('SuSiE','SuSiE-RSS','mvSuSiE Oracle prior',
+                                             'mvSuSiE Random effects prior',
+                                             'mvSuSiE Default prior','mvSuSiE ED prior',
+                                             'mvSuSiE ED+default prior'))
+  p1 = plot_panel(rates_suff_y, c('coverage', 'coverage'), legend=F)
+  p2 = plot_panel(rates_suff_y, c('power', 'power'), legend=F)
+  p3 = plot_panel(rates_suff_y, c('size', 'median number of variables'), legend=F)
+  p4 = plot_panel(rates_suff_y, c('purity', 'median of purity'), legend=F)
+  pdf(paste0(output, '_suff_yresid_plots.pdf'), width=12, height=3)
+  grid.arrange(p1,p2,p3,p4, ncol=4, widths=c(3,3,3,3))
+  dev.off()
+  system(paste0("convert -flatten -density 120 ", paste0(output, '_suff_yresid_plots.pdf'), 
+                " ", paste0(output, '_suff_yresid_plots.png')))
+  
   # residuals
   rates_resid = rates %>% filter(method %in% methods_resid)
-  rates_resid$method = factor(rates_resid$method, levels=c('SuSiE',
-                                                           'SuSiE-RSS',
+  rates_resid$method = sapply(rates_resid$method, function(x) rename[[x]])
+  rates_resid$method = gsub(' Oracle prior', '', rates_resid$method)
+  rates_resid$method = factor(rates_resid$method, levels=c('SuSiE','SuSiE-RSS',
                                                            'mvSuSiE Oracle residual',
-                                                           'mvSuSiE Y cov residual',
                                                            'mvSuSiE-RSS Oracle residual',
                                                            'mvSuSiE-RSS Identity residual',
-                                                           'mvSuSiE-RSS Y cor residual',
-                                                           'mvSuSiE-RSS z cor residual'))
+                                                           'mvSuSiE-RSS Y residual',
+                                                           'mvSuSiE-RSS z residual'))
   p1 = plot_panel(rates_resid, c('coverage', 'coverage'), legend=F)
   p2 = plot_panel(rates_resid, c('power', 'power'), legend=F)
   p3 = plot_panel(rates_resid, c('size', 'median number of variables'), legend=F)
   p4 = plot_panel(rates_resid, c('purity', 'median of purity'), legend=F)
-  # p5 = plot_panel(rates_resid, c('cs_cor', 'cor between CS'), legend=F)
   pdf(paste0(output, '_resid_plots.pdf'), width=12, height=3)
   grid.arrange(p1,p2,p3,p4, ncol=4, widths=c(3,3,3,3))
   dev.off()
   system(paste0("convert -flatten -density 120 ", paste0(output, '_resid_plots.pdf'), " ", paste0(output, '_resid_plots.png')))
-  # output2 = paste0('ukb_rss_20210107_cs_paper/ukb_rss_cs_simu', simu, '_', level)
-  # pdf(paste0(output2, '_resid_plots.pdf'), width=12, height=4)
-  # grid.arrange(p1,p2,p3,p4, ncol=4, widths=c(3,3,3,3))
-  # dev.off()
-  # system(paste0("convert -flatten -density 120 ", paste0(output2, '_resid_plots.pdf'), " ", paste0(output2, '_resid_plots.png')))
-
+  
   # priors oracle residual
-  rates_priors_oraclaresid = rates %>% filter(method %in% methods_prior_oracleresid)
-  rates_priors_oraclaresid$method = factor(rates_priors_oraclaresid$method, 
-                                           levels=c('SuSiE','SuSiE-RSS',
-                                                    'mvSuSiE Oracle prior & residual',
-                                                    'mvSuSiE ED prior Oracle residual',
-                                                    'mvSuSiE-RSS Oracle prior & residual',
-                                                    'mvSuSiE-RSS Default prior Oracle residual',
-                                                    'mvSuSiE-RSS Random effects prior Oracle residual',
-                                                    'mvSuSiE-RSS Fixed effect prior Oracle residual',
-                                                    'mvSuSiE-RSS ED prior Oracle residual'))
-  p1 = plot_panel(rates_priors_oraclaresid, c('coverage', 'coverage'), legend=F)
-  p2 = plot_panel(rates_priors_oraclaresid, c('power', 'power'), legend=F)
-  p3 = plot_panel(rates_priors_oraclaresid, c('size', 'median number of variables'), legend=F)
-  p4 = plot_panel(rates_priors_oraclaresid, c('purity', 'median of purity'), legend=F)
-  # p5 = plot_panel(rates_priors_oraclaresid, c('cs_cor', 'cor between CS'), legend=F)
+  rates_priors_oracleresid = rates %>% filter(method %in% methods_prior_oracleresid)
+  rates_priors_oracleresid$method = sapply(rates_priors_oracleresid$method, function(x) rename[[x]])
+  rates_priors_oracleresid$method = gsub(' Oracle residual', '', rates_priors_oracleresid$method)
+  rates_priors_oracleresid$method = factor(rates_priors_oracleresid$method,
+                                           levels=c('SuSiE','SuSiE-RSS','mvSuSiE Oracle prior',
+                                                    'mvSuSiE-RSS Oracle prior',
+                                                    'mvSuSiE-RSS Fixed effects prior',
+                                                    'mvSuSiE-RSS Random effects prior',
+                                                    'mvSuSiE-RSS Default prior',
+                                                    'mvSuSiE-RSS ED prior',
+                                                    'mvSuSiE-RSS ED+default prior'))
+  p1 = plot_panel(rates_priors_oracleresid, c('coverage', 'coverage'), legend=F)
+  p2 = plot_panel(rates_priors_oracleresid, c('power', 'power'), legend=F)
+  p3 = plot_panel(rates_priors_oracleresid, c('size', 'median number of variables'), legend=F)
+  p4 = plot_panel(rates_priors_oracleresid, c('purity', 'median of purity'), legend=F)
   pdf(paste0(output, '_priors_oraclereid_plots.pdf'), width=12, height=3)
   grid.arrange(p1,p2,p3,p4, ncol=4, widths=c(3,3,3,3))
   dev.off()
   system(paste0("convert -flatten -density 120 ", paste0(output, '_priors_oraclereid_plots.pdf'), " ", paste0(output, '_priors_oraclereid_plots.png')))
-  # pdf(paste0(output2, '_priors_plots.pdf'), width=12, height=4)
-  # grid.arrange(p1,p2,p3,p4, ncol=4, widths=c(3,3,3,3))
-  # dev.off()
-  # system(paste0("convert -flatten -density 120 ", paste0(output2, '_priors_plots.pdf'), " ", paste0(output2, '_priors_plots.png')))
+  
+  # priors y residual
+  rates_priors_yresid = rates %>% filter(method %in% methods_prior_y)
+  rates_priors_yresid$method = sapply(rates_priors_yresid$method, function(x) rename[[x]])
+  rates_priors_yresid$method = gsub(' Y residual', '', rates_priors_yresid$method)
+  rates_priors_yresid$method = factor(rates_priors_yresid$method,
+                                           levels=c('SuSiE','SuSiE-RSS','mvSuSiE Oracle prior',
+                                                    'mvSuSiE-RSS Oracle prior',
+                                                    'mvSuSiE-RSS Fixed effects prior',
+                                                    'mvSuSiE-RSS Random effects prior',
+                                                    'mvSuSiE-RSS Default prior',
+                                                    'mvSuSiE-RSS ED prior',
+                                                    'mvSuSiE-RSS ED+default prior'))
+  p1 = plot_panel(rates_priors_yresid, c('coverage', 'coverage'), legend=F)
+  p2 = plot_panel(rates_priors_yresid, c('power', 'power'), legend=F)
+  p3 = plot_panel(rates_priors_yresid, c('size', 'median number of variables'), legend=F)
+  p4 = plot_panel(rates_priors_yresid, c('purity', 'median of purity'), legend=F)
+  pdf(paste0(output, '_priors_yreid_plots.pdf'), width=12, height=3)
+  grid.arrange(p1,p2,p3,p4, ncol=4, widths=c(3,3,3,3))
+  dev.off()
+  system(paste0("convert -flatten -density 120 ", paste0(output, '_priors_yreid_plots.pdf'), 
+                " ", paste0(output, '_priors_yreid_plots.png')))
   
   # priors
   rates_priors = rates %>% filter(method %in% methods_prior)
-  rates_priors$method = factor(rates_priors$method, 
+  rates_priors$method = sapply(rates_priors$method, function(x) rename[[x]])
+  rates_priors$method = gsub(' Y residual', '', rates_priors$method)
+  rates_priors$method = gsub(' z residual', '', rates_priors$method)
+  rates_priors$method = factor(rates_priors$method,
                                levels=c('SuSiE','SuSiE-RSS',
-                                        'mvSuSiE Oracle prior', 'mvSuSiE ED prior',
-                                        'mvSuSiE-RSS Oracle prior', 'mvSuSiE-RSS Default prior',
+                                        'mvSuSiE Oracle prior',
+                                        'mvSuSiE-RSS Oracle prior', 
                                         'mvSuSiE-RSS Random effects prior',
-                                        'mvSuSiE-RSS Fixed effect prior',
-                                        'mvSuSiE-RSS ED prior'))
+                                        'mvSuSiE-RSS Fixed effects prior',
+                                        'mvSuSiE-RSS Default prior',
+                                        'mvSuSiE-RSS ED prior',
+                                        'mvSuSiE-RSS ED+default prior'))
   p1 = plot_panel(rates_priors, c('coverage', 'coverage'), legend=F)
   p2 = plot_panel(rates_priors, c('power', 'power'), legend=F)
   p3 = plot_panel(rates_priors, c('size', 'median number of variables'), legend=F)
   p4 = plot_panel(rates_priors, c('purity', 'median of purity'), legend=F)
-  # p5 = plot_panel(rates_priors, c('cs_cor', 'cor between CS'), legend=F)
   pdf(paste0(output, '_priors_plots.pdf'), width=12, height=3)
   grid.arrange(p1,p2,p3,p4, ncol=4, widths=c(3,3,3,3))
   dev.off()
-  system(paste0("convert -flatten -density 120 ", paste0(output, '_priors_plots.pdf'), " ", paste0(output, '_priors_plots.png')))
-  # pdf(paste0(output2, '_priors_plots.pdf'), width=12, height=4)
-  # grid.arrange(p1,p2,p3,p4, ncol=4, widths=c(3,3,3,3))
-  # dev.off()
-  # system(paste0("convert -flatten -density 120 ", paste0(output2, '_priors_plots.pdf'), " ", paste0(output2, '_priors_plots.png')))
+  system(paste0("convert -flatten -density 120 ", paste0(output, '_priors_plots.pdf'), 
+                " ", paste0(output, '_priors_plots.png')))
+  
 }
