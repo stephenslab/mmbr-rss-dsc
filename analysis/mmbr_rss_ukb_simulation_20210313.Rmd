@@ -59,61 +59,221 @@ Artificial Mixture
 
 1. Different residuals with Oracle prior
 
-![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuartificial_mixture_ukb_glob.prresidual.png){width=45%} ![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuartificial_mixture_ukb_glob.rocresidual.png){width=45%}
+![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuartificial_mixture_ukb_glob.pr.residual.png){width=45%} ![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuartificial_mixture_ukb_glob.roc.residual.png){width=45%}
 
 2. Different priors with Oracle residual
 
-![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuartificial_mixture_ukb_glob.prprior_oracleresid.png){width=45%} ![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuartificial_mixture_ukb_glob.rocprior_oracleresid.png){width=45%}
+![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuartificial_mixture_ukb_glob.pr.prior_oracleresid.png){width=45%} ![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuartificial_mixture_ukb_glob.roc.prior_oracleresid.png){width=45%}
 
-3. Different priors with estimated residual from close to null z scores
+3. Different priors with estimated residual from Y
 
-![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuartificial_mixture_ukb_glob.prprior.png){width=45%} ![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuartificial_mixture_ukb_glob.rocprior.png){width=45%}
+![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuartificial_mixture_ukb_glob.pr.prior_residy.png){width=45%} ![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuartificial_mixture_ukb_glob.roc.prior_residy.png){width=45%}
+
+4. Different priors with estimated residual from close to null z scores
+
+![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuartificial_mixture_ukb_glob.pr.prior.png){width=45%} ![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuartificial_mixture_ukb_glob.roc.prior.png){width=45%}
 
 UKB Bloodcells Mixture
 
 1. Different residuals with Oracle prior
 
-![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuukb_bloodcells_mixture_glob.prresidual.png){width=45%} ![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuukb_bloodcells_mixture_glob.rocresidual.png){width=45%}
+![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuukb_bloodcells_mixture_glob.pr.residual.png){width=45%} ![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuukb_bloodcells_mixture_glob.roc.residual.png){width=45%}
 
 2. Different priors with Oracle residual
 
-![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuukb_bloodcells_mixture_glob.prprior_oracleresid.png){width=45%} ![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuukb_bloodcells_mixture_glob.rocprior_oracleresid.png){width=45%}
+![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuukb_bloodcells_mixture_glob.pr.prior_oracleresid.png){width=45%} ![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuukb_bloodcells_mixture_glob.roc.prior_oracleresid.png){width=45%}
 
-3. Different priors with estimated residual from close to null z scores
+3. Different priors with estimated residual from Y
 
-![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuukb_bloodcells_mixture_glob.prprior.png){width=45%} ![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuukb_bloodcells_mixture_glob.rocprior.png){width=45%}
+![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuukb_bloodcells_mixture_glob.pr.prior_residy.png){width=45%} ![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuukb_bloodcells_mixture_glob.roc.prior_residy.png){width=45%}
+
+4. Different priors with estimated residual from close to null z scores
+
+![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuukb_bloodcells_mixture_glob.pr.prior.png){width=45%} ![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuukb_bloodcells_mixture_glob.roc.prior.png){width=45%}
 
 ### CS
 
 Artificial Mixture
 
-mnm_rss_naive has overlapping CSs.
+```{r}
+library(dplyr)
+library(kableExtra)
+tb = readRDS('output/ukb_rss_20210313/ukb_rss_20210313_cs/ukb_rss_cs_simuartificial_mixture_ukb_glob.rds')
+tb$method = rownames(tb)
+rename = list('susie_suff+FALSE' = 'SuSiE',
+              'susie_rss+FALSE' = 'SuSiE-RSS',
+              'mnm_suff_oracle+oracle' = 'mvSuSiE Oracle prior Oracle residual',
+              'mnm_suff_oracle+covY' = 'mvSuSiE Oracle prior Y residual',
+              'mnm_suff_identity+oracle' = 'mvSuSiE Random effects prior Oracle residual',
+              'mnm_suff_identity+covY' = 'mvSuSiE Random effects prior Y residual',
+              'mnm_suff_naive+oracle' = 'mvSuSiE Default prior Oracle residual',
+              'mnm_suff_naive+covY' = 'mvSuSiE Default prior Y residual',
+              'mnm_suff_ed+oracle' = 'mvSuSiE ED prior Oracle residual',
+              'mnm_suff_ed+covY' = 'mvSuSiE ED prior Y residual',
+              'mnm_suff_ed_ddcan+oracle' = 'mvSuSiE ED+default prior Oracle residual',
+              'mnm_suff_ed_ddcan+covY' = 'mvSuSiE ED+default prior Y residual',
+              'mnm_rss_oracle+oracle' = 'mvSuSiE-RSS Oracle prior Oracle residual',
+              'mnm_rss_oracle+identity' = 'mvSuSiE-RSS Oracle prior Identity residual',
+              'mnm_rss_oracle+nullz' = 'mvSuSiE-RSS Oracle prior z residual', 
+              'mnm_rss_oracle+corY' = 'mvSuSiE-RSS Oracle prior Y residual',
+              'mnm_rss_identity+oracle' = 'mvSuSiE-RSS Random effects prior Oracle residual',
+              'mnm_rss_shared+oracle' = 'mvSuSiE-RSS Fixed effects prior Oracle residual',
+              'mnm_rss_naive+oracle' = 'mvSuSiE-RSS Default prior Oracle residual',
+              'mnm_rss_ed+oracle' = 'mvSuSiE-RSS ED prior Oracle residual',
+              'mnm_rss_ed_ddcan+oracle' = 'mvSuSiE-RSS ED+default prior Oracle residual',
+              'mnm_rss_identity_corY+corY' = 'mvSuSiE-RSS Random effects prior Y residual',
+              'mnm_rss_shared_corY+corY' = 'mvSuSiE-RSS Fixed effects prior Y residual',
+              'mnm_rss_naive_corY+corY' = 'mvSuSiE-RSS Default prior Y residual',
+              'mnm_rss_ed_corY+corY' = 'mvSuSiE-RSS ED prior Y residual',
+              'mnm_rss_ed_ddcan_corY+corY' = 'mvSuSiE-RSS ED+default prior Y residual',
+              'mnm_rss_identity_corZ+nullz' = 'mvSuSiE-RSS Random effects prior z residual',
+              'mnm_rss_shared_corZ+nullz' = 'mvSuSiE-RSS Fixed effects prior z residual',
+              'mnm_rss_naive_corZ+nullz' = 'mvSuSiE-RSS Default prior z residual',
+              'mnm_rss_ed_corZ+nullz' = 'mvSuSiE-RSS ED prior z residual',
+              'mnm_rss_ed_ddcan_corZ+nullz' = 'mvSuSiE-RSS ED+default prior z residual')
+```
 
 1. Different residuals with Oracle prior
 
 ![](assets/ukb_rss_20210313/ukb_rss_20210313_cs/ukb_rss_cs_simuartificial_mixture_ukb_glob_resid_plots.png)
 
+```{r}
+methods_resid = c('mnm_suff_oracle+oracle','mnm_rss_oracle+oracle', 
+                  'mnm_rss_oracle+identity','mnm_rss_oracle+nullz','mnm_rss_oracle+corY')
+rates_resid = tb %>% filter(method %in% methods_resid)
+rates_resid$method = sapply(rates_resid$method, function(x) rename[[x]])
+rates_resid$method = gsub(' Oracle prior', '', rates_resid$method)
+rates_resid = rates_resid[match(c('mvSuSiE Oracle residual','mvSuSiE-RSS Oracle residual','mvSuSiE-RSS Identity residual',
+                                  'mvSuSiE-RSS Y residual','mvSuSiE-RSS z residual'), rates_resid$method),]
+rates_resid[,c('size', 'purity', 'overlap', 'power', 'fdr', 'coverage')] %>% kbl() %>% kable_styling()
+```
+
 2. Different priors with Oracle residual
 
-![](assets/ukb_rss_20210313/ukb_rss_20210313_cs/ukb_rss_cs_simuartificial_mixture_ukb_glob_priors_oraclereid_plots.png)
+![](assets/ukb_rss_20210313/ukb_rss_20210313_cs/ukb_rss_cs_simuartificial_mixture_ukb_glob_priors_oracleresid_plots.png)
 
-3. Different priors with estimated residual from close to null z scores
+```{r}
+methods_prior_oracleresid = c('mnm_rss_oracle+oracle', 'mnm_rss_identity+oracle', 'mnm_rss_shared+oracle',
+                              'mnm_rss_naive+oracle', 'mnm_rss_ed+oracle','mnm_rss_ed_ddcan+oracle')
+rates_priors_oracleresid = tb %>% filter(method %in% methods_prior_oracleresid)
+rates_priors_oracleresid$method = sapply(rates_priors_oracleresid$method, function(x) rename[[x]])
+rates_priors_oracleresid$method = gsub(' Oracle residual', '', rates_priors_oracleresid$method)
+rates_priors_oracleresid = rates_priors_oracleresid[match(c('mvSuSiE-RSS Oracle prior','mvSuSiE-RSS Fixed effects prior',
+                                                            'mvSuSiE-RSS Random effects prior','mvSuSiE-RSS Default prior',
+                                                            'mvSuSiE-RSS ED prior','mvSuSiE-RSS ED+default prior'), 
+                                                          rates_priors_oracleresid$method),]
+rates_priors_oracleresid[,c('size', 'purity', 'overlap', 'power', 'fdr', 'coverage')] %>% kbl() %>% kable_styling()
+```
+
+3. Different priors with estimated residual from Y
+
+![](assets/ukb_rss_20210313/ukb_rss_20210313_cs/ukb_rss_cs_simuartificial_mixture_ukb_glob_priors_yresid_plots.png)
+
+```{r}
+methods_prior_y = c('mnm_rss_oracle+corY', 'mnm_rss_identity_corY+corY',
+                        'mnm_rss_shared_corY+corY', 'mnm_rss_naive_corY+corY',
+                        "mnm_rss_ed_corY+corY","mnm_rss_ed_ddcan_corY+corY")
+rates_priors_yresid = tb %>% filter(method %in% methods_prior_y)
+rates_priors_yresid$method = sapply(rates_priors_yresid$method, function(x) rename[[x]])
+rates_priors_yresid$method = gsub(' Y residual', '', rates_priors_yresid$method)
+rates_priors_yresid = rates_priors_yresid[match(c('mvSuSiE-RSS Oracle prior','mvSuSiE-RSS Fixed effects prior',
+                                                  'mvSuSiE-RSS Random effects prior','mvSuSiE-RSS Default prior',
+                                                  'mvSuSiE-RSS ED prior','mvSuSiE-RSS ED+default prior'), 
+                                                rates_priors_yresid$method),]
+rates_priors_yresid[,c('size', 'purity', 'overlap', 'power', 'fdr', 'coverage')] %>% kbl() %>% kable_styling()
+```
+
+4. Different priors with estimated residual from close to null z scores
 
 ![](assets/ukb_rss_20210313/ukb_rss_20210313_cs/ukb_rss_cs_simuartificial_mixture_ukb_glob_priors_plots.png)
 
+```{r}
+methods_prior = c('mnm_rss_oracle+nullz', 'mnm_rss_identity_corZ+nullz', 
+                  'mnm_rss_shared_corZ+nullz', 'mnm_rss_naive_corZ+nullz',
+                  'mnm_rss_ed_corZ+nullz', 'mnm_rss_ed_ddcan_corZ+nullz')
+rates_priors = tb %>% filter(method %in% methods_prior)
+rates_priors$method = sapply(rates_priors$method, function(x) rename[[x]])
+rates_priors$method = gsub(' Y residual', '', rates_priors$method)
+rates_priors$method = gsub(' z residual', '', rates_priors$method)
+rates_priors = rates_priors[match(c('mvSuSiE-RSS Oracle prior', 'mvSuSiE-RSS Random effects prior',
+                                    'mvSuSiE-RSS Fixed effects prior','mvSuSiE-RSS Default prior',
+                                    'mvSuSiE-RSS ED prior','mvSuSiE-RSS ED+default prior'), rates_priors$method),]
+rates_priors[,c('size', 'purity', 'overlap', 'power', 'fdr', 'coverage')] %>% kbl() %>% kable_styling()
+```
+
 UKB Bloodcells Mixture
+
+```{r}
+tb = readRDS('output/ukb_rss_20210313/ukb_rss_20210313_cs/ukb_rss_cs_simuukb_bloodcells_mixture_glob.rds')
+tb$method = rownames(tb)
+```
 
 1. Different residuals with Oracle prior
 
 ![](assets/ukb_rss_20210313/ukb_rss_20210313_cs/ukb_rss_cs_simuukb_bloodcells_mixture_glob_resid_plots.png)
 
+```{r}
+methods_resid = c('mnm_suff_oracle+oracle','mnm_rss_oracle+oracle', 
+                  'mnm_rss_oracle+identity','mnm_rss_oracle+nullz','mnm_rss_oracle+corY')
+rates_resid = tb %>% filter(method %in% methods_resid)
+rates_resid$method = sapply(rates_resid$method, function(x) rename[[x]])
+rates_resid$method = gsub(' Oracle prior', '', rates_resid$method)
+rates_resid = rates_resid[match(c('mvSuSiE Oracle residual','mvSuSiE-RSS Oracle residual','mvSuSiE-RSS Identity residual',
+                                  'mvSuSiE-RSS Y residual','mvSuSiE-RSS z residual'), rates_resid$method),]
+rates_resid[,c('size', 'purity', 'overlap', 'power', 'fdr', 'coverage')] %>% kbl() %>% kable_styling()
+```
+
 2. Different priors with Oracle residual
 
-![](assets/ukb_rss_20210313/ukb_rss_20210313_cs/ukb_rss_cs_simuukb_bloodcells_mixture_glob_priors_oraclereid_plots.png)
+![](assets/ukb_rss_20210313/ukb_rss_20210313_cs/ukb_rss_cs_simuukb_bloodcells_mixture_glob_priors_oracleresid_plots.png)
+```{r}
+methods_prior_oracleresid = c('mnm_rss_oracle+oracle', 'mnm_rss_identity+oracle', 'mnm_rss_shared+oracle',
+                              'mnm_rss_naive+oracle', 'mnm_rss_ed+oracle','mnm_rss_ed_ddcan+oracle')
+rates_priors_oracleresid = tb %>% filter(method %in% methods_prior_oracleresid)
+rates_priors_oracleresid$method = sapply(rates_priors_oracleresid$method, function(x) rename[[x]])
+rates_priors_oracleresid$method = gsub(' Oracle residual', '', rates_priors_oracleresid$method)
+rates_priors_oracleresid = rates_priors_oracleresid[match(c('mvSuSiE-RSS Oracle prior','mvSuSiE-RSS Fixed effects prior',
+                                                            'mvSuSiE-RSS Random effects prior','mvSuSiE-RSS Default prior',
+                                                            'mvSuSiE-RSS ED prior','mvSuSiE-RSS ED+default prior'), 
+                                                          rates_priors_oracleresid$method),]
+rates_priors_oracleresid[,c('size', 'purity', 'overlap', 'power', 'fdr', 'coverage')] %>% kbl() %>% kable_styling()
+```
 
-3. Different priors with estimated residual from close to null z scores
+3. Different priors with estimated residual from Y
+
+![](assets/ukb_rss_20210313/ukb_rss_20210313_cs/ukb_rss_cs_simuukb_bloodcells_mixture_glob_priors_yresid_plots.png)
+
+```{r}
+methods_prior_y = c('mnm_rss_oracle+corY', 'mnm_rss_identity_corY+corY',
+                        'mnm_rss_shared_corY+corY', 'mnm_rss_naive_corY+corY',
+                        "mnm_rss_ed_corY+corY","mnm_rss_ed_ddcan_corY+corY")
+rates_priors_yresid = tb %>% filter(method %in% methods_prior_y)
+rates_priors_yresid$method = sapply(rates_priors_yresid$method, function(x) rename[[x]])
+rates_priors_yresid$method = gsub(' Y residual', '', rates_priors_yresid$method)
+rates_priors_yresid = rates_priors_yresid[match(c('mvSuSiE-RSS Oracle prior','mvSuSiE-RSS Fixed effects prior',
+                                                  'mvSuSiE-RSS Random effects prior','mvSuSiE-RSS Default prior',
+                                                  'mvSuSiE-RSS ED prior','mvSuSiE-RSS ED+default prior'), 
+                                                rates_priors_yresid$method),]
+rates_priors_yresid[,c('size', 'purity', 'overlap', 'power', 'fdr', 'coverage')] %>% kbl() %>% kable_styling()
+```
+
+4. Different priors with estimated residual from close to null z scores
 
 ![](assets/ukb_rss_20210313/ukb_rss_20210313_cs/ukb_rss_cs_simuukb_bloodcells_mixture_glob_priors_plots.png)
+
+```{r}
+methods_prior = c('mnm_rss_oracle+nullz', 'mnm_rss_identity_corZ+nullz', 
+                  'mnm_rss_shared_corZ+nullz', 'mnm_rss_naive_corZ+nullz',
+                  'mnm_rss_ed_corZ+nullz', 'mnm_rss_ed_ddcan_corZ+nullz')
+rates_priors = tb %>% filter(method %in% methods_prior)
+rates_priors$method = sapply(rates_priors$method, function(x) rename[[x]])
+rates_priors$method = gsub(' Y residual', '', rates_priors$method)
+rates_priors$method = gsub(' z residual', '', rates_priors$method)
+rates_priors = rates_priors[match(c('mvSuSiE-RSS Oracle prior', 'mvSuSiE-RSS Random effects prior',
+                                    'mvSuSiE-RSS Fixed effects prior','mvSuSiE-RSS Default prior',
+                                    'mvSuSiE-RSS ED prior','mvSuSiE-RSS ED+default prior'), rates_priors$method),]
+rates_priors[,c('size', 'purity', 'overlap', 'power', 'fdr', 'coverage')] %>% kbl() %>% kable_styling()
+```
 
 ## Trait specific comparison
 
@@ -155,58 +315,188 @@ Artificial Mixture
 
 1. Different residuals with Oracle prior
 
-![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuartificial_mixture_ukb_cond.prresidual.png){width=45%} ![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuartificial_mixture_ukb_cond.rocresidual.png){width=45%}
+![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuartificial_mixture_ukb_cond.pr.residual.png){width=45%} ![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuartificial_mixture_ukb_cond.roc.residual.png){width=45%}
 
 2. Different priors with Oracle residual
 
-![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuartificial_mixture_ukb_cond.prprior_oracleresid.png){width=45%} ![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuartificial_mixture_ukb_cond.rocprior_oracleresid.png){width=45%}
+![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuartificial_mixture_ukb_cond.pr.prior_oracleresid.png){width=45%} ![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuartificial_mixture_ukb_cond.roc.prior_oracleresid.png){width=45%}
 
 3. Different priors with estimated residual from close to null z scores
 
-![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuartificial_mixture_ukb_cond.prprior.png){width=45%} ![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuartificial_mixture_ukb_cond.rocprior.png){width=45%}
+![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuartificial_mixture_ukb_cond.pr.prior.png){width=45%} ![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuartificial_mixture_ukb_cond.roc.prior.png){width=45%}
 
 UKB Bloodcells Mixture
 
 1. Different residuals with Oracle prior
 
-![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuukb_bloodcells_mixture_cond.prresidual.png){width=45%} ![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuukb_bloodcells_mixture_cond.rocresidual.png){width=45%}
+![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuukb_bloodcells_mixture_cond.pr.residual.png){width=45%} ![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuukb_bloodcells_mixture_cond.roc.residual.png){width=45%}
 
 2. Different priors with Oracle residual
 
-![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuukb_bloodcells_mixture_cond.prprior_oracleresid.png){width=45%} ![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuukb_bloodcells_mixture_cond.rocprior_oracleresid.png){width=45%}
+![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuukb_bloodcells_mixture_cond.pr.prior_oracleresid.png){width=45%} ![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuukb_bloodcells_mixture_cond.roc.prior_oracleresid.png){width=45%}
 
 3. Different priors with estimated residual from close to null z scores
 
-![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuukb_bloodcells_mixture_cond.prprior.png){width=45%} ![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuukb_bloodcells_mixture_cond.rocprior.png){width=45%}
+![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuukb_bloodcells_mixture_cond.pr.prior.png){width=45%} ![](assets/ukb_rss_20210313/ukb_rss_20210313_roc/ukb_rss_roc_simuukb_bloodcells_mixture_cond.roc.prior.png){width=45%}
 
 ### CS
 
 Artificial Mixture
 
-mnm_rss_naive and mnm_rss_ed+oracle have overlapping CSs.
+```{r}
+tb = readRDS('output/ukb_rss_20210313/ukb_rss_20210313_cs/ukb_rss_cs_simuartificial_mixture_ukb_cond.rds')
+tb$method = rownames(tb)
+```
 
 1. Different residuals with Oracle prior
 
 ![](assets/ukb_rss_20210313/ukb_rss_20210313_cs/ukb_rss_cs_simuartificial_mixture_ukb_cond_resid_plots.png)
 
+```{r}
+methods_resid = c('susie_suff+FALSE','susie_rss+FALSE','mnm_suff_oracle+oracle','mnm_rss_oracle+oracle', 
+                  'mnm_rss_oracle+identity','mnm_rss_oracle+nullz','mnm_rss_oracle+corY')
+rates_resid = tb %>% filter(method %in% methods_resid)
+rates_resid$method = sapply(rates_resid$method, function(x) rename[[x]])
+rates_resid$method = gsub(' Oracle prior', '', rates_resid$method)
+rates_resid = rates_resid[match(c('SuSiE', 'SuSiE-RSS',
+                                  'mvSuSiE Oracle residual','mvSuSiE-RSS Oracle residual','mvSuSiE-RSS Identity residual',
+                                  'mvSuSiE-RSS Y residual','mvSuSiE-RSS z residual'), rates_resid$method),]
+rates_resid[,c('size', 'purity', 'power', 'fdr', 'coverage')] %>% kbl() %>% kable_styling()
+```
+
 2. Different priors with Oracle residual
 
 ![](assets/ukb_rss_20210313/ukb_rss_20210313_cs/ukb_rss_cs_simuartificial_mixture_ukb_cond_priors_oraclereid_plots.png)
 
-3. Different priors with estimated residual from close to null z scores
+```{r}
+methods_prior_oracleresid = c('susie_suff+FALSE','susie_rss+FALSE',
+                              'mnm_rss_oracle+oracle', 'mnm_rss_identity+oracle', 'mnm_rss_shared+oracle',
+                              'mnm_rss_naive+oracle', 'mnm_rss_ed+oracle','mnm_rss_ed_ddcan+oracle')
+rates_priors_oracleresid = tb %>% filter(method %in% methods_prior_oracleresid)
+rates_priors_oracleresid$method = sapply(rates_priors_oracleresid$method, function(x) rename[[x]])
+rates_priors_oracleresid$method = gsub(' Oracle residual', '', rates_priors_oracleresid$method)
+rates_priors_oracleresid = rates_priors_oracleresid[match(c('SuSiE', 'SuSiE-RSS',
+                                                            'mvSuSiE-RSS Oracle prior','mvSuSiE-RSS Fixed effects prior',
+                                                            'mvSuSiE-RSS Random effects prior','mvSuSiE-RSS Default prior',
+                                                            'mvSuSiE-RSS ED prior','mvSuSiE-RSS ED+default prior'), 
+                                                          rates_priors_oracleresid$method),]
+rates_priors_oracleresid[,c('size', 'purity', 'power', 'fdr', 'coverage')] %>% kbl() %>% kable_styling()
+```
+
+3. Different priors with estimated residual from Y
+
+![](assets/ukb_rss_20210313/ukb_rss_20210313_cs/ukb_rss_cs_simuartificial_mixture_ukb_cond_priors_yresid_plots.png)
+
+```{r}
+methods_prior_y = c('susie_suff+FALSE','susie_rss+FALSE',
+                    'mnm_rss_oracle+corY', 'mnm_rss_identity_corY+corY',
+                    'mnm_rss_shared_corY+corY', 'mnm_rss_naive_corY+corY',
+                    "mnm_rss_ed_corY+corY","mnm_rss_ed_ddcan_corY+corY")
+rates_priors_yresid = tb %>% filter(method %in% methods_prior_y)
+rates_priors_yresid$method = sapply(rates_priors_yresid$method, function(x) rename[[x]])
+rates_priors_yresid$method = gsub(' Y residual', '', rates_priors_yresid$method)
+rates_priors_yresid = rates_priors_yresid[match(c('SuSiE', 'SuSiE-RSS','mvSuSiE-RSS Oracle prior','mvSuSiE-RSS Fixed effects prior',
+                                                  'mvSuSiE-RSS Random effects prior','mvSuSiE-RSS Default prior',
+                                                  'mvSuSiE-RSS ED prior','mvSuSiE-RSS ED+default prior'), 
+                                                rates_priors_yresid$method),]
+rates_priors_yresid[,c('size', 'purity', 'power', 'fdr', 'coverage')] %>% kbl() %>% kable_styling()
+```
+
+4. Different priors with estimated residual from close to null z scores
 
 ![](assets/ukb_rss_20210313/ukb_rss_20210313_cs/ukb_rss_cs_simuartificial_mixture_ukb_cond_priors_plots.png)
 
+```{r}
+methods_prior = c('susie_suff+FALSE','susie_rss+FALSE',
+                  'mnm_rss_oracle+nullz', 'mnm_rss_identity_corZ+nullz', 
+                  'mnm_rss_shared_corZ+nullz', 'mnm_rss_naive_corZ+nullz',
+                  'mnm_rss_ed_corZ+nullz', 'mnm_rss_ed_ddcan_corZ+nullz')
+rates_priors = tb %>% filter(method %in% methods_prior)
+rates_priors$method = sapply(rates_priors$method, function(x) rename[[x]])
+rates_priors$method = gsub(' Y residual', '', rates_priors$method)
+rates_priors$method = gsub(' z residual', '', rates_priors$method)
+rates_priors = rates_priors[match(c('SuSiE', 'SuSiE-RSS','mvSuSiE-RSS Oracle prior', 'mvSuSiE-RSS Random effects prior',
+                                    'mvSuSiE-RSS Fixed effects prior','mvSuSiE-RSS Default prior',
+                                    'mvSuSiE-RSS ED prior','mvSuSiE-RSS ED+default prior'), rates_priors$method),]
+rates_priors[,c('size', 'purity', 'power', 'fdr', 'coverage')] %>% kbl() %>% kable_styling()
+```
+
 UKB Bloodcells Mixture
+
+```{r}
+tb = readRDS('output/ukb_rss_20210313/ukb_rss_20210313_cs/ukb_rss_cs_simuukb_bloodcells_mixture_cond.rds')
+tb$method = rownames(tb)
+```
 
 1. Different residuals with Oracle prior
 
 ![](assets/ukb_rss_20210313/ukb_rss_20210313_cs/ukb_rss_cs_simuukb_bloodcells_mixture_cond_resid_plots.png)
 
+```{r}
+methods_resid = c('susie_suff+FALSE','susie_rss+FALSE','mnm_suff_oracle+oracle','mnm_rss_oracle+oracle', 
+                  'mnm_rss_oracle+identity','mnm_rss_oracle+nullz','mnm_rss_oracle+corY')
+rates_resid = tb %>% filter(method %in% methods_resid)
+rates_resid$method = sapply(rates_resid$method, function(x) rename[[x]])
+rates_resid$method = gsub(' Oracle prior', '', rates_resid$method)
+rates_resid = rates_resid[match(c('SuSiE', 'SuSiE-RSS',
+                                  'mvSuSiE Oracle residual','mvSuSiE-RSS Oracle residual','mvSuSiE-RSS Identity residual',
+                                  'mvSuSiE-RSS Y residual','mvSuSiE-RSS z residual'), rates_resid$method),]
+rates_resid[,c('size', 'purity', 'power', 'fdr', 'coverage')] %>% kbl() %>% kable_styling()
+```
+
+
 2. Different priors with Oracle residual
 
 ![](assets/ukb_rss_20210313/ukb_rss_20210313_cs/ukb_rss_cs_simuukb_bloodcells_mixture_cond_priors_oraclereid_plots.png)
+```{r}
+methods_prior_oracleresid = c('susie_suff+FALSE','susie_rss+FALSE',
+                              'mnm_rss_oracle+oracle', 'mnm_rss_identity+oracle', 'mnm_rss_shared+oracle',
+                              'mnm_rss_naive+oracle', 'mnm_rss_ed+oracle','mnm_rss_ed_ddcan+oracle')
+rates_priors_oracleresid = tb %>% filter(method %in% methods_prior_oracleresid)
+rates_priors_oracleresid$method = sapply(rates_priors_oracleresid$method, function(x) rename[[x]])
+rates_priors_oracleresid$method = gsub(' Oracle residual', '', rates_priors_oracleresid$method)
+rates_priors_oracleresid = rates_priors_oracleresid[match(c('SuSiE', 'SuSiE-RSS',
+                                                            'mvSuSiE-RSS Oracle prior','mvSuSiE-RSS Fixed effects prior',
+                                                            'mvSuSiE-RSS Random effects prior','mvSuSiE-RSS Default prior',
+                                                            'mvSuSiE-RSS ED prior','mvSuSiE-RSS ED+default prior'), 
+                                                          rates_priors_oracleresid$method),]
+rates_priors_oracleresid[,c('size', 'purity', 'power', 'fdr', 'coverage')] %>% kbl() %>% kable_styling()
+```
 
-3. Different priors with estimated residual from close to null z scores
+3. Different priors with estimated residual from Y
+
+![](assets/ukb_rss_20210313/ukb_rss_20210313_cs/ukb_rss_cs_simuukb_bloodcells_mixture_cond_priors_yresid_plots.png)
+
+```{r}
+methods_prior_y = c('susie_suff+FALSE','susie_rss+FALSE',
+                    'mnm_rss_oracle+corY', 'mnm_rss_identity_corY+corY',
+                    'mnm_rss_shared_corY+corY', 'mnm_rss_naive_corY+corY',
+                    "mnm_rss_ed_corY+corY","mnm_rss_ed_ddcan_corY+corY")
+rates_priors_yresid = tb %>% filter(method %in% methods_prior_y)
+rates_priors_yresid$method = sapply(rates_priors_yresid$method, function(x) rename[[x]])
+rates_priors_yresid$method = gsub(' Y residual', '', rates_priors_yresid$method)
+rates_priors_yresid = rates_priors_yresid[match(c('SuSiE', 'SuSiE-RSS','mvSuSiE-RSS Oracle prior','mvSuSiE-RSS Fixed effects prior',
+                                                  'mvSuSiE-RSS Random effects prior','mvSuSiE-RSS Default prior',
+                                                  'mvSuSiE-RSS ED prior','mvSuSiE-RSS ED+default prior'), 
+                                                rates_priors_yresid$method),]
+rates_priors_yresid[,c('size', 'purity', 'power', 'fdr', 'coverage')] %>% kbl() %>% kable_styling()
+```
+
+4. Different priors with estimated residual from close to null z scores
 
 ![](assets/ukb_rss_20210313/ukb_rss_20210313_cs/ukb_rss_cs_simuukb_bloodcells_mixture_cond_priors_plots.png)
+
+```{r}
+methods_prior = c('susie_suff+FALSE','susie_rss+FALSE',
+                  'mnm_rss_oracle+nullz', 'mnm_rss_identity_corZ+nullz', 
+                  'mnm_rss_shared_corZ+nullz', 'mnm_rss_naive_corZ+nullz',
+                  'mnm_rss_ed_corZ+nullz', 'mnm_rss_ed_ddcan_corZ+nullz')
+rates_priors = tb %>% filter(method %in% methods_prior)
+rates_priors$method = sapply(rates_priors$method, function(x) rename[[x]])
+rates_priors$method = gsub(' Y residual', '', rates_priors$method)
+rates_priors$method = gsub(' z residual', '', rates_priors$method)
+rates_priors = rates_priors[match(c('SuSiE', 'SuSiE-RSS','mvSuSiE-RSS Oracle prior', 'mvSuSiE-RSS Random effects prior',
+                                    'mvSuSiE-RSS Fixed effects prior','mvSuSiE-RSS Default prior',
+                                    'mvSuSiE-RSS ED prior','mvSuSiE-RSS ED+default prior'), rates_priors$method),]
+rates_priors[,c('size', 'purity', 'power', 'fdr', 'coverage')] %>% kbl() %>% kable_styling()
+```
