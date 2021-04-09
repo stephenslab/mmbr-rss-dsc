@@ -48,5 +48,7 @@ UKB simulations:
 
 * [Result20210313](mmbr_rss_ukb_simulation_20210313.html)
 
+    [Random vs Default](mmbr_rss_ukb_simulation_20210313_RandomvsDefault.html)
+
 * [Compare with PAINTOR](mmbr_rss_ukb_simulation_paintor.html)
 
