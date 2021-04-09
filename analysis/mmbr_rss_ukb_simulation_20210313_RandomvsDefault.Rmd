@@ -1,0 +1,77 @@
+---
+title: "mvSuSiE RSS ukb Random vs Default"
+author: "Yuxin Zou"
+date: "03/16/2021"
+output:
+  workflowr::wflow_html:
+    code_folding: hide
+---
+
+The data is simulated using UKB bloodcells patterns.
+
+```{r}
+dat = readRDS('output/ukb_rss_20210313/data_ukb_14.rds')
+simu = readRDS('output/ukb_rss_20210313/data_ukb_14_ukb_bloodcells_mixture_1.rds')
+ld <- readRDS('output/ukb_rss_20210313/bloodcells_chr1.36507801.37193916.ld.rds')
+meta <- simu$meta
+suffstats <- simu$suffstats
+sumstats <- simu$sumstats
+L <- 10
+maxiter <- 1000
+```
+
+The true cofficients are
+```{r}
+true_coef = meta$true_coef
+beta_idx = which(rowSums(true_coef!=0)>0) #  631 2877
+par(mfrow=c(1,2))
+barplot(true_coef[beta_idx[1],])
+barplot(true_coef[beta_idx[2],])
+```
+The z scores for true signals:
+```{r}
+resid_Z = meta$residual_variance
+Z = as.matrix(sumstats$bhat/sumstats$sbhat)
+Z[is.na(Z)] = 0
+par(mfrow=c(1,2))
+barplot(Z[beta_idx[1],], las=2, cex.names = 0.7)
+barplot(Z[beta_idx[2],], las=2, cex.names = 0.7)
+```
+Using Default prior, 
+```{r}
+priorUn = meta$prior[['naive']]
+m_initn = mvsusieR::create_mash_prior(mixture_prior = list(matrices=priorUn$xUlist, weights=priorUn$pi),
+                                 null_weight=priorUn$null_weight, max_mixture_len=-1)
+result = mvsusieR::mvsusie_rss(Z, ld, L=2, prior_variance=m_initn, 
+                          residual_variance=resid_Z,compute_objective=T, 
+                          estimate_prior_variance=T, estimate_prior_method='EM',
+                          precompute_covariances=T, n_thread=1, 
+                          max_iter=100, track_fit = T)
+susieR::susie_plot(result, y='PIP', b=true_coef, main=paste0('ELBO = ', round(susieR::susie_get_objective(result), 2)))
+```
+
+Using identity prior,
+```{r}
+priorUi = meta$prior[['identity']]
+m_initi = mvsusieR::create_mash_prior(mixture_prior = list(matrices=priorUi$xUlist, weights=priorUi$pi),
+                                 null_weight=priorUi$null_weight, max_mixture_len=-1)
+result_ide = mvsusieR::mvsusie_rss(Z, ld, L=2, prior_variance=m_initi, residual_variance=resid_Z,
+                                   compute_objective=T, estimate_prior_variance=T, estimate_prior_method='EM',
+                                   precompute_covariances=T, n_thread=1, max_iter=100, track_fit = T)
+susieR::susie_plot(result_ide, y='PIP', b=true_coef, main=paste0('ELBO = ', round(susieR::susie_get_objective(result_ide), 2)))
+```
+
+I set estimate prior variance = FALSE, and run with 1 iteration.
+```{r}
+result1 = mvsusieR::mvsusie_rss(Z, ld, L=2, prior_variance=m_initn, 
+                          residual_variance=resid_Z,compute_objective=T, 
+                          estimate_prior_variance=F, estimate_prior_method='EM',
+                          precompute_covariances=T, n_thread=1, 
+                          max_iter=1, track_fit = T)
+susieR::susie_plot(result1, y='PIP', b=true_coef, main=paste0('ELBO = ', round(susieR::susie_get_objective(result1), 2)))
+
+result_ide1 = mvsusieR::mvsusie_rss(Z, ld, L=2, prior_variance=m_initi, residual_variance=resid_Z,
+                                   compute_objective=T, estimate_prior_variance=F, estimate_prior_method='EM',
+                                   precompute_covariances=T, n_thread=1, max_iter=1, track_fit = T)
+susieR::susie_plot(result_ide1, y='PIP', b=true_coef, main=paste0('ELBO = ', round(susieR::susie_get_objective(result_ide1), 2)))
+```
