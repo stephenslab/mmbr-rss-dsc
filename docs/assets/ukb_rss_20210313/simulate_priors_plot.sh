@@ -1,0 +1,8 @@
+Rscript simulation_priors_plot.R artificial_mixture_20
+
+Rscript simulation_priors_plot.R artificial_mixture_6
+
+Rscript simulation_priors_plot.R artificial_mixture_2
+
+Rscript simulation_priors_plot.R bloodcells_mixture
+

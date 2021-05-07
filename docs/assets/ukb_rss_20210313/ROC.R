@@ -71,6 +71,17 @@ rename_priors_oracle_resid = list('mnm_rss_naive+oracle' = 'mvSuSiE-RSS Default 
                                   'susie_suff+FALSE' = 'SuSiE',
                                   'susie_rss+FALSE' = 'SuSiE-RSS')
 
+rename_priors_residy = list('mnm_rss_naive_corY+corY' = 'mvSuSiE-RSS Default prior',
+                            'mnm_rss_oracle+corY' = 'mvSuSiE-RSS Oracle prior',
+                            'mnm_rss_ed_corY+corY' = 'mvSuSiE-RSS ED prior',
+                            'mnm_rss_ed_ddcan_corY+corY' = 'mvSuSiE-RSS ED+Default prior',
+                            'mnm_rss_identity_corY+corY' = 'mvSuSiE-RSS Random effects prior',
+                            'mnm_rss_shared_corY+corY' = 'mvSuSiE-RSS Fixed effects prior',
+                            'mnm_suff_oracle+covY' = 'mvSuSiE Oracle prior',
+                            'mnm_suff_ed+covY' = 'mvSuSiE ED prior',
+                            'susie_suff+FALSE' = 'SuSiE',
+                            'susie_rss+FALSE' = 'SuSiE-RSS')
+
 rename_priors = list('mnm_rss_shared_corZ+nullz' = 'mvSuSiE-RSS Fixed effects prior',
                      'mnm_rss_naive_corZ+nullz' = 'mvSuSiE-RSS Default prior',
                      'mnm_rss_ed_corZ+nullz' = 'mvSuSiE-RSS ED prior',
@@ -89,7 +100,7 @@ chunks = 0
 xlim = 0.8
 ylim = 0.8
 
-for(case in 3:nrow(all.comb)){
+for(case in 1:nrow(all.comb)){
   simu = all.comb[case, 'simulate_method']
   level = all.comb[case, 'level']
   input = paste0('ukb_rss_20210313_pip_extraction/ukb_rss_pip_simu', simu,'_',level,'.rds')
@@ -152,7 +163,7 @@ for(case in 3:nrow(all.comb)){
                      'susie_suff+FALSE', 'susie_rss+FALSE')) {
       yy = make_smooth((1 - tb[[method]][[type]][,1]), tb[[method]][[type]][,2])
       if (i == 1) {
-        plot(yy$x, yy$y, t="l", col=colors[i], ylab = ylab, xlab = xlab, main = main,
+        plot(yy$x, yy$y, t="l", col=colors[i], ylab = ylab, xlab = xlab, main = paste0(main, ' with Oracle Priors'),
              bty='l',lwd = 2, xlim = c(0,xlim), ylim = c(0,ylim))
       } else {
         lines(yy$x, yy$y, col=colors[i], lwd = 2, xlim = c(0,xlim), ylim = c(0,ylim))
@@ -168,13 +179,13 @@ for(case in 3:nrow(all.comb)){
     pdf(paste0(output,'.', type,'.prior_oracleresid.pdf'), width=10, height=10, pointsize=15)
     i = 1
     labels = vector()
-    for (method in c('mnm_suff_oracle+oracle', 'mnm_rss_oracle+oracle',
+    for (method in c('mnm_rss_oracle+oracle',
                      'mnm_rss_identity+oracle', 'mnm_rss_shared+oracle',
                      'mnm_rss_naive+oracle', 'mnm_rss_ed+oracle','mnm_rss_ed_ddcan+oracle',
                      'susie_suff+FALSE', 'susie_rss+FALSE')) {
       yy = make_smooth((1 - tb[[method]][[type]][,1]), tb[[method]][[type]][,2])
       if (i == 1) {
-        plot(yy$x, yy$y, t="l", col=colors[i], ylab = ylab, xlab = xlab, main = paste0(main, ": using oracle residuals"), bty='l',
+        plot(yy$x, yy$y, t="l", col=colors[i], ylab = ylab, xlab = xlab, main = paste0(main, " with Oracle Residuals"), bty='l',
              lwd = 2, xlim = c(0,xlim), ylim = c(0,ylim))
       } else {
         lines(yy$x, yy$y, col=colors[i], lwd = 2, xlim = c(0,xlim), ylim = c(0,ylim))
@@ -188,10 +199,33 @@ for(case in 3:nrow(all.comb)){
     system(paste0("convert -flatten -density 120 ", output, '.', type,'.prior_oracleresid.pdf',
                   " ", output, '.', type, '.prior_oracleresid.png'))
 
+    pdf(paste0(output,'.', type,'.prior_residy.pdf'), width=10, height=10, pointsize=15)
+    i = 1
+    labels = vector()
+    for (method in c('mnm_rss_oracle+corY',
+                     'mnm_rss_identity_corY+corY', 'mnm_rss_shared_corY+corY',
+                     'mnm_rss_naive_corY+corY', 'mnm_rss_ed_corY+corY','mnm_rss_ed_ddcan_corY+corY',
+                     'susie_suff+FALSE', 'susie_rss+FALSE')) {
+      yy = make_smooth((1 - tb[[method]][[type]][,1]), tb[[method]][[type]][,2])
+      if (i == 1) {
+        plot(yy$x, yy$y, t="l", col=colors[i], ylab = ylab, xlab = xlab, main = paste0(main, " with Y cor Residuals"), bty='l',
+             lwd = 2, xlim = c(0,xlim), ylim = c(0,ylim))
+      } else {
+        lines(yy$x, yy$y, col=colors[i], lwd = 2, xlim = c(0,xlim), ylim = c(0,ylim))
+      }
+      add_text(tb[[method]][[type]][,3], yy$x, yy$y, 0.95, colors[i])
+      labels[i] = rename_priors_residy[[method]]
+      i = i + 1
+    }
+    legend("bottomright", legend=labels, col=colors[1:i], lty=1, cex=0.7)
+    dev.off()
+    system(paste0("convert -flatten -density 120 ", output, '.', type,'.prior_residy.pdf',
+                  " ", output, '.', type, '.prior_residy.png'))
+    
     pdf(paste0(output,'.', type,'.prior.pdf'), width=10, height=10, pointsize=15)
     i = 1
     labels = vector()
-    for (method in c('mnm_suff_oracle+covY', 'mnm_rss_oracle+nullz',
+    for (method in c('mnm_rss_oracle+nullz',
                      'mnm_rss_identity_corZ+nullz', 'mnm_rss_shared_corZ+nullz',
                      'mnm_rss_naive_corZ+nullz', 'mnm_rss_ed_corZ+nullz','mnm_rss_ed_ddcan_corZ+nullz',
                      'susie_suff+FALSE', 'susie_rss+FALSE')) {

@@ -169,7 +169,7 @@ for(case in 1:nrow(all.comb)){
   cmd = paste('convert +append', paste(files, collapse=" "), paste0(output, '_priors.png'))
   system(cmd)
   system(paste('rm -f', paste(files, collapse=" ")))
-  
+
   ## suff priors with oracle residuals
   pip_cali = readRDS(paste0(output, '.rds'))
   idx = 0
@@ -189,14 +189,14 @@ for(case in 1:nrow(all.comb)){
     system(paste0("convert -flatten -density 120 ", output, '_suff_priors_oracleresid_' , idx, '.pdf', " ",
                   output, '_suff_priors_oracleresid_' , idx, '.png'))
   }
-  
+
   files = paste0(output, '_suff_priors_oracleresid_', 1:idx, '.png')
   # files = paste0(output, '_', c(1,2,4,6), '.png')
   # output2 = paste0('ukb_rss_20210107_pip_calibration_paper/ukb_rss_pip_cali_simu', simu, '_', level)
   cmd = paste('convert +append', paste(files, collapse=" "), paste0(output, '_suff_priors_oracleresid.png'))
   system(cmd)
   system(paste('rm -f', paste(files, collapse=" ")))
-  
+
   ## suff priors with oracle residuals
   pip_cali = readRDS(paste0(output, '.rds'))
   idx = 0
@@ -216,7 +216,7 @@ for(case in 1:nrow(all.comb)){
     system(paste0("convert -flatten -density 120 ", output, '_suff_priors_' , idx, '.pdf', " ",
                   output, '_suff_priors_' , idx, '.png'))
   }
-  
+
   files = paste0(output, '_suff_priors_', 1:idx, '.png')
   # files = paste0(output, '_', c(1,2,4,6), '.png')
   # output2 = paste0('ukb_rss_20210107_pip_calibration_paper/ukb_rss_pip_cali_simu', simu, '_', level)

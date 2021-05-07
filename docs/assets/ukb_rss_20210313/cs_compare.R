@@ -85,13 +85,13 @@ for(case in 1:nrow(all.comb)){
 
     methods_resid = c('mnm_suff_oracle+oracle','mnm_rss_oracle+oracle', 
                       'mnm_rss_oracle+identity','mnm_rss_oracle+nullz','mnm_rss_oracle+corY')
-    methods_prior_oracleresid = c('mnm_suff_oracle+oracle','mnm_rss_oracle+oracle', 
+    methods_prior_oracleresid = c('mnm_rss_oracle+oracle', 
                                   'mnm_rss_identity+oracle', 'mnm_rss_shared+oracle',
                                   'mnm_rss_naive+oracle', 'mnm_rss_ed+oracle','mnm_rss_ed_ddcan+oracle')
-    methods_prior_y = c('mnm_suff_oracle+covY','mnm_rss_oracle+corY', 'mnm_rss_identity_corY+corY',
+    methods_prior_y = c('mnm_rss_oracle+corY', 'mnm_rss_identity_corY+corY',
                         'mnm_rss_shared_corY+corY', 'mnm_rss_naive_corY+corY',
                         "mnm_rss_ed_corY+corY","mnm_rss_ed_ddcan_corY+corY")
-    methods_prior = c('mnm_suff_oracle+covY','mnm_rss_oracle+nullz', 'mnm_rss_identity_corZ+nullz', 
+    methods_prior = c('mnm_rss_oracle+nullz', 'mnm_rss_identity_corZ+nullz', 
                       'mnm_rss_shared_corZ+nullz', 'mnm_rss_naive_corZ+nullz',
                       'mnm_rss_ed_corZ+nullz', 'mnm_rss_ed_ddcan_corZ+nullz')
   }else{
@@ -104,72 +104,72 @@ for(case in 1:nrow(all.comb)){
                        "mnm_suff_ed+covY","mnm_suff_ed_ddcan+covY")
     
     methods_resid = c('susie_suff+FALSE', 'susie_rss+FALSE', 
-                      'mnm_suff_oracle+oracle','mnm_rss_oracle+oracle', 
-                      'mnm_rss_oracle+identity','mnm_rss_oracle+nullz','mnm_rss_oracle+corY')
+                      'mnm_rss_oracle+oracle', 'mnm_rss_oracle+identity',
+                      'mnm_rss_oracle+nullz','mnm_rss_oracle+corY')
     methods_prior_oracleresid = c('susie_suff+FALSE', 'susie_rss+FALSE', 
-                                  'mnm_suff_oracle+oracle','mnm_rss_oracle+oracle', 
-                                  'mnm_rss_identity+oracle', 'mnm_rss_shared+oracle',
-                                  'mnm_rss_naive+oracle', 'mnm_rss_ed+oracle','mnm_rss_ed_ddcan+oracle')
+                                  'mnm_rss_oracle+oracle', 'mnm_rss_identity+oracle', 
+                                  'mnm_rss_shared+oracle','mnm_rss_naive+oracle', 
+                                  'mnm_rss_ed+oracle','mnm_rss_ed_ddcan+oracle')
     methods_prior_y = c('susie_suff+FALSE', 'susie_rss+FALSE', 
-                        'mnm_suff_oracle+covY','mnm_rss_oracle+corY', 'mnm_rss_identity_corY+corY',
+                        'mnm_rss_oracle+corY', 'mnm_rss_identity_corY+corY',
                         'mnm_rss_shared_corY+corY', 'mnm_rss_naive_corY+corY',
                         "mnm_rss_ed_corY+corY","mnm_rss_ed_ddcan_corY+corY")
     methods_prior = c('susie_suff+FALSE', 'susie_rss+FALSE', 
-                      'mnm_suff_oracle+covY','mnm_rss_oracle+nullz', 'mnm_rss_identity_corZ+nullz', 
+                      'mnm_rss_oracle+nullz', 'mnm_rss_identity_corZ+nullz', 
                       'mnm_rss_shared_corZ+nullz', 'mnm_rss_naive_corZ+nullz',
                       'mnm_rss_ed_corZ+nullz', 'mnm_rss_ed_ddcan_corZ+nullz')
   }
   
-  # for(met in methods){
-  #   print(met)
-  #   dat_sub = dat_out %>% filter(method == met)
-  # 
-  #   if(level == 'glob'){
-  #     total = dat_sub$mvsusie_scores.total
-  #     valid = dat_sub$mvsusie_scores.valid
-  #     sizes = unlist(dat_sub$mvsusie_scores.size)
-  #     purity = unlist(dat_sub$mvsusie_scores.purity)
-  #     overlap = dat_sub$mvsusie_scores.overlap_cs
-  #     expected = dat_sub$mvsusie_scores.n_causal
-  #     cs_cor = dat_sub$mvsusie_scores.cs_correlation
-  #   }else{
-  #     if(grepl('susie', met)){
-  #       total = unlist(dat_sub$susie_scores.total)
-  #       valid = unlist(dat_sub$susie_scores.valid)
-  #       sizes = unlist(dat_sub$susie_scores.size)
-  #       purity = unlist(dat_sub$susie_scores.purity)
-  #       overlap = NA
-  #       expected = unlist(dat_sub$susie_scores.n_causal)
-  #       cs_cor = dat_sub$susie_scores.cs_correlation
-  #     }else{
-  #       total = unlist(dat_sub$mvsusie_scores.true_cond_discoveries) +
-  #         unlist(dat_sub$mvsusie_scores.false_pos_cond_discoveries)
-  #       valid = unlist(dat_sub$mvsusie_scores.true_cond_discoveries)
-  #       sizes = unlist(dat_sub$mvsusie_scores.size_cond_cs)
-  #       purity = unlist(dat_sub$mvsusie_scores.purity_cond_cs)
-  #       overlap = NA
-  #       cs_cor = dat_sub$mvsusie_scores.cs_correlation
-  #       tmp = dat_out %>% filter(method == 'susie_suff+FALSE')
-  #       expected = unlist(tmp$susie_scores.n_causal)
-  #     }
-  #   }
-  #   res[[met]] = list(total = sum(total), valid = sum(valid),
-  #                     size = median(sizes, na.rm=T), purity = median(purity, na.rm=T),
-  #                     overlap = sum(overlap), expected = sum(expected),
-  #                     cs_cor = median(cs_cor, na.rm=T))
-  # }
-  # rates = matrix(unlist(res), length(res), byrow = T)
-  # rownames(rates) = names(res)
-  # colnames(rates) = c('discoveries', 'valid', 'size', 'purity', 'overlap', 'expected', 'cs_cor')
-  # rates = as.data.frame(rates)
-  # rates$power = rates$valid/rates$expected
-  # rates$fdr = (rates$discoveries - rates$valid)/rates$discoveries
-  # rates$coverage = rates$valid/rates$discoveries
-  # rates$power_se = sqrt(rates$power * (1-rates$power) / rates$expected)
-  # rates$power_se[is.nan(rates$power_se)] = 0
-  # rates$fdr_se = sqrt(rates$fdr * (1-rates$fdr) / rates$discoveries)
-  # rates$coverage_se = sqrt(rates$coverage * (1-rates$coverage) / rates$discoveries)
-  # saveRDS(rates, paste0(output, '.rds'))
+  for(met in methods){
+    print(met)
+    dat_sub = dat_out %>% filter(method == met)
+
+    if(level == 'glob'){
+      total = dat_sub$mvsusie_scores.total
+      valid = dat_sub$mvsusie_scores.valid
+      sizes = unlist(dat_sub$mvsusie_scores.size)
+      purity = unlist(dat_sub$mvsusie_scores.purity)
+      overlap = dat_sub$mvsusie_scores.overlap_cs
+      expected = dat_sub$mvsusie_scores.n_causal
+      cs_cor = dat_sub$mvsusie_scores.cs_correlation
+    }else{
+      if(grepl('susie', met)){
+        total = unlist(dat_sub$susie_scores.total)
+        valid = unlist(dat_sub$susie_scores.valid)
+        sizes = unlist(dat_sub$susie_scores.size)
+        purity = unlist(dat_sub$susie_scores.purity)
+        overlap = NA
+        expected = unlist(dat_sub$susie_scores.n_causal)
+        cs_cor = dat_sub$susie_scores.cs_correlation
+      }else{
+        total = unlist(dat_sub$mvsusie_scores.true_cond_discoveries) +
+          unlist(dat_sub$mvsusie_scores.false_pos_cond_discoveries)
+        valid = unlist(dat_sub$mvsusie_scores.true_cond_discoveries)
+        sizes = unlist(dat_sub$mvsusie_scores.size_cond_cs)
+        purity = unlist(dat_sub$mvsusie_scores.purity_cond_cs)
+        overlap = NA
+        cs_cor = dat_sub$mvsusie_scores.cs_correlation
+        tmp = dat_out %>% filter(method == 'susie_suff+FALSE')
+        expected = unlist(tmp$susie_scores.n_causal)
+      }
+    }
+    res[[met]] = list(total = sum(total), valid = sum(valid),
+                      size = median(sizes, na.rm=T), purity = median(purity, na.rm=T),
+                      overlap = sum(overlap), expected = sum(expected),
+                      cs_cor = median(cs_cor, na.rm=T))
+  }
+  rates = matrix(unlist(res), length(res), byrow = T)
+  rownames(rates) = names(res)
+  colnames(rates) = c('discoveries', 'valid', 'size', 'purity', 'overlap', 'expected', 'cs_cor')
+  rates = as.data.frame(rates)
+  rates$power = rates$valid/rates$expected
+  rates$fdr = (rates$discoveries - rates$valid)/rates$discoveries
+  rates$coverage = rates$valid/rates$discoveries
+  rates$power_se = sqrt(rates$power * (1-rates$power) / rates$expected)
+  rates$power_se[is.nan(rates$power_se)] = 0
+  rates$fdr_se = sqrt(rates$fdr * (1-rates$fdr) / rates$discoveries)
+  rates$coverage_se = sqrt(rates$coverage * (1-rates$coverage) / rates$discoveries)
+  saveRDS(rates, paste0(output, '.rds'))
 
   rates = readRDS(paste0(output, '.rds'))
   rates$method = rownames(rates)
@@ -247,10 +247,10 @@ for(case in 1:nrow(all.comb)){
   p2 = plot_panel(rates_priors_oracleresid, c('power', 'power'), legend=F)
   p3 = plot_panel(rates_priors_oracleresid, c('size', 'median number of variables'), legend=F)
   p4 = plot_panel(rates_priors_oracleresid, c('purity', 'median of purity'), legend=F)
-  pdf(paste0(output, '_priors_oraclereid_plots.pdf'), width=12, height=3)
+  pdf(paste0(output, '_priors_oracleresid_plots.pdf'), width=12, height=3)
   grid.arrange(p1,p2,p3,p4, ncol=4, widths=c(3,3,3,3))
   dev.off()
-  system(paste0("convert -flatten -density 120 ", paste0(output, '_priors_oraclereid_plots.pdf'), " ", paste0(output, '_priors_oraclereid_plots.png')))
+  system(paste0("convert -flatten -density 120 ", paste0(output, '_priors_oracleresid_plots.pdf'), " ", paste0(output, '_priors_oracleresid_plots.png')))
   
   # priors y residual
   rates_priors_yresid = rates %>% filter(method %in% methods_prior_y)
@@ -268,11 +268,11 @@ for(case in 1:nrow(all.comb)){
   p2 = plot_panel(rates_priors_yresid, c('power', 'power'), legend=F)
   p3 = plot_panel(rates_priors_yresid, c('size', 'median number of variables'), legend=F)
   p4 = plot_panel(rates_priors_yresid, c('purity', 'median of purity'), legend=F)
-  pdf(paste0(output, '_priors_yreid_plots.pdf'), width=12, height=3)
+  pdf(paste0(output, '_priors_yresid_plots.pdf'), width=12, height=3)
   grid.arrange(p1,p2,p3,p4, ncol=4, widths=c(3,3,3,3))
   dev.off()
-  system(paste0("convert -flatten -density 120 ", paste0(output, '_priors_yreid_plots.pdf'), 
-                " ", paste0(output, '_priors_yreid_plots.png')))
+  system(paste0("convert -flatten -density 120 ", paste0(output, '_priors_yresid_plots.pdf'), 
+                " ", paste0(output, '_priors_yresid_plots.png')))
   
   # priors
   rates_priors = rates %>% filter(method %in% methods_prior)
