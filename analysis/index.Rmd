@@ -8,7 +8,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-This repository contains simulation results related to M&M RSS.
+This repository contains simulation results related to mvSuSiE-RSS.
 
 * [20200229 First simple simulation](mmbr_rss_simulation_1.html)
 
