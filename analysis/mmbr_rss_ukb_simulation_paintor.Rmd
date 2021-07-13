@@ -19,3 +19,52 @@ We compare PIP for each SNP. PAINTOR has very high FDR.
 
 ![](assets/ukb_rss_small/ukb_rss_small_roc/ukb_rss_small_roc_simuartificial_mixture_2_indep_glob.pr.png)
 
+Here is one example:
+```{r}
+Z = as.matrix(data.table::fread('data/PAINTOR_problem_2indep/test.PAINTOR', header=TRUE))
+B = readRDS('data/PAINTOR_problem_2indep/test.PAINTOR.2indep.rds')
+ld = as.matrix(data.table::fread('data/PAINTOR_problem_2indep/test.PAINTOR.ld'))
+```
+The variable 5, 1035 has non-zero effect in 2 traits.
+
+The z scores at true effects are
+```{r}
+Z[c(5,1035),]
+```
+
+```{r}
+par(mfrow=c(1,2))
+plot(Z[,1], pch=16)
+points(c(5, 1035), Z[c(5,1035),1], pch=16, col = 'red')
+plot(Z[,2], pch = 16)
+points(c(5, 1035), Z[c(5,1035),2], pch=16, col = 'red')
+```
+Using mvSuSiE with default prior,
+```{r}
+library(ggplot2)
+m_init = mvsusieR::create_mash_prior(mixture_prior = list(matrices=mvsusieR:::create_cov_canonical(2), weights=NULL), 
+                                 null_weight=NULL, max_mixture_len=-1)
+m = mvsusieR::mvsusie_rss(Z, R = ld, L=10, prior_variance=m_init,
+                     residual_variance=diag(2), 
+                     compute_objective=TRUE, 
+                     estimate_prior_variance=T, estimate_prior_method='EM', 
+                     precompute_covariances=T, n_thread=1, 
+                     max_iter=1000, track_fit = FALSE, verbosity = FALSE)
+susieR::susie_plot(m, y = 'PIP', b = B)
+```
+From PAINTOR, the PIPs are
+```{r}
+paintor_pip = data.table::fread('data/PAINTOR_problem_2indep/test.PAINTOR.results')
+plot(paintor_pip$Posterior_Prob, pch=16)
+points(c(5, 1035), paintor_pip$Posterior_Prob[c(5, 1035)], pch=16, col='red')
+```
+The z scores for SNPs with PIP=1 in PAINTOR are
+```{r}
+Z[which(paintor_pip$Posterior_Prob>0.5),]
+```
+
+
+
+
+
+
