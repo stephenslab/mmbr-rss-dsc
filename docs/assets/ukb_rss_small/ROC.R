@@ -1,5 +1,4 @@
-pip_cutoff = 0.05
-
+library(scam)
 roc_data = function(d1, cutoff = c(pip_cutoff, 0.999), connect_org = F) {
   grid = 1000
   ttv = seq(1:grid)/grid
@@ -20,31 +19,10 @@ roc_data = function(d1, cutoff = c(pip_cutoff, 0.999), connect_org = F) {
   colnames(rst3) = c('TN', 'TP', 'Threshold')
   return(list(counts = rst1, pr = rst2, roc = rst3))
 }
-colors = c('#A60628', '#7A68A6', '#348ABD', '#467821', '#FF00FF', '#E2A233', 
-           '#00FFFF', '#A9A9A9', '#ADFF2F', '#188487',  '#FF0000', '#000000', 
-           '#FFD700', '#00FF00', '#9400D3', '#7FFFD4', '#A52A2A', '#000080')
-rename = list('mnm_rss_oracle+oracle' = 'mvSuSiE-RSS Oracle prior & residual',
-              'mnm_rss_oracle+identity' = 'mvSuSiE-RSS Oracle prior Identity residual',
-              'mnm_rss_oracle+nullz' = 'mvSuSiE-RSS Oracle prior, z cor residual', 
-              'mnm_rss_oracle+corY' = 'mvSuSiE-RSS Oracle prior, Y cor residual', 
-              'mnm_rss_naive+oracle' = 'mvSuSiE-RSS Default prior oracle residual',
-              'mnm_rss_ed+oracle' = 'mvSuSiE-RSS ED prior oracle residual',
-              'mnm_rss_identity+oracle' = 'mvSuSiE-RSS Random effects prior oracle residual',
-              'mnm_rss_shared+oracle' = 'mvSuSiE-RSS Fixed effect prior oracle residual',
-              'mnm_suff_oracle+oracle' = 'mvSuSiE Oracle prior and residual',
-              'mnm_suff_oracle+covY' = 'mvSuSiE Oracle prior, Y cov residual',
-              'susie_suff+TRUE' = 'SuSiE',
-              'susie_rss+TRUE' = 'SuSiE-RSS',
-              'susie_rss+FALSE' = 'SuSiE-RSS fixed residual variance',
-              'PAINTOR+NA' = 'PAINTOR')
-library(scam)
 create_chunks = function(item, n) {
   splitted = suppressWarnings(split(item, 1:n))
   return(c(splitted[[1]], splitted[[length(splitted)]][length(splitted[[length(splitted)]])]))
 }
-chunks = 0
-xlim = 1
-ylim = 1
 make_smooth = function(x,y,subset=chunks, smooth = FALSE) {
   if (smooth) {
     if (subset < length(x) && subset > 0) {
@@ -59,53 +37,86 @@ make_smooth = function(x,y,subset=chunks, smooth = FALSE) {
 }
 add_text = function(thresholds, x, y, threshold, color, delta = -0.06) {
   idx = which(thresholds == threshold)
-  text(x[idx] - delta, y[idx], labels = threshold, col = color, cex=0.8)
-  points(x[idx],y[idx])
+  # text(x[idx] - delta, y[idx], labels = threshold, col = color, cex=0.8)
+  points(x[idx],y[idx], col = color)
 }
 
-input = paste0('ukb_rss_small_pip_extraction/ukb_rss_pip.rds')
-output = paste0('ukb_rss_small_roc/ukb_rss_roc')
-dat = readRDS(input)
+colors = c('#A60628', '#7A68A6', '#348ABD', '#467821', '#FF00FF', '#E2A233', 
+           '#00FFFF', '#A9A9A9', '#ADFF2F', '#188487',  '#FF0000', '#000000', 
+           '#FFD700', '#00FF00', '#9400D3', '#7FFFD4', '#A52A2A', '#000080')
+
+simulate_method = c('artificial_mixture_2', 'artificial_mixture_2_indep', 'artificial_mixture_6')
+all.comb = expand.grid(simulate_method)
+colnames(all.comb) = c('simulate_method')
+
+colors = c('#A60628', '#7A68A6', '#348ABD', '#467821', '#FF00FF', '#E2A233', 
+           '#00FFFF', '#A9A9A9', '#ADFF2F', '#188487',  '#FF0000', '#000000', 
+           '#FFD700', '#00FF00', '#9400D3', '#7FFFD4', '#A52A2A', '#000080')
+
+rename = list('mnm_rss_naive+oracle' = 'mvSuSiE-RSS Default prior oracle residual',
+              'mnm_rss_naive_corY+corY' = 'mvSuSiE-RSS Default prior, Y cor residual',
+              "mnm_rss_naive_corZ+nullz" = 'mvSuSiE-RSS Default prior, z cor residual',
+              'mnm_suff_naive+covY' = 'mvSuSiE Default prior, Y cov residual',
+              'mnm_suff_naive+oracle' = 'mvSuSiE Default prior Oracle residual',
+              'PAINTOR+NA' = 'PAINTOR')
+
+pip_cutoff = 0.05
+chunks = 0
+xlim = 0.8
+ylim = 0.8
+
+for(case in 1:nrow(all.comb)){
+  simu = all.comb[case, 'simulate_method']
+  input = paste0('ukb_rss_small_pip_extraction/ukb_rss_small_pip_simu', simu,'_glob.rds')
+  output = paste0('ukb_rss_small_roc/ukb_rss_small_roc_simu', simu, '_glob')
   
-# print("Computing ROC data ...")
-# tb = list()
-# for (method in names(dat)) {
-#   print(method)
-#   tb[[method]] = roc_data(dat[[method]])
-# }
-# saveRDS(tb, paste0(output, '.rds'))
-#   
-tb = readRDS(paste0(output, '.rds'))
-for(type in c('pr', 'roc')){
-  if(type == 'pr'){
-    main = "FDR vs Power"
-    ylab = "power"
-    xlab = "FDR"
-  }else{
-    main = "ROC curve"
-    ylab = "True Positive"
-    xlab = "False Positive"
-  }
-  pdf(paste0(output,'.', type,'.pdf'), width=10, height=10, pointsize=15)
-  i = 1
-  labels = vector()
-  for (method in c('mnm_suff_oracle+oracle',
-                   'mnm_rss_oracle+oracle','PAINTOR+NA')) {
-    # 'mnm_suff_oracle+oracle', 'mnm_suff_oracle+covY',
-    # 'mnm_rss_oracle+oracle', 'mnm_rss_oracle+identity','mnm_rss_oracle+corY',
-    yy = make_smooth((1 - tb[[method]][[type]][,1]), tb[[method]][[type]][,2])
-    if (i == 1) {
-      plot(yy$x, yy$y, t="l", col=colors[i], ylab = ylab, xlab = xlab, main = main, bty='l',
-           lwd = 2, xlim = c(0,xlim), ylim = c(0,ylim))
-    } else {
-      lines(yy$x, yy$y, col=colors[i], lwd = 2, xlim = c(0,xlim), ylim = c(0,ylim))
+  # dat = readRDS(input)
+  # 
+  # print("Computing ROC data ...")
+  # tb = list()
+  # for (method in names(dat)) {
+  #   print(method)
+  #   tb[[method]] = roc_data(dat[[method]])
+  # }
+  # saveRDS(tb, paste0(output, '.rds'))
+  
+  tb = readRDS(paste0(output, '.rds'))
+  for(type in c('pr', 'roc')){
+    if(type == 'pr'){
+      main = "FDR vs Power"
+      ylab = "power"
+      xlab = "FDR"
+      xlim = 0.8
+      ylim = 0.8
+    }else{
+      main = "ROC curve"
+      ylab = "True Positive"
+      xlab = "False Positive"
+      xlim = 0.001
+      ylim = 0.8
     }
-    add_text(tb[[method]][[type]][,3], yy$x, yy$y, 0.95, colors[i])
-    labels[i] = rename[[method]]
-    i = i + 1
+    pdf(paste0(output,'.', type,'.pdf'), width=8, height=8, pointsize=15)
+    i = 1
+    labels = vector()
+    for (method in c("mnm_rss_naive_corZ+nullz", 'PAINTOR+NA')) {
+      yy = make_smooth((1 - tb[[method]][[type]][,1]), tb[[method]][[type]][,2])
+      if (i == 1) {
+        plot(yy$x, yy$y, t="l", col=colors[i], ylab = ylab, xlab = xlab, main = main, bty='l',
+             lwd = 2, xlim = c(0,xlim), ylim = c(0,ylim))
+      } else {
+        lines(yy$x, yy$y, col=colors[i], lwd = 2, xlim = c(0,xlim), ylim = c(0,ylim))
+      }
+      add_text(tb[[method]][[type]][,3], yy$x, yy$y, 0.95, colors[i])
+      labels[i] = rename[[method]]
+      i = i + 1
+    }
+    legend("bottomright", legend=labels, col=colors[1:i], lty=1)
+    dev.off()
+    system(paste0("convert -flatten -density 120 ", output, '.', type,'.pdf', " ", 
+                  output, '.', type, '.png'))
   }
-  legend("bottomright", legend=labels, col=colors[1:i], lty=1, cex=0.8)
-  dev.off()
-  system(paste0("convert -flatten -density 120 ", output, '.', type,'.pdf', " ", output, '.', type, '.png'))
+  
 }
+
+
 
