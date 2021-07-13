@@ -9,7 +9,7 @@ output:
 
 This is result from our mvSuSiE RSS simulation using UKB data. There are 600 datasets. The max PVE across traits is 0.0005.
 
-For each dataset, we simulate 2 signals using artificial mixture prior in 6 conditions. The detail for prior is [here](https://github.com/gaow/mvarbvs/blob/master/analysis/multivariate/20200402_create_prior_mixture.ipynb).
+For each dataset, we simulate 2 signals with independent effects in 2 conditions.
    
 We run mvSuSiE-suff and mvSuSiE-rss with L = 10. We estimate prior weights using 'EM' method.
 
@@ -17,5 +17,5 @@ We use PAINTORv3.0 from [github](https://github.com/gkichaev/PAINTOR_V3.0). Sinc
 
 We compare PIP for each SNP. PAINTOR has very high FDR.
 
-![](assets/ukb_rss_small/ukb_rss_small_roc/ukb_rss_roc.pr.png)
+![](assets/ukb_rss_small/ukb_rss_small_roc/ukb_rss_small_roc_simuartificial_mixture_2_indep_glob.pr.png)
 
