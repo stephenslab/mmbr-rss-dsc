@@ -14,7 +14,7 @@ output:
 Canonical patterns of sharing:
 ```{r}
 R = 20
-prior = mmbr:::create_cov_canonical(R)
+prior = mvsusieR:::create_cov_canonical(R)
 ```
 
 Paired sharing:
@@ -64,7 +64,7 @@ artificial_mixture_20 = list(U=prior,w=w)
 Canonical patterns of sharing:
 ```{r}
 R = 4
-prior = mmbr:::create_cov_canonical(R)
+prior = mvsusieR:::create_cov_canonical(R)
 ```
 
 Paired sharing:
@@ -111,7 +111,7 @@ artificial_mixture_4 = list(U=prior,w=w)
 Canonical patterns of sharing:
 ```{r}
 R = 2
-prior = mmbr:::create_cov_canonical(R)
+prior = mvsusieR:::create_cov_canonical(R)
 ```
 
 We assign weights to priors:
@@ -133,28 +133,71 @@ w = w[which(w>0)]
 artificial_mixture_2 = list(U=prior,w=w)
 ```
 
+## 2 traits independent
+
+Canonical patterns of sharing:
+```{r}
+R = 2
+prior = list(independent=diag(2))
+w = c(1)
+```
+
+```{r}
+names(prior)
+artificial_mixture_2_indep = list(U=prior,w=w)
+```
+
+## 3 traits
+
+Canonical patterns of sharing:
+```{r}
+R = 3
+prior = mvsusieR:::create_cov_canonical(R)
+```
+
+Paired sharing:
+```{r}
+paired = matrix(0,R,R)
+paired[1:2,1:2] = 1
+prior[['paired_1']] = paired
+```
+
+We assign weights to priors:
+
+1. singleton total 30%
+
+    * singleton_1 has 15%
+    
+    * singleton_2 has 5% 
+    
+    * singleton_3 has 10%
+    
+2. shared total 50% (10% each)
+
+3. paired 20%
+
+```{r}
+w = c(0.15, 0.05, 0.1, rep(0.1, 5), 0.2)
+```
+
+```{r}
+prior = prior[which(w>0)]
+w = w[which(w>0)]
+artificial_mixture_3 = list(U=prior,w=w)
+```
 
 # Mixture from UKB
 
-The priors are from [this workflow](https://stephenslab.github.io/finemap-uk-biobank/bloodcells_priors.html).
+The priors are from [this workflow](https://github.com/gaow/mvarbvs/blob/master/analysis/20210503_ukb_pipeline.ipynb).
 
 ```{r}
-prior = readRDS('~/Documents/GitHub/finemap-uk-biobank/output/BloodCells.Ulist.Scor.ed.rds')
-names(prior$U)
+prior = readRDS('/project2/mstephens/yuxin/ukb-bloodcells/analysis_20220619/ukbbloodcells_prepare.ed_bovy.ukbbloodcells_prepare.Ycor.rds')
 ```
-Most weighths are in tFLASH and XX,
+
 ```{r}
-names(prior$U)[prior$w>0.1]
-```
-But many other weights are also non-trivial
-```{r}
-names(prior$U)[prior$w > 0.001]
-```
-```{r}
-tol=1E-12
+tol=1E-10
 U = prior$U[which(prior$w>tol)]
 w = prior$w[which(prior$w>tol)]
-names(U)
 bloodcells_mixture = list(U=U,w=w)
 ```
 
@@ -170,5 +213,5 @@ for(i in 1:length(U)){
 ```
 
 ```{r}
-saveRDS(list(bloodcells_mixture=bloodcells_mixture, artificial_mixture_20=artificial_mixture_20, artificial_mixture_4=artificial_mixture_4, artificial_mixture_2 = artificial_mixture_2), 'output/ukb_prior_simulation.rds')
+saveRDS(list(bloodcells_mixture=bloodcells_mixture, artificial_mixture_20=artificial_mixture_20, artificial_mixture_4=artificial_mixture_4, artificial_mixture_2 = artificial_mixture_2, artificial_mixture_2_indep = artificial_mixture_2_indep, artificial_mixture_3 = artificial_mixture_3), 'output/ukb_prior_simulation_20220619.rds')
 ```
