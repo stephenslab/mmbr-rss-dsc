@@ -1,0 +1,231 @@
+---
+title: "Plot simulated prior and data driven prior"
+author: "Yuxin Zou"
+date: "06/18/2022"
+output: 
+  workflowr::wflow_html:
+    code_folding: hide
+---
+
+The result is from [this notebook](https://github.com/cumc/bioworkflows/blob/master/multivariate-fine-mapping/mixture_prior.ipynb).
+
+```{r load packages}
+library(reshape2)
+library(ggplot2)
+tol = 1E-10
+```
+
+```{r}
+plot_sharing = function(X, col = 'black', to_cor=FALSE, title="", remove_names=F) {
+  clrs <- colorRampPalette(rev(c("#D73027","#FC8D59","#FEE090","#FFFFBF",
+                                 "#E0F3F8","#91BFDB","#4575B4")))(128)
+  if (to_cor) lat <- cov2cor(X)
+  else lat = X/max(diag(X))
+  lat[lower.tri(lat)] <- NA
+  n <- nrow(lat)
+  if (remove_names) {
+    colnames(lat) = paste('t',1:n, sep = '')
+    rownames(lat) = paste('t',1:n, sep = '')
+  }
+  melted_cormat <- melt(lat[n:1,], na.rm = TRUE)
+  melted_cormat$Var2 = as.factor(melted_cormat$Var2)
+  melted_cormat$Var1 = as.factor(melted_cormat$Var1)
+  p = ggplot(data = melted_cormat, aes(Var2, Var1, fill = value))+
+    geom_tile(color = "white")+ggtitle(title) + 
+    scale_fill_gradientn(colors = clrs, limit = c(-1,1), space = "Lab") +
+    theme_minimal()+ 
+    coord_fixed() +
+    theme(
+      axis.title.x = element_blank(),
+      axis.title.y = element_blank(),
+      axis.text.x = element_text(color=col, size=8,angle=45,hjust=1),
+      axis.text.y = element_text(color=rev(col), size=8),
+      title =element_text(size=10),
+      # panel.grid.major = element_blank(),
+      panel.border = element_blank(),
+      panel.background = element_blank(),
+      axis.ticks = element_blank(),
+      legend.justification = c(1, 0),
+      legend.position = c(0.6, 0),
+      legend.direction = "horizontal")+
+    guides(fill = guide_colorbar(title="", barwidth = 7, barheight = 1,
+                                 title.position = "top", title.hjust = 0.5))
+  if(remove_names){
+    p = p + scale_x_discrete(labels= 1:n) + scale_y_discrete(labels= n:1)
+  }
+  
+  return(p)
+}
+```
+
+```{r}
+prior_simu = readRDS('data/analysis_20220619/ukb_prior_simulation_20220619.rds')
+```
+
+## Artificial mixture
+
+Simulated prior
+```{r}
+meta = data.frame(names(prior_simu$artificial_mixture_20$U), prior_simu$artificial_mixture_20$w, stringsAsFactors=F)
+colnames(meta) = c("U", "w")
+n_comp = length(meta$U[which(meta$w>tol)])
+meta = head(meta[order(meta[,2], decreasing = T),], nrow(meta))
+
+res = list()
+for (i in 1:n_comp) {
+  title = paste0('U', i, ', w', i, '=', round(meta$w[i], 2))
+  res[[i]] = plot_sharing(prior_simu$artificial_mixture_20$U[[meta$U[i]]], to_cor = F, title=title, remove_names = TRUE)
+}
+unit = 4
+n_col = 5
+n_row = ceiling(n_comp / n_col)
+```
+
+```{r artificial_mixture_ukb_prior, fig.width=20, fig.height=16}
+do.call(gridExtra::grid.arrange, c(res, list(ncol = n_col, nrow = n_row)))
+pdf('output/analysis_20220619/artificial_mixture_ukb_prior.pdf', width = unit * n_col, height = unit * n_row)
+do.call(gridExtra::grid.arrange, c(res, list(ncol = n_col, nrow = n_row)))
+dev.off()
+```
+
+Data driven prior
+
+```{r}
+dat_a = readRDS('data/analysis_20220619/artificial_mixture_ukb.ed_bovy.rds')
+```
+```{r}
+names(dat_a$w) = names(dat_a$U)
+barplot(dat_a$w, las=2, cex.names = 0.7)
+```
+
+```{r}
+meta = data.frame(names(dat_a$U), dat_a$w, stringsAsFactors=F)
+colnames(meta) = c("U", "w")
+n_comp = length(meta$U[which(meta$w>tol)])
+meta = head(meta[order(meta[,2], decreasing = T),], nrow(meta))
+message(paste(n_comp, "components out of", length(dat_a$w), "total components have weight greater than", tol))
+```
+
+The component with strongest weight is XtX.
+
+```{r}
+res = list()
+for (i in 1:n_comp) {
+  title = paste0('U', i, ', w', i, '=', round(meta$w[i], 2))
+  res[[i]] = plot_sharing(dat_a$U[[meta$U[i]]], to_cor = F, title=title, remove_names = TRUE)
+}
+unit = 4
+n_col = 5
+n_row = ceiling(n_comp / n_col)
+```
+
+```{r artificial_mixture_ukb_ed_bovy, fig.height=20, fig.width=20}
+do.call(gridExtra::grid.arrange, c(res, list(ncol = n_col, nrow = n_row)))
+pdf('output/analysis_20220619/artificial_mixture_ukb_ed_bovy.pdf', width = unit * n_col, height = unit * n_row)
+do.call(gridExtra::grid.arrange, c(res, list(ncol = n_col, nrow = n_row)))
+dev.off()
+```
+
+## UKB bloodcells mixture
+
+```{r}
+rename = list('WBC_count' = 'WBC#',
+              'RBC_count' = 'RBC#',
+              'Haemoglobin' = 'HGB',
+              'MCV' = 'MCV',
+              'RDW' = 'RDW',
+              "Platelet_count" = 'PLT#',
+              "Plateletcrit" = 'PCT',
+              "PDW" = 'PDW',
+              "Lymphocyte_perc" = 'LYMPH%',
+              "Monocyte_perc" = 'MONO%',
+              "Neutrophill_perc" = 'NEUT%',
+              "Eosinophill_perc" = 'EO%',
+              "Basophill_perc" = 'BASO%',
+              "Reticulocyte_perc" = 'RET%',
+              "MSCV" = 'MSCV', 
+              "HLR_perc" = 'HLR%')
+trait_names = sapply(colnames(prior_simu$bloodcells_mixture$U$XtX), function(x) rename[[x]])
+bloodcells_col = cbind(trait_names, 
+                       c('Compound white cell', 'Mature red cell', 'Mature red cell', 
+                         'Mature red cell', 'Mature red cell', 'Platelet', 'Platelet',
+                         'Platelet', 'Compound white cell', 'Compound white cell', 
+                         'Compound white cell', 'Compound white cell', 'Compound white cell',
+                         'Immature red cell', 'Mature red cell','Immature red cell'),
+                       c('#33cccc', 'red', 'red', 'red', 'red',
+                         '#cc66ff', '#cc66ff', '#cc66ff',
+                         '#33cccc', '#33cccc', '#33cccc', '#33cccc', '#33cccc',
+                         'pink', 'red', 'pink'))
+trait_new_order = c("RBC#", "HGB", "MCV", "RDW", "MSCV", "RET%", "HLR%", "PLT#", "PCT", "PDW", 
+                    "WBC#", "LYMPH%", "MONO%", "NEUT%", "EO%", "BASO%")
+traits_index = match(trait_new_order, trait_names)
+```
+
+Simulated prior
+```{r}
+meta = data.frame(names(prior_simu$bloodcells_mixture$U), prior_simu$bloodcells_mixture$w, stringsAsFactors=F)
+colnames(meta) = c("U", "w")
+n_comp = length(meta$U[which(meta$w>tol)])
+meta = head(meta[order(meta[,2], decreasing = T),], nrow(meta))
+
+res = list()
+for (i in 1:n_comp) {
+  title = paste0('U', i, ', w', i, '=', round(meta$w[i], 2))
+  U = prior_simu$bloodcells_mixture$U[[meta$U[i]]]
+  colnames(U) = rownames(U) = bloodcells_col[,1]
+  U = U[traits_index, traits_index]
+  res[[i]] = plot_sharing(U, col = bloodcells_col[,3][traits_index],
+                          to_cor = F, title=title, remove_names = FALSE)
+}
+unit = 4
+n_col = 5
+n_row = ceiling(n_comp / n_col)
+```
+
+```{r ukbbloodcells_prepare_prior, fig.width=20, fig.height=12}
+do.call(gridExtra::grid.arrange, c(res, list(ncol = n_col, nrow = n_row)))
+pdf('output/analysis_20220619/ukbbloodcells_prepare_prior.pdf', width = unit * n_col, height = unit * n_row)
+do.call(gridExtra::grid.arrange, c(res, list(ncol = n_col, nrow = n_row)))
+dev.off()
+```
+
+Data driven prior
+```{r}
+dat_ukb = readRDS('data/analysis_20220619/ukb_bloodcells_mixture.ed_bovy.rds')
+```
+
+```{r}
+names(dat_ukb$w) = names(dat_ukb$U)
+barplot(dat_ukb$w, las=2, cex.names = 0.7)
+```
+
+```{r}
+meta = data.frame(names(dat_ukb$U), dat_ukb$w, stringsAsFactors=F)
+colnames(meta) = c("U", "w")
+n_comp = length(meta$U[which(meta$w>tol)])
+meta = head(meta[order(meta[,2], decreasing = T),], nrow(meta))
+message(paste(n_comp, "components out of", length(dat_ukb$w), "total components have weight greater than", tol))
+```
+
+```{r}
+res = list()
+for (i in 1:n_comp) {
+  title = paste0('U', i, ', w', i, '=', round(meta$w[i], 2))
+  U = dat_ukb$U[[meta$U[i]]]
+  colnames(U) = rownames(U) = bloodcells_col[,1]
+  U = U[traits_index, traits_index]
+  res[[i]] = plot_sharing(U, col = bloodcells_col[,3][traits_index],
+                          to_cor = F, title=title, remove_names = FALSE)
+}
+unit = 4
+n_col = 5
+n_row = ceiling(n_comp / n_col)
+```
+
+```{r ukbbloodcells_prepare_ed_bovy, fig.width=20, fig.height=8}
+do.call(gridExtra::grid.arrange, c(res, list(ncol = n_col, nrow = n_row)))
+pdf('output/analysis_20220619/ukbbloodcells_prepare_ed_bovy.pdf', width = unit * n_col, height = unit * n_row)
+do.call(gridExtra::grid.arrange, c(res, list(ncol = n_col, nrow = n_row)))
+dev.off()
+```
+
