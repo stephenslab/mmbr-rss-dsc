@@ -1,0 +1,72 @@
+---
+title: "mvSuSiE RSS simulation"
+author: "Yuxin Zou"
+date: "06/19/2022"
+output:
+  workflowr::wflow_html:
+    code_folding: hide
+---
+
+This is result from our mvSuSiE RSS simulation using UKB data. There are 600 datasets. The max PVE across traits is 0.0005.
+
+For each dataset, we simulate signals using 2 type of priors, the details are [here](https://zouyuxin.github.io/mmbr-rss-dsc/create_simulation_priors.html)
+
+1. Artificial mixture: 20 conditions. The oracle residual variance is a diagonal matrix.
+   
+2. UKB Bloodcells mixture: 16 conditions. The oracle residual variance is a dense matrix.
+   
+We estimate prior weights using ‘EM’ method.
+
+## Global PIP
+
+### PIP calibration
+
+Using data-driven prior
+
+![](assets/analysis_20220619/ukb_rss_pip_cali_glob_edprior.pdf)
+
+Artificial Mixture
+
+![](assets/analysis_20220619/ukb_rss_pip_cali_simuartificial_mixture_ukb_glob.pdf)
+
+UKB Bloodcells Mixture
+
+![](assets/analysis_20220619/ukb_rss_pip_cali_simuukb_bloodcells_mixture_glob.pdf)
+
+### Power vs FDR
+
+The residual variance matrix is estimated using z scores
+
+![](assets/analysis_20220619/ukb_rss_roc_glob_pr_zcorresid_priors.pdf)
+
+The prior is oracle.
+
+![](assets/analysis_20220619/ukb_rss_roc_glob_pr_resid.pdf)
+
+## Trait-specific CS
+
+Using data-driven prior and z score estimated residual correlation matrix.
+
+![](assets/analysis_20220619/ukb_rss_cs_cond_priors.pdf)
+
+## Trait-specific PIP
+
+### PIP calibration
+
+Artificial Mixture
+
+![](assets/analysis_20220619/ukb_rss_pip_cali_simuartificial_mixture_ukb_cond.pdf)
+
+UKB Bloodcells Mixture
+
+![](assets/analysis_20220619/ukb_rss_pip_cali_simuukb_bloodcells_mixture_cond.pdf)
+
+### Power vs FDR
+
+![](assets/analysis_20220619/ukb_rss_roc_cond_pr_zcorresid_priors.pdf)
+
+
+
+
+
+
