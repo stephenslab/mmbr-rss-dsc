@@ -93,10 +93,6 @@ Data driven prior
 ```{r}
 dat_a = readRDS('data/analysis_20220619/artificial_mixture_ukb.ed_bovy.rds')
 ```
-```{r}
-names(dat_a$w) = names(dat_a$U)
-barplot(dat_a$w, las=2, cex.names = 0.7)
-```
 
 ```{r}
 meta = data.frame(names(dat_a$U), dat_a$w, stringsAsFactors=F)
@@ -192,11 +188,6 @@ dev.off()
 Data driven prior
 ```{r}
 dat_ukb = readRDS('data/analysis_20220619/ukb_bloodcells_mixture.ed_bovy.rds')
-```
-
-```{r}
-names(dat_ukb$w) = names(dat_ukb$U)
-barplot(dat_ukb$w, las=2, cex.names = 0.7)
 ```
 
 ```{r}
