@@ -529,15 +529,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree943d8751532952cbb713e879fc6c58721eccf243targetblank943d875a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctreed028da9cde3c229682985c3c49373525eee4368dtargetblankd028da9a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/943d8751532952cbb713e879fc6c58721eccf243" target="_blank">943d875</a>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/d028da9cde3c229682985c3c49373525eee4368d" target="_blank">d028da9</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree943d8751532952cbb713e879fc6c58721eccf243targetblank943d875a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctreed028da9cde3c229682985c3c49373525eee4368dtargetblankd028da9a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -547,7 +547,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/943d8751532952cbb713e879fc6c58721eccf243" target="_blank">943d875</a>.
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/d028da9cde3c229682985c3c49373525eee4368d" target="_blank">d028da9</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -616,6 +616,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/d028da9cde3c229682985c3c49373525eee4368d/analysis/priors_ed_20220619.Rmd" target="_blank">d028da9</a>
+</td>
+<td>
+Yuxin Zou
+</td>
+<td>
+2022-07-19
+</td>
+<td>
+wflow_publish("analysis/priors_ed_20220619.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/1a64eb11bfd6f5f835ce684e045ae61858452170/docs/priors_ed_20220619.html" target="_blank">1a64eb1</a>
+</td>
+<td>
+Yuxin Zou
+</td>
+<td>
+2022-07-19
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -705,6 +739,43 @@ n_col = 5
 n_row = ceiling(n_comp / n_col)</code></pre>
 <pre class="r"><code>do.call(gridExtra::grid.arrange, c(res, list(ncol = n_col, nrow = n_row)))</code></pre>
 <p><img src="figure/priors_ed_20220619.Rmd/artificial_mixture_ukb_prior-1.png" width="1920" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-artificial_mixture_ukb_prior-1">
+Past versions of artificial_mixture_ukb_prior-1.png
+</button>
+</p>
+<div id="fig-artificial_mixture_ukb_prior-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/1a64eb11bfd6f5f835ce684e045ae61858452170/docs/figure/priors_ed_20220619.Rmd/artificial_mixture_ukb_prior-1.png" target="_blank">1a64eb1</a>
+</td>
+<td>
+Yuxin Zou
+</td>
+<td>
+2022-07-19
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>pdf(&#39;output/analysis_20220619/artificial_mixture_ukb_prior.pdf&#39;, width = unit * n_col, height = unit * n_row)
 do.call(gridExtra::grid.arrange, c(res, list(ncol = n_col, nrow = n_row)))
 dev.off()</code></pre>
@@ -712,9 +783,6 @@ dev.off()</code></pre>
                 2 </code></pre>
 <p>Data driven prior</p>
 <pre class="r"><code>dat_a = readRDS(&#39;data/analysis_20220619/artificial_mixture_ukb.ed_bovy.rds&#39;)</code></pre>
-<pre class="r"><code>names(dat_a$w) = names(dat_a$U)
-barplot(dat_a$w, las=2, cex.names = 0.7)</code></pre>
-<p><img src="figure/priors_ed_20220619.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>meta = data.frame(names(dat_a$U), dat_a$w, stringsAsFactors=F)
 colnames(meta) = c(&quot;U&quot;, &quot;w&quot;)
 n_comp = length(meta$U[which(meta$w&gt;tol)])
@@ -732,6 +800,43 @@ n_col = 5
 n_row = ceiling(n_comp / n_col)</code></pre>
 <pre class="r"><code>do.call(gridExtra::grid.arrange, c(res, list(ncol = n_col, nrow = n_row)))</code></pre>
 <p><img src="figure/priors_ed_20220619.Rmd/artificial_mixture_ukb_ed_bovy-1.png" width="1920" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-artificial_mixture_ukb_ed_bovy-1">
+Past versions of artificial_mixture_ukb_ed_bovy-1.png
+</button>
+</p>
+<div id="fig-artificial_mixture_ukb_ed_bovy-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/1a64eb11bfd6f5f835ce684e045ae61858452170/docs/figure/priors_ed_20220619.Rmd/artificial_mixture_ukb_ed_bovy-1.png" target="_blank">1a64eb1</a>
+</td>
+<td>
+Yuxin Zou
+</td>
+<td>
+2022-07-19
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>pdf(&#39;output/analysis_20220619/artificial_mixture_ukb_ed_bovy.pdf&#39;, width = unit * n_col, height = unit * n_row)
 do.call(gridExtra::grid.arrange, c(res, list(ncol = n_col, nrow = n_row)))
 dev.off()</code></pre>
@@ -850,6 +955,43 @@ n_col = 5
 n_row = ceiling(n_comp / n_col)</code></pre>
 <pre class="r"><code>do.call(gridExtra::grid.arrange, c(res, list(ncol = n_col, nrow = n_row)))</code></pre>
 <p><img src="figure/priors_ed_20220619.Rmd/ukbbloodcells_prepare_prior-1.png" width="1920" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-ukbbloodcells_prepare_prior-1">
+Past versions of ukbbloodcells_prepare_prior-1.png
+</button>
+</p>
+<div id="fig-ukbbloodcells_prepare_prior-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/1a64eb11bfd6f5f835ce684e045ae61858452170/docs/figure/priors_ed_20220619.Rmd/ukbbloodcells_prepare_prior-1.png" target="_blank">1a64eb1</a>
+</td>
+<td>
+Yuxin Zou
+</td>
+<td>
+2022-07-19
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>pdf(&#39;output/analysis_20220619/ukbbloodcells_prepare_prior.pdf&#39;, width = unit * n_col, height = unit * n_row)
 do.call(gridExtra::grid.arrange, c(res, list(ncol = n_col, nrow = n_row)))
 dev.off()</code></pre>
@@ -857,9 +999,6 @@ dev.off()</code></pre>
                 2 </code></pre>
 <p>Data driven prior</p>
 <pre class="r"><code>dat_ukb = readRDS(&#39;data/analysis_20220619/ukb_bloodcells_mixture.ed_bovy.rds&#39;)</code></pre>
-<pre class="r"><code>names(dat_ukb$w) = names(dat_ukb$U)
-barplot(dat_ukb$w, las=2, cex.names = 0.7)</code></pre>
-<p><img src="figure/priors_ed_20220619.Rmd/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>meta = data.frame(names(dat_ukb$U), dat_ukb$w, stringsAsFactors=F)
 colnames(meta) = c(&quot;U&quot;, &quot;w&quot;)
 n_comp = length(meta$U[which(meta$w&gt;tol)])
@@ -916,6 +1055,43 @@ n_col = 5
 n_row = ceiling(n_comp / n_col)</code></pre>
 <pre class="r"><code>do.call(gridExtra::grid.arrange, c(res, list(ncol = n_col, nrow = n_row)))</code></pre>
 <p><img src="figure/priors_ed_20220619.Rmd/ukbbloodcells_prepare_ed_bovy-1.png" width="1920" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-ukbbloodcells_prepare_ed_bovy-1">
+Past versions of ukbbloodcells_prepare_ed_bovy-1.png
+</button>
+</p>
+<div id="fig-ukbbloodcells_prepare_ed_bovy-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/1a64eb11bfd6f5f835ce684e045ae61858452170/docs/figure/priors_ed_20220619.Rmd/ukbbloodcells_prepare_ed_bovy-1.png" target="_blank">1a64eb1</a>
+</td>
+<td>
+Yuxin Zou
+</td>
+<td>
+2022-07-19
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>pdf(&#39;output/analysis_20220619/ukbbloodcells_prepare_ed_bovy.pdf&#39;, width = unit * n_col, height = unit * n_row)
 do.call(gridExtra::grid.arrange, c(res, list(ncol = n_col, nrow = n_row)))
 dev.off()</code></pre>
