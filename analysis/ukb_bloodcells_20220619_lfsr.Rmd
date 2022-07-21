@@ -1,0 +1,97 @@
+---
+title: "mvSuSiE with naive prior lfsr"
+author: "Yuxin Zou"
+date: "06/19/2022"
+output:
+  workflowr::wflow_html:
+    code_folding: hide
+---
+
+We found some inflation in condition specific pip using canonical prior. 
+
+```{r}
+library(reshape2)
+library(ggplot2)
+```
+
+```{r}
+plot_sharing = function(X, col = 'black', to_cor=FALSE, title="", remove_names=F) {
+  clrs <- colorRampPalette(rev(c("#D73027","#FC8D59","#FEE090","#FFFFBF",
+                                 "#E0F3F8","#91BFDB","#4575B4")))(128)
+  if (to_cor) lat <- cov2cor(X)
+  else lat = X/max(diag(X))
+  lat[lower.tri(lat)] <- NA
+  n <- nrow(lat)
+  if (remove_names) {
+    colnames(lat) = paste('t',1:n, sep = '')
+    rownames(lat) = paste('t',1:n, sep = '')
+  }
+  melted_cormat <- melt(lat[n:1,], na.rm = TRUE)
+  melted_cormat$Var2 = as.factor(melted_cormat$Var2)
+  melted_cormat$Var1 = as.factor(melted_cormat$Var1)
+  p = ggplot(data = melted_cormat, aes(Var2, Var1, fill = value))+
+    geom_tile(color = "white")+ggtitle(title) + 
+    scale_fill_gradientn(colors = clrs, limit = c(-1,1), space = "Lab") +
+    theme_minimal()+ 
+    coord_fixed() +
+    theme(
+      axis.title.x = element_blank(),
+      axis.title.y = element_blank(),
+      axis.text.x = element_text(color=col, size=8,angle=45,hjust=1),
+      axis.text.y = element_text(color=rev(col), size=8),
+      title =element_text(size=10),
+      # panel.grid.major = element_blank(),
+      panel.border = element_blank(),
+      panel.background = element_blank(),
+      axis.ticks = element_blank(),
+      legend.justification = c(1, 0),
+      legend.position = c(0.6, 0),
+      legend.direction = "horizontal")+
+    guides(fill = guide_colorbar(title="", barwidth = 7, barheight = 1,
+                                 title.position = "top", title.hjust = 0.5))
+  if(remove_names){
+    p = p + scale_x_discrete(labels= 1:n) + scale_y_discrete(labels= n:1)
+  }
+  
+  return(p)
+}
+```
+
+```{r}
+dat = readRDS('data/analysis_20220619/data_ukb_670_artificial_mixture_ukb_2.rds')
+idx = which(rowSums(dat$meta$true_coef != 0)>0)
+```
+There is one causal SNP. The causal SNP has effect in condition 10, 11.
+
+```{r}
+round(dat$meta$true_coef[idx,], 4)
+```
+
+Load model using canonical prior, and check the trait-specific PIP at the causal variant.
+```{r}
+m_can = readRDS('data/analysis_20220619/data_ukb_70_artificial_mixture_ukb_1_mnm_rss_naive_corZ_1.rds')
+round(1-m_can$result$lfsr[1552,], 2)
+```
+
+The first single effect is the causal SNP with posterior mixture weight 1 at singleton 10. The second single effect is the causal SNP with posterior mixture weight 1 at singleton 11.
+```{r}
+round(m_can$result$mixture_weights[1:2,1552,], 4)
+plot_sharing(dat$meta$prior$naive$xUlist[[10]], remove_names=TRUE)
+plot_sharing(dat$meta$prior$naive$xUlist[[11]], remove_names = TRUE)
+```
+
+
+Load model using data-driven prior, and check the trait-specific PIP at the causal variant.
+```{r}
+m_ed = readRDS('data/analysis_20220619/data_ukb_70_artificial_mixture_ukb_1_mnm_rss_ed_corZ_1.rds')
+round(1-m_ed$result$lfsr[1552,], 2)
+```
+
+The posterior weight is 1 for the pattern below.
+```{r}
+round(m_ed$result$mixture_weights[1, 1552,], 4)
+plot_sharing(dat$meta$prior$ED$xUlist$FLASH_default_4, remove_names = TRUE)
+diag(dat$meta$prior$ED$xUlist$FLASH_default_4)
+```
+
+
