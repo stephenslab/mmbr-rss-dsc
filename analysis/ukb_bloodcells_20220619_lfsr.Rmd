@@ -1,5 +1,5 @@
 ---
-title: "mvSuSiE with naive prior lfsr"
+title: "mvSuSiE lfsr"
 author: "Yuxin Zou"
 date: "06/19/2022"
 output:
