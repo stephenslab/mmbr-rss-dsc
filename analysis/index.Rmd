@@ -48,6 +48,10 @@ UKB simulations:
     
     [Artificial conditional lfsr](ukb_bloodcells_20220619_lfsr.html)
 
+UKB analysis:
+  
+* [Result20220619](ukb_bloodcells_20220619.html)
+
 Previous results
 
 * [Simulation Data Driven Prior](priors_ed.html)
