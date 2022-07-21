@@ -1,0 +1,124 @@
+---
+title: "mvSuSiE naive prior vs random prior"
+author: "Yuxin Zou"
+date: "06/19/2022"
+output:
+  workflowr::wflow_html:
+    code_folding: hide
+---
+
+```{r}
+library(mvsusieR)
+library(reshape2)
+library(ggplot2)
+plot_sharing = function(X, col = 'black', to_cor=FALSE, title="", remove_names=F) {
+  clrs <- colorRampPalette(rev(c("#D73027","#FC8D59","#FEE090","#FFFFBF",
+                                 "#E0F3F8","#91BFDB","#4575B4")))(128)
+  if (to_cor) lat <- cov2cor(X)
+  else lat = X/max(diag(X))
+  lat[lower.tri(lat)] <- NA
+  n <- nrow(lat)
+  if (remove_names) {
+    colnames(lat) = paste('t',1:n, sep = '')
+    rownames(lat) = paste('t',1:n, sep = '')
+  }
+  melted_cormat <- melt(lat[n:1,], na.rm = TRUE)
+  melted_cormat$Var2 = as.factor(melted_cormat$Var2)
+  melted_cormat$Var1 = as.factor(melted_cormat$Var1)
+  p = ggplot(data = melted_cormat, aes(Var2, Var1, fill = value))+
+    geom_tile(color = "white")+ggtitle(title) + 
+    scale_fill_gradientn(colors = clrs, limit = c(-1,1), space = "Lab") +
+    theme_minimal()+ 
+    coord_fixed() +
+    theme(
+      axis.title.x = element_blank(),
+      axis.title.y = element_blank(),
+      axis.text.x = element_text(color=col, size=8,angle=45,hjust=1),
+      axis.text.y = element_text(color=rev(col), size=8),
+      title =element_text(size=10),
+      # panel.grid.major = element_blank(),
+      panel.border = element_blank(),
+      panel.background = element_blank(),
+      axis.ticks = element_blank(),
+      legend.justification = c(1, 0),
+      legend.position = c(0.6, 0),
+      legend.direction = "horizontal")+
+    guides(fill = guide_colorbar(title="", barwidth = 7, barheight = 1,
+                                 title.position = "top", title.hjust = 0.5))
+  if(remove_names){
+    p = p + scale_x_discrete(labels= 1:n) + scale_y_discrete(labels= n:1)
+  }
+  
+  return(p)
+}
+```
+
+In simulation with UKB blood cell traits priors, the random effect prior performs slightly better than canonical prior.
+
+Load simulated data
+```{r}
+dat = readRDS('data/analysis_20220619/data_ukb_609_ukb_bloodcells_mixture_2.rds')
+meta = dat$meta
+```
+
+There are 3 causal variants.
+
+Load the model using canonical prior
+```{r}
+m_can = readRDS('data/analysis_20220619/data_ukb_9_ukb_bloodcells_mixture_1_mnm_rss_naive_corZ_1.rds')
+susie_plot(m_can$result, y='PIP', b = meta$true_coef)
+```
+
+Load the model using random effects prior
+```{r}
+m_ran = readRDS('data/analysis_20220619/data_ukb_9_ukb_bloodcells_mixture_1_mnm_rss_identity_corZ_1.rds')
+susie_plot(m_ran$result, y='PIP', b = meta$true_coef)
+```
+
+The variant 1375 has PIP 0.78 using canonical prior, PIP 0.99 using random effects prior. The true effect of variant 1375 is
+```{r}
+rename = list('WBC_count' = 'WBC#',
+              'RBC_count' = 'RBC#',
+              'Haemoglobin' = 'HGB',
+              'MCV' = 'MCV',
+              'RDW' = 'RDW',
+              "Platelet_count" = 'PLT#',
+              "Plateletcrit" = 'PCT',
+              "PDW" = 'PDW',
+              "Lymphocyte_perc" = 'LYMPH%',
+              "Monocyte_perc" = 'MONO%',
+              "Neutrophill_perc" = 'NEUT%',
+              "Eosinophill_perc" = 'EO%',
+              "Basophill_perc" = 'BASO%',
+              "Reticulocyte_perc" = 'RET%',
+              "MSCV" = 'MSCV', 
+              "HLR_perc" = 'HLR%')
+trait_names = sapply(colnames(meta$residual_variance), function(x) rename[[x]])
+bloodcells_col = cbind(trait_names, 
+                       c('Compound white cell', 'Mature red cell', 'Mature red cell', 
+                         'Mature red cell', 'Mature red cell', 'Platelet', 'Platelet',
+                         'Platelet', 'Compound white cell', 'Compound white cell', 
+                         'Compound white cell', 'Compound white cell', 'Compound white cell',
+                         'Immature red cell', 'Mature red cell','Immature red cell'),
+                       c('#33cccc', 'red', 'red', 'red', 'red',
+                         '#cc66ff', '#cc66ff', '#cc66ff',
+                         '#33cccc', '#33cccc', '#33cccc', '#33cccc', '#33cccc',
+                         'pink', 'red', 'pink'))
+trait_new_order = c("RBC#", "HGB", "MCV", "RDW", "MSCV", "RET%", "HLR%", "PLT#", "PCT", "PDW", 
+                    "WBC#", "LYMPH%", "MONO%", "NEUT%", "EO%", "BASO%")
+traits_index = match(trait_new_order, trait_names)
+
+colnames(meta$true_coef) = colnames(meta$residual_variance)
+barplot(meta$true_coef[1375,traits_index], las = 2, cex.names=0.6)
+```
+It is simulated from this covaraince structure
+```{r}
+plot_sharing(meta$trueU$`1375`[traits_index, traits_index], col=bloodcells_col[traits_index,3]) 
+```
+
+The posterior weights for each component in canonical prior is
+```{r}
+w = m_can$result$mixture_weights[2, 1375,]
+names(w) = c('null', names(meta$prior$naive$xUlist))
+round(w, 4)
+```
