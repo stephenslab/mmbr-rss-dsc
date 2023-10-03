@@ -1,0 +1,114 @@
+---
+title: "mvSuSiE RSS simulation - 2 traits"
+author: "Yuxin Zou"
+date: "08/22/2023"
+output:
+  workflowr::wflow_html:
+    code_folding: hide
+---
+
+This is result from our mvSuSiE RSS simulation 2 traits using UKB data. 
+There are 600 datasets. The max PVE across traits is 0.0005. 
+There are 2 causal variants per simulated data.
+
+For each dataset, we simulate signals with different signal correlation and residual correlations. 
+
+Signal correlation:
+
+  1. $\rho$ = 0
+  
+  2. $\rho$ = 0.25
+  
+  3. $\rho$ = 0.5
+  
+  4. $\rho$ = 0.75
+  
+  5. $\rho$ = 1
+  
+  6. mixture of effects: see Artificial Structure 2 traits section in [here](https://stephenslab.github.io/mmbr-rss-dsc/create_simulation_priors.html)
+  
+Residual correlation:
+
+  1. V_corr = 0
+  
+  2. V_corr = 0.4
+  
+  3. V_corr = 0.8
+
+For mvSuSiE, we estimate the residual correlations using the variants close to null.
+
+## Cross-trait PIP
+
+![](assets/ukb_rss_small2_20230822/ukb_rss_roc_glob_pr.pdf)
+
+With mixture effects
+
+V_corr = 0
+
+![](assets/ukb_rss_small2_20230822/ukb_rss_roc_V0_effectmixture_glob_pr.pdf)
+
+V_corr = 0.4
+
+![](assets/ukb_rss_small2_20230822/ukb_rss_roc_V0.4_effectmixture_glob_pr.pdf)
+
+V_corr = 0.8
+
+![](assets/ukb_rss_small2_20230822/ukb_rss_roc_V0.4_effectmixture_glob_pr.pdf)
+
+## Cross-trait CS
+
+![](assets/ukb_rss_small2_20230822/ukb_rss_cs_glob_coverage.pdf)
+
+![](assets/ukb_rss_small2_20230822/ukb_rss_cs_glob_power.pdf)
+
+![](assets/ukb_rss_small2_20230822/ukb_rss_cs_glob_size.pdf)
+
+![](assets/ukb_rss_small2_20230822/ukb_rss_cs_glob_purity.pdf)
+
+With mixture effects
+
+![](assets/ukb_rss_small2_20230822/ukb_rss_cs_glob_mixture_coverage.pdf)
+
+![](assets/ukb_rss_small2_20230822/ukb_rss_cs_glob_mixture_power.pdf)
+
+![](assets/ukb_rss_small2_20230822/ukb_rss_cs_glob_mixture_size.pdf)
+
+![](assets/ukb_rss_small2_20230822/ukb_rss_cs_glob_mixture_purity.pdf)
+
+## Trait-specific PIP
+
+![](assets/ukb_rss_small2_20230822/ukb_rss_roc_cond_pr.pdf)
+
+With mixture effects
+
+V_corr = 0
+
+![](assets/ukb_rss_small2_20230822/ukb_rss_roc_V0_effectmixture_cond_pr.pdf)
+
+V_corr = 0.4
+
+![](assets/ukb_rss_small2_20230822/ukb_rss_roc_V0.4_effectmixture_cond_pr.pdf)
+
+V_corr = 0.8
+
+![](assets/ukb_rss_small2_20230822/ukb_rss_roc_V0.4_effectmixture_cond_pr.pdf)
+
+## Trait-specific CS
+
+![](assets/ukb_rss_small2_20230822/ukb_rss_cs_cond_coverage.pdf)
+
+![](assets/ukb_rss_small2_20230822/ukb_rss_cs_cond_power.pdf)
+
+![](assets/ukb_rss_small2_20230822/ukb_rss_cs_cond_size.pdf)
+
+![](assets/ukb_rss_small2_20230822/ukb_rss_cs_cond_purity.pdf)
+
+With mixture effects
+
+![](assets/ukb_rss_small2_20230822/ukb_rss_cs_cond_mixture_coverage.pdf)
+
+![](assets/ukb_rss_small2_20230822/ukb_rss_cs_cond_mixture_power.pdf)
+
+![](assets/ukb_rss_small2_20230822/ukb_rss_cs_cond_mixture_size.pdf)
+
+![](assets/ukb_rss_small2_20230822/ukb_rss_cs_cond_mixture_purity.pdf)
