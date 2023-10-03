@@ -13,7 +13,7 @@
 
 <title>Home</title>
 
-<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.21/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -33,7 +33,7 @@
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 
-<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
 <!-- Add a small amount of space between sections. -->
 <style type="text/css">
 div.section {
@@ -151,11 +151,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -184,8 +188,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -193,16 +197,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -305,7 +302,7 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-07-21
+<strong>Last updated:</strong> 2023-10-03
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -314,16 +311,16 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 2
 aria-hidden="true"></span> 0
 </p>
 <p>
-<strong>Knit directory:</strong> <code>mmbr-rss-dsc/</code> <span
-class="glyphicon glyphicon-question-sign" aria-hidden="true"
+<strong>Knit directory:</strong> <code>mmbr-rss-dsc_stephen/</code>
+<span class="glyphicon glyphicon-question-sign" aria-hidden="true"
 title="This is the local directory in which the code in this file was executed.">
 </span>
 </p>
 <p>
-This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a>
 analysis was created with <a
-  href="https://github.com/workflowr/workflowr">workflowr</a> (version
-1.7.0). The <em>Checks</em> tab describes the reproducibility checks
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version
+1.6.2). The <em>Checks</em> tab describes the reproducibility checks
 that were applied when the results were created. The <em>Past
 versions</em> tab lists the development history.
 </p>
@@ -352,15 +349,15 @@ results.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree677ad2a829ae3299fc303a491c7227cd753ed097targetblank677ad2aa">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomstephenslabmmbrrssdsctree2259ed2161ae42ddc6ce3907e8c3781ccc0d5d7btargetblank2259ed2a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/677ad2a829ae3299fc303a491c7227cd753ed097" target="_blank">677ad2a</a>
+<a href="https://github.com/stephenslab/mmbr-rss-dsc/tree/2259ed2161ae42ddc6ce3907e8c3781ccc0d5d7b" target="_blank">2259ed2</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomzouyuxinmmbrrssdsctree677ad2a829ae3299fc303a491c7227cd753ed097targetblank677ad2aa"
+id="strongRepositoryversionstrongahrefhttpsgithubcomstephenslabmmbrrssdsctree2259ed2161ae42ddc6ce3907e8c3781ccc0d5d7btargetblank2259ed2a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -370,7 +367,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/zouyuxin/mmbr-rss-dsc/tree/677ad2a829ae3299fc303a491c7227cd753ed097" target="_blank">677ad2a</a>.
+<a href="https://github.com/stephenslab/mmbr-rss-dsc/tree/2259ed2161ae42ddc6ce3907e8c3781ccc0d5d7b" target="_blank">2259ed2</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -384,17 +381,7 @@ depends on. Below is the status of the Git repository when the results
 were generated:
 </p>
 <pre><code>
-Ignored files:
-    Ignored:    .Rhistory
-    Ignored:    .Rproj.user/
-
-Untracked files:
-    Untracked:  data/analysis_20220619/
-    Untracked:  output/analysis_20220619/
-
-Unstaged changes:
-    Deleted:    analysis/ukb_bllodcells_20220619.Rmd
-
+working directory clean
 </code></pre>
 <p>
 Note that any generated files, e.g. HTML, png, CSS, etc., are not
@@ -443,13 +430,13 @@ Message
 Rmd
 </td>
 <td>
-<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/677ad2a829ae3299fc303a491c7227cd753ed097/analysis/index.Rmd" target="_blank">677ad2a</a>
+<a href="https://github.com/stephenslab/mmbr-rss-dsc/blob/2259ed2161ae42ddc6ce3907e8c3781ccc0d5d7b/analysis/index.Rmd" target="_blank">2259ed2</a>
 </td>
 <td>
-Yuxin Zou
+zouyuxin
 </td>
 <td>
-2022-07-21
+2023-10-03
 </td>
 <td>
 wflow_publish("analysis/index.Rmd")
@@ -460,7 +447,7 @@ wflow_publish("analysis/index.Rmd")
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/ff64d9ec3c3c833c822a95ee3a58a61ab9066fea/docs/index.html" target="_blank">ff64d9e</a>
+<a href="https://rawcdn.githack.com/stephenslab/mmbr-rss-dsc/4fbf81d12399859bf8f47fec28bbfe905b6ea19e/docs/index.html" target="_blank">4fbf81d</a>
 </td>
 <td>
 Yuxin Zou
@@ -477,7 +464,7 @@ Build site.
 Rmd
 </td>
 <td>
-<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/03ff4006a99664430cea45c170539b7ddfaac030/analysis/index.Rmd" target="_blank">03ff400</a>
+<a href="https://github.com/stephenslab/mmbr-rss-dsc/blob/677ad2a829ae3299fc303a491c7227cd753ed097/analysis/index.Rmd" target="_blank">677ad2a</a>
 </td>
 <td>
 Yuxin Zou
@@ -494,7 +481,41 @@ wflow_publish("analysis/index.Rmd")
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/5664015cd2aa9296fb1d13d30fa656cb25ba705c/docs/index.html" target="_blank">5664015</a>
+<a href="https://rawcdn.githack.com/stephenslab/mmbr-rss-dsc/ff64d9ec3c3c833c822a95ee3a58a61ab9066fea/docs/index.html" target="_blank">ff64d9e</a>
+</td>
+<td>
+Yuxin Zou
+</td>
+<td>
+2022-07-21
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/stephenslab/mmbr-rss-dsc/blob/03ff4006a99664430cea45c170539b7ddfaac030/analysis/index.Rmd" target="_blank">03ff400</a>
+</td>
+<td>
+Yuxin Zou
+</td>
+<td>
+2022-07-21
+</td>
+<td>
+wflow_publish("analysis/index.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/stephenslab/mmbr-rss-dsc/5664015cd2aa9296fb1d13d30fa656cb25ba705c/docs/index.html" target="_blank">5664015</a>
 </td>
 <td>
 Yuxin Zou
@@ -511,7 +532,7 @@ Build site.
 Rmd
 </td>
 <td>
-<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/c607d22e1ef9086d6c8c733bafcb13affbc73b3e/analysis/index.Rmd" target="_blank">c607d22</a>
+<a href="https://github.com/stephenslab/mmbr-rss-dsc/blob/c607d22e1ef9086d6c8c733bafcb13affbc73b3e/analysis/index.Rmd" target="_blank">c607d22</a>
 </td>
 <td>
 Yuxin Zou
@@ -528,7 +549,7 @@ wflow_publish("analysis/index.Rmd")
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/09b99869912c9d5ad205ef894f679fa1b222a5be/docs/index.html" target="_blank">09b9986</a>
+<a href="https://rawcdn.githack.com/stephenslab/mmbr-rss-dsc/09b99869912c9d5ad205ef894f679fa1b222a5be/docs/index.html" target="_blank">09b9986</a>
 </td>
 <td>
 zouyuxin
@@ -545,7 +566,7 @@ Build site.
 Rmd
 </td>
 <td>
-<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/9af77ba86bdbcbe983b1e495c2bb82ace2ebba2a/analysis/index.Rmd" target="_blank">9af77ba</a>
+<a href="https://github.com/stephenslab/mmbr-rss-dsc/blob/9af77ba86bdbcbe983b1e495c2bb82ace2ebba2a/analysis/index.Rmd" target="_blank">9af77ba</a>
 </td>
 <td>
 zouyuxin
@@ -562,7 +583,7 @@ wflow_publish("analysis/index.Rmd")
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/96907386985792329847156a79a398ea9054780c/docs/index.html" target="_blank">9690738</a>
+<a href="https://rawcdn.githack.com/stephenslab/mmbr-rss-dsc/96907386985792329847156a79a398ea9054780c/docs/index.html" target="_blank">9690738</a>
 </td>
 <td>
 zouyuxin
@@ -579,7 +600,7 @@ Build site.
 Rmd
 </td>
 <td>
-<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/876cf5551cb6e7d296a393ce7106f917d2bd5338/analysis/index.Rmd" target="_blank">876cf55</a>
+<a href="https://github.com/stephenslab/mmbr-rss-dsc/blob/876cf5551cb6e7d296a393ce7106f917d2bd5338/analysis/index.Rmd" target="_blank">876cf55</a>
 </td>
 <td>
 zouyuxin
@@ -596,7 +617,7 @@ wflow_publish("analysis/index.Rmd")
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/e5978594171938b85f35a3a1e1e481c6c64d4cb1/docs/index.html" target="_blank">e597859</a>
+<a href="https://rawcdn.githack.com/stephenslab/mmbr-rss-dsc/e5978594171938b85f35a3a1e1e481c6c64d4cb1/docs/index.html" target="_blank">e597859</a>
 </td>
 <td>
 zouyuxin
@@ -613,7 +634,7 @@ Build site.
 Rmd
 </td>
 <td>
-<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/b96ace03c0990727fcc65b53d59e90582a1da4c4/analysis/index.Rmd" target="_blank">b96ace0</a>
+<a href="https://github.com/stephenslab/mmbr-rss-dsc/blob/b96ace03c0990727fcc65b53d59e90582a1da4c4/analysis/index.Rmd" target="_blank">b96ace0</a>
 </td>
 <td>
 zouyuxin
@@ -630,7 +651,7 @@ wflow_publish("analysis/index.Rmd")
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/8006a7cd330a0cda72812e646c20c1ddb2110970/docs/index.html" target="_blank">8006a7c</a>
+<a href="https://rawcdn.githack.com/stephenslab/mmbr-rss-dsc/8006a7cd330a0cda72812e646c20c1ddb2110970/docs/index.html" target="_blank">8006a7c</a>
 </td>
 <td>
 zouyuxin
@@ -647,7 +668,7 @@ Build site.
 Rmd
 </td>
 <td>
-<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/d0376fae495b3a9bcec02c2e519603e8096f0d52/analysis/index.Rmd" target="_blank">d0376fa</a>
+<a href="https://github.com/stephenslab/mmbr-rss-dsc/blob/d0376fae495b3a9bcec02c2e519603e8096f0d52/analysis/index.Rmd" target="_blank">d0376fa</a>
 </td>
 <td>
 zouyuxin
@@ -664,7 +685,7 @@ wflow_publish("analysis/index.Rmd")
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/92ffd5e9e459b56b7a3c17cfc8a2fad04f47ba85/docs/index.html" target="_blank">92ffd5e</a>
+<a href="https://rawcdn.githack.com/stephenslab/mmbr-rss-dsc/92ffd5e9e459b56b7a3c17cfc8a2fad04f47ba85/docs/index.html" target="_blank">92ffd5e</a>
 </td>
 <td>
 zouyuxin
@@ -681,7 +702,7 @@ Build site.
 Rmd
 </td>
 <td>
-<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/813ced03befeaaf9ccedfa5798d1ea75bc4f616a/analysis/index.Rmd" target="_blank">813ced0</a>
+<a href="https://github.com/stephenslab/mmbr-rss-dsc/blob/813ced03befeaaf9ccedfa5798d1ea75bc4f616a/analysis/index.Rmd" target="_blank">813ced0</a>
 </td>
 <td>
 zouyuxin
@@ -698,13 +719,13 @@ wflow_publish("analysis/index.Rmd")
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/072e906f2b94433874f9f44de3e468bf06fd9658/docs/index.html" target="_blank">072e906</a>
+<a href="https://rawcdn.githack.com/stephenslab/mmbr-rss-dsc/072e906f2b94433874f9f44de3e468bf06fd9658/docs/index.html" target="_blank">072e906</a>
 </td>
 <td>
 zouyuxin
 </td>
 <td>
-2021-01-08
+2021-01-07
 </td>
 <td>
 Build site.
@@ -715,13 +736,13 @@ Build site.
 Rmd
 </td>
 <td>
-<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/5e7f58748624d65b3ae22c9760b488484cc918f0/analysis/index.Rmd" target="_blank">5e7f587</a>
+<a href="https://github.com/stephenslab/mmbr-rss-dsc/blob/5e7f58748624d65b3ae22c9760b488484cc918f0/analysis/index.Rmd" target="_blank">5e7f587</a>
 </td>
 <td>
 zouyuxin
 </td>
 <td>
-2021-01-08
+2021-01-07
 </td>
 <td>
 wflow_publish("analysis/index.Rmd")
@@ -732,7 +753,7 @@ wflow_publish("analysis/index.Rmd")
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/6e91c5b2c294a7d881071838b1ac4f21eaaa715e/docs/index.html" target="_blank">6e91c5b</a>
+<a href="https://rawcdn.githack.com/stephenslab/mmbr-rss-dsc/6e91c5b2c294a7d881071838b1ac4f21eaaa715e/docs/index.html" target="_blank">6e91c5b</a>
 </td>
 <td>
 zouyuxin
@@ -749,7 +770,7 @@ Build site.
 Rmd
 </td>
 <td>
-<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/7f930cb7d2b92374b0f9e8b6597aa0259d69502e/analysis/index.Rmd" target="_blank">7f930cb</a>
+<a href="https://github.com/stephenslab/mmbr-rss-dsc/blob/7f930cb7d2b92374b0f9e8b6597aa0259d69502e/analysis/index.Rmd" target="_blank">7f930cb</a>
 </td>
 <td>
 zouyuxin
@@ -766,7 +787,7 @@ wflow_publish("analysis/index.Rmd")
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/3cf2637ce5c899e3e8d2ceb83a17117e65187568/docs/index.html" target="_blank">3cf2637</a>
+<a href="https://rawcdn.githack.com/stephenslab/mmbr-rss-dsc/3cf2637ce5c899e3e8d2ceb83a17117e65187568/docs/index.html" target="_blank">3cf2637</a>
 </td>
 <td>
 zouyuxin
@@ -783,7 +804,7 @@ Build site.
 Rmd
 </td>
 <td>
-<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/037d1698cadf69450feb54f1fb84b808da5247e2/analysis/index.Rmd" target="_blank">037d169</a>
+<a href="https://github.com/stephenslab/mmbr-rss-dsc/blob/037d1698cadf69450feb54f1fb84b808da5247e2/analysis/index.Rmd" target="_blank">037d169</a>
 </td>
 <td>
 zouyuxin
@@ -800,7 +821,7 @@ wflow_publish("analysis/index.Rmd")
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/cad91e22e03905e04349fdc8cce854db6c614b1c/docs/index.html" target="_blank">cad91e2</a>
+<a href="https://rawcdn.githack.com/stephenslab/mmbr-rss-dsc/cad91e22e03905e04349fdc8cce854db6c614b1c/docs/index.html" target="_blank">cad91e2</a>
 </td>
 <td>
 zouyuxin
@@ -817,7 +838,7 @@ Build site.
 Rmd
 </td>
 <td>
-<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/c2b75cfdf3e4c10aa541137a7036b9f49b1afee3/analysis/index.Rmd" target="_blank">c2b75cf</a>
+<a href="https://github.com/stephenslab/mmbr-rss-dsc/blob/c2b75cfdf3e4c10aa541137a7036b9f49b1afee3/analysis/index.Rmd" target="_blank">c2b75cf</a>
 </td>
 <td>
 zouyuxin
@@ -834,7 +855,7 @@ wflow_publish("analysis/index.Rmd")
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/59ddf37d58b8751aeb4d6e10ad4191f90477b54b/docs/index.html" target="_blank">59ddf37</a>
+<a href="https://rawcdn.githack.com/stephenslab/mmbr-rss-dsc/59ddf37d58b8751aeb4d6e10ad4191f90477b54b/docs/index.html" target="_blank">59ddf37</a>
 </td>
 <td>
 zouyuxin
@@ -851,7 +872,7 @@ Build site.
 Rmd
 </td>
 <td>
-<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/fb1542aebf958e96969387bab705fe46e6264f0b/analysis/index.Rmd" target="_blank">fb1542a</a>
+<a href="https://github.com/stephenslab/mmbr-rss-dsc/blob/fb1542aebf958e96969387bab705fe46e6264f0b/analysis/index.Rmd" target="_blank">fb1542a</a>
 </td>
 <td>
 zouyuxin
@@ -868,7 +889,7 @@ wflow_publish("analysis/index.Rmd")
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/941dd8a92139111242593e669ae127d014cb79d8/docs/index.html" target="_blank">941dd8a</a>
+<a href="https://rawcdn.githack.com/stephenslab/mmbr-rss-dsc/941dd8a92139111242593e669ae127d014cb79d8/docs/index.html" target="_blank">941dd8a</a>
 </td>
 <td>
 zouyuxin
@@ -885,7 +906,7 @@ Build site.
 Rmd
 </td>
 <td>
-<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/a45fbf73ee45663cb06fc27bfc757608c54e6e1f/analysis/index.Rmd" target="_blank">a45fbf7</a>
+<a href="https://github.com/stephenslab/mmbr-rss-dsc/blob/a45fbf73ee45663cb06fc27bfc757608c54e6e1f/analysis/index.Rmd" target="_blank">a45fbf7</a>
 </td>
 <td>
 zouyuxin
@@ -902,13 +923,13 @@ wflow_publish("analysis/index.Rmd")
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/bad42b94b4c990a40e230545cd52acf30c60efda/docs/index.html" target="_blank">bad42b9</a>
+<a href="https://rawcdn.githack.com/stephenslab/mmbr-rss-dsc/bad42b94b4c990a40e230545cd52acf30c60efda/docs/index.html" target="_blank">bad42b9</a>
 </td>
 <td>
 zouyuxin
 </td>
 <td>
-2020-10-30
+2020-10-29
 </td>
 <td>
 Build site.
@@ -919,13 +940,13 @@ Build site.
 Rmd
 </td>
 <td>
-<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/d6faf0cb95dcd9acb799870b16db4d1b6f876f20/analysis/index.Rmd" target="_blank">d6faf0c</a>
+<a href="https://github.com/stephenslab/mmbr-rss-dsc/blob/d6faf0cb95dcd9acb799870b16db4d1b6f876f20/analysis/index.Rmd" target="_blank">d6faf0c</a>
 </td>
 <td>
 zouyuxin
 </td>
 <td>
-2020-10-30
+2020-10-29
 </td>
 <td>
 wflow_publish("analysis/index.Rmd")
@@ -936,7 +957,7 @@ wflow_publish("analysis/index.Rmd")
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/fa984670390d5a631c9e63f1b67bc39515ad1407/docs/index.html" target="_blank">fa98467</a>
+<a href="https://rawcdn.githack.com/stephenslab/mmbr-rss-dsc/fa984670390d5a631c9e63f1b67bc39515ad1407/docs/index.html" target="_blank">fa98467</a>
 </td>
 <td>
 zouyuxin
@@ -953,7 +974,7 @@ Build site.
 Rmd
 </td>
 <td>
-<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/f7ce59e4d2e3c4b7b302ca71260bd4de0360daeb/analysis/index.Rmd" target="_blank">f7ce59e</a>
+<a href="https://github.com/stephenslab/mmbr-rss-dsc/blob/f7ce59e4d2e3c4b7b302ca71260bd4de0360daeb/analysis/index.Rmd" target="_blank">f7ce59e</a>
 </td>
 <td>
 zouyuxin
@@ -970,7 +991,7 @@ wflow_publish("analysis/index.Rmd")
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/b114d6f633cce794f54dc84c74533303520ef5cb/docs/index.html" target="_blank">b114d6f</a>
+<a href="https://rawcdn.githack.com/stephenslab/mmbr-rss-dsc/b114d6f633cce794f54dc84c74533303520ef5cb/docs/index.html" target="_blank">b114d6f</a>
 </td>
 <td>
 zouyuxin
@@ -987,7 +1008,7 @@ Build site.
 Rmd
 </td>
 <td>
-<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/6baf40429305568fcfe27e13837a0ca18ccf09c8/analysis/index.Rmd" target="_blank">6baf404</a>
+<a href="https://github.com/stephenslab/mmbr-rss-dsc/blob/6baf40429305568fcfe27e13837a0ca18ccf09c8/analysis/index.Rmd" target="_blank">6baf404</a>
 </td>
 <td>
 zouyuxin
@@ -1004,7 +1025,7 @@ wflow_publish("analysis/index.Rmd")
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/f340cee6c21855a77e6d46f4be48619bcaafa5fa/docs/index.html" target="_blank">f340cee</a>
+<a href="https://rawcdn.githack.com/stephenslab/mmbr-rss-dsc/f340cee6c21855a77e6d46f4be48619bcaafa5fa/docs/index.html" target="_blank">f340cee</a>
 </td>
 <td>
 zouyuxin
@@ -1021,7 +1042,7 @@ Build site.
 Rmd
 </td>
 <td>
-<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/cbc342f51991b6a1f3ce0252d24b7c8c0213b493/analysis/index.Rmd" target="_blank">cbc342f</a>
+<a href="https://github.com/stephenslab/mmbr-rss-dsc/blob/cbc342f51991b6a1f3ce0252d24b7c8c0213b493/analysis/index.Rmd" target="_blank">cbc342f</a>
 </td>
 <td>
 zouyuxin
@@ -1038,7 +1059,7 @@ wflow_publish("analysis/index.Rmd")
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/a6d5a07deabf07c6727f0388869bfed525be92b9/docs/index.html" target="_blank">a6d5a07</a>
+<a href="https://rawcdn.githack.com/stephenslab/mmbr-rss-dsc/a6d5a07deabf07c6727f0388869bfed525be92b9/docs/index.html" target="_blank">a6d5a07</a>
 </td>
 <td>
 zouyuxin
@@ -1055,7 +1076,7 @@ Build site.
 Rmd
 </td>
 <td>
-<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/339274f51ad0e1aac0a0586d58d6b64bc2a4153c/analysis/index.Rmd" target="_blank">339274f</a>
+<a href="https://github.com/stephenslab/mmbr-rss-dsc/blob/339274f51ad0e1aac0a0586d58d6b64bc2a4153c/analysis/index.Rmd" target="_blank">339274f</a>
 </td>
 <td>
 zouyuxin
@@ -1072,7 +1093,7 @@ wflow_publish("analysis/index.Rmd")
 Rmd
 </td>
 <td>
-<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/8c595dbd56793e28b1a979eea4638ecdf0d9010f/analysis/index.Rmd" target="_blank">8c595db</a>
+<a href="https://github.com/stephenslab/mmbr-rss-dsc/blob/8c595dbd56793e28b1a979eea4638ecdf0d9010f/analysis/index.Rmd" target="_blank">8c595db</a>
 </td>
 <td>
 zouyuxin
@@ -1089,7 +1110,7 @@ solve conflict
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/8c595dbd56793e28b1a979eea4638ecdf0d9010f/docs/index.html" target="_blank">8c595db</a>
+<a href="https://rawcdn.githack.com/stephenslab/mmbr-rss-dsc/8c595dbd56793e28b1a979eea4638ecdf0d9010f/docs/index.html" target="_blank">8c595db</a>
 </td>
 <td>
 zouyuxin
@@ -1106,7 +1127,7 @@ solve conflict
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/931570e4c97d05c93954090f87a41e4843606695/docs/index.html" target="_blank">931570e</a>
+<a href="https://rawcdn.githack.com/stephenslab/mmbr-rss-dsc/931570e4c97d05c93954090f87a41e4843606695/docs/index.html" target="_blank">931570e</a>
 </td>
 <td>
 zouyuxin
@@ -1123,7 +1144,7 @@ Build site.
 Rmd
 </td>
 <td>
-<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/ef2918bdbd820b4396f4347481a3cd884ece3bcc/analysis/index.Rmd" target="_blank">ef2918b</a>
+<a href="https://github.com/stephenslab/mmbr-rss-dsc/blob/ef2918bdbd820b4396f4347481a3cd884ece3bcc/analysis/index.Rmd" target="_blank">ef2918b</a>
 </td>
 <td>
 zouyuxin
@@ -1140,7 +1161,7 @@ wflow_publish("analysis/index.Rmd")
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/a309337c6fb06703a7fa6f24c1e30452d316cb26/docs/index.html" target="_blank">a309337</a>
+<a href="https://rawcdn.githack.com/stephenslab/mmbr-rss-dsc/a309337c6fb06703a7fa6f24c1e30452d316cb26/docs/index.html" target="_blank">a309337</a>
 </td>
 <td>
 zouyuxin
@@ -1157,7 +1178,7 @@ Build site.
 Rmd
 </td>
 <td>
-<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/08f69dc0a868c9ce8df32eceea2ba1106fa9b4da/analysis/index.Rmd" target="_blank">08f69dc</a>
+<a href="https://github.com/stephenslab/mmbr-rss-dsc/blob/08f69dc0a868c9ce8df32eceea2ba1106fa9b4da/analysis/index.Rmd" target="_blank">08f69dc</a>
 </td>
 <td>
 zouyuxin
@@ -1174,7 +1195,7 @@ wflow_publish("analysis/index.Rmd")
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/97a0659e4234d24fa092bbd05b0475bfdfa63308/docs/index.html" target="_blank">97a0659</a>
+<a href="https://rawcdn.githack.com/stephenslab/mmbr-rss-dsc/97a0659e4234d24fa092bbd05b0475bfdfa63308/docs/index.html" target="_blank">97a0659</a>
 </td>
 <td>
 zouyuxin
@@ -1191,7 +1212,7 @@ Build site.
 Rmd
 </td>
 <td>
-<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/cbb1bbb1c7af1ba3a4656e39bd66277934bf8a12/analysis/index.Rmd" target="_blank">cbb1bbb</a>
+<a href="https://github.com/stephenslab/mmbr-rss-dsc/blob/cbb1bbb1c7af1ba3a4656e39bd66277934bf8a12/analysis/index.Rmd" target="_blank">cbb1bbb</a>
 </td>
 <td>
 zouyuxin
@@ -1208,13 +1229,13 @@ wflow_publish("analysis/index.Rmd")
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/zouyuxin/mmbr-rss-dsc/b9250c918cde88522b76cb90c062481356f3186f/docs/index.html" target="_blank">b9250c9</a>
+<a href="https://rawcdn.githack.com/stephenslab/mmbr-rss-dsc/b9250c918cde88522b76cb90c062481356f3186f/docs/index.html" target="_blank">b9250c9</a>
 </td>
 <td>
 zouyuxin
 </td>
 <td>
-2020-03-02
+2020-03-01
 </td>
 <td>
 Build site.
@@ -1225,13 +1246,13 @@ Build site.
 Rmd
 </td>
 <td>
-<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/4eb3fbfa74e7d1e637846ba423a4854579bb7d2a/analysis/index.Rmd" target="_blank">4eb3fbf</a>
+<a href="https://github.com/stephenslab/mmbr-rss-dsc/blob/4eb3fbfa74e7d1e637846ba423a4854579bb7d2a/analysis/index.Rmd" target="_blank">4eb3fbf</a>
 </td>
 <td>
 zouyuxin
 </td>
 <td>
-2020-03-02
+2020-03-01
 </td>
 <td>
 wflow_publish("analysis/index.Rmd")
@@ -1242,7 +1263,7 @@ wflow_publish("analysis/index.Rmd")
 Rmd
 </td>
 <td>
-<a href="https://github.com/zouyuxin/mmbr-rss-dsc/blob/a6797ffe9675f3bd0c5159ee490e9cc52faf31c0/analysis/index.Rmd" target="_blank">a6797ff</a>
+<a href="https://github.com/stephenslab/mmbr-rss-dsc/blob/a6797ffe9675f3bd0c5159ee490e9cc52faf31c0/analysis/index.Rmd" target="_blank">a6797ff</a>
 </td>
 <td>
 zouyuxin
@@ -1302,6 +1323,9 @@ href="mvsusie_rss_ukb_simulation_20220619.html">Result20220619</a></p>
 cannonical vs random</a></p>
 <p><a href="ukb_bloodcells_20220619_lfsr.html">Artificial conditional
 lfsr</a></p></li>
+<li><p><a
+href="mvsusie_rss_ukb_simulation_small2_20230822.html">Simulation with 2
+traits - 20230822</a></p></li>
 </ul>
 <p>UKB analysis:</p>
 <ul>
@@ -1328,7 +1352,7 @@ PAINTOR</a></p></li>
 
 <!-- Adjust MathJax settings so that all math formulae are shown using
 TeX fonts only; see
-https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
 the presentation more consistent at the cost of the webpage sometimes
 taking slightly longer to load. Note that this only works because the
 footer is added to webpages before the MathJax javascript. -->
