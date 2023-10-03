@@ -48,6 +48,8 @@ UKB simulations:
     
     [Artificial conditional lfsr](ukb_bloodcells_20220619_lfsr.html)
 
+* [Simulation with 2 traits - 20230822](mvsusie_rss_ukb_simulation_small2_20230822.html)
+
 UKB analysis:
   
 * [Result20220619](ukb_bloodcells_20220619.html)
